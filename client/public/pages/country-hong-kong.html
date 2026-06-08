@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Current time in Hong Kong. View all cities, timezones, and real-time clocks for Hong Kong. World clock and timezone converter.">
+  <meta name="keywords" content="Hong Kong time, world clock, timezone converter, current time, Hong Kong">
+  <meta name="author" content="Chronos">
+  <meta name="google-adsense-account" content="ca-pub-3811332485680799">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://whattime.info/pages/country-hong-kong.html">
+  <meta property="og:title" content="Current Time in Hong Kong | Chronos">
+  <meta property="og:description" content="Current time in Hong Kong. View all cities, timezones, and real-time clocks for Hong Kong. World clock and timezone converter.">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Current Time in Hong Kong">
+  <meta name="twitter:description" content="Current time in Hong Kong. View all cities, timezones, and real-time clocks for Hong Kong. World clock and timezone converter.">
+  
+  <!-- Canonical -->
+  <link rel="canonical" href="https://whattime.info/pages/country-hong-kong.html">
+  
+  <title>Current Time in Hong Kong | Chronos World Clock</title>
+  
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    color: #1e293b;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  nav {
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: #3b82f6;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .back-btn:hover {
+    background: #e2e8f0;
+    color: #3b82f6;
+  }
+
+  main {
+    padding: 48px 20px;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 48px;
+    margin-bottom: 48px;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    opacity: 0.95;
+    margin-bottom: 8px;
+  }
+
+  .clock-display {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 32px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .clock-time {
+    font-size: 56px;
+    font-weight: 700;
+    font-family: 'Monaco', monospace;
+    margin-bottom: 16px;
+  }
+
+  .clock-date {
+    font-size: 18px;
+    opacity: 0.9;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+
+  .card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+  }
+
+  .card h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+
+  .card-icon {
+    width: 20px;
+    height: 20px;
+    color: #3b82f6;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .info-value {
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  .cities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .city-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+  }
+
+  .city-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .city-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  .city-card p {
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  footer {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 32px 20px;
+    text-align: center;
+    color: #64748b;
+    margin-top: 48px;
+  }
+
+  footer a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 32px;
+    }
+
+    .clock-time {
+      font-size: 36px;
+    }
+
+    .nav-links {
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">⏰ Chronos</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/?page=world-clock">World Clock</a></li>
+        <li><a href="/?page=countries">Countries</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <a href="/?page=countries" class="back-btn">← Back to Countries</a>
+    
+    <div class="hero">
+      <h1>Hong Kong</h1>
+      <p style="font-size: 18px; opacity: 0.95;">Explore current time and timezones in Hong Kong</p>
+      <div style="margin-top: 24px; padding: 16px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);">
+        <p style="font-size: 16px;"><strong>Total Cities:</strong> 1</p>
+        <p style="font-size: 16px;"><strong>Timezones:</strong> 1</p>
+      </div>
+    </div>
+
+    <div>
+      <h2 style="margin-bottom: 24px; color: #1e293b;">Cities in Hong Kong</h2>
+      <div class="cities-grid">
+        
+    <a href="city-56.html" class="city-card">
+      <h4>Hong Kong</h4>
+      <p>Asia/Hong_Kong</p>
+      <span class="badge">Asia</span>
+    </a>
+  
+      </div>
+      
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Chronos World Clock. All rights reserved.</p>
+    <p><a href="/">Home</a> | <a href="/?page=world-clock">World Clock</a> | <a href="/?page=countries">Countries</a></p>
+  </footer>
+</body>
+</html>
