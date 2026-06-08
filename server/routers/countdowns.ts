@@ -29,7 +29,7 @@ export const countdownsRouter = router({
           .limit(input.limit)
           .offset(input.offset);
 
-        return countdowns;
+        return countdowns || [];
       } catch (error) {
         console.error("[Countdowns] Failed to list countdowns:", error);
         return [];
@@ -43,10 +43,11 @@ export const countdownsRouter = router({
     .input(
       z.object({
         title: z.string(),
-        targetTimeUtc: z.date(),
+        // 💡 FIX: Use z.coerce.date() so stringified ISO dates from the frontend are parsed correctly
+        targetTimeUtc: z.coerce.date(),
         timezone: z.string(),
         isPublic: z.boolean().default(true),
-        expiresAt: z.date().optional(),
+        expiresAt: z.coerce.date().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -81,7 +82,8 @@ export const countdownsRouter = router({
    * Get countdown by code (public)
    */
   getByCode: publicProcedure
-    .input(z.string())
+    // 💡 FIX: Safe wrapping of primitives inside objects for unified tRPC client network calls
+    .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) return null;
@@ -92,7 +94,7 @@ export const countdownsRouter = router({
           .from(countdownTimers)
           .where(
             and(
-              eq(countdownTimers.countdownCode, input),
+              eq(countdownTimers.countdownCode, input.code),
               eq(countdownTimers.isPublic, true)
             )
           )
@@ -109,7 +111,8 @@ export const countdownsRouter = router({
    * Delete a countdown
    */
   delete: protectedProcedure
-    .input(z.number())
+    // 💡 FIX: Safe wrapper object matching tRPC call schema rules
+    .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
@@ -119,7 +122,7 @@ export const countdownsRouter = router({
           .delete(countdownTimers)
           .where(
             and(
-              eq(countdownTimers.id, input),
+              eq(countdownTimers.id, input.id),
               eq(countdownTimers.userId, ctx.user.id)
             )
           );
