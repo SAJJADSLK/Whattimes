@@ -1,0 +1,94 @@
+{
+  "name": "Chronos - Premium World Clock & Timezone Suite",
+  "short_name": "Chronos",
+  "description": "Real-time world clock, timezone converter, and team scheduling tool",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#3b82f6",
+  "background_color": "#ffffff",
+  "categories": ["productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "World Clock",
+      "short_name": "Clock",
+      "description": "View world clock with 80+ cities",
+      "url": "/world-clock",
+      "icons": [
+        {
+          "src": "/icon-world-clock.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Timezone Converter",
+      "short_name": "Convert",
+      "description": "Convert between timezones instantly",
+      "url": "/converter",
+      "icons": [
+        {
+          "src": "/icon-converter.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Meeting Invites",
+      "short_name": "Invites",
+      "description": "Create shareable meeting invites",
+      "url": "/meeting-invite",
+      "icons": [
+        {
+          "src": "/icon-invites.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

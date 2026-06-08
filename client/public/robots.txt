@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Allow: /world-clock
+Allow: /converter
+Allow: /meeting-invite
+Allow: /countdown
+Allow: /dst-tracker
+Allow: /team-dashboard
+Allow: /city/
+Allow: /widget
+Allow: /admin/analytics
+Allow: /dashboard
+
+Disallow: /api/
+Disallow: /__manus__/
+Disallow: /.env
+Disallow: /node_modules/
+
+Sitemap: https://chronosclock-jbvr5r7i.manus.space/sitemap.xml
+Sitemap: https://chronosclock-jbvr5r7i.manus.space/sitemap-cities.xml
+
+Crawl-delay: 1
+Request-rate: 30/60
