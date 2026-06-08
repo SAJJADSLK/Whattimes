@@ -1,0 +1,6 @@
+{
+  "app": { "title": "Chronos", "tagline": "Siempre a Tiempo", "description": "Sincronización de tiempo precisa para un mundo conectado" },
+  "nav": { "home": "Inicio", "worldClock": "Reloj Mundial", "converter": "Convertidor", "meetings": "Invitaciones de Reunión", "countdown": "Cuenta Regresiva", "dst": "Rastreador DST", "team": "Panel de Equipo", "countries": "Países y Ciudades", "widget": "Widget", "dashboard": "Panel" },
+  "home": { "hero": "Siempre a Tiempo", "subtitle": "Sincronización de tiempo precisa para un mundo conectado.", "yourTimezone": "Tu Zona Horaria", "location": "Ubicación", "utcOffset": "Desplazamiento UTC", "dstStatus": "Estado DST", "date": "Fecha", "week": "Semana", "dst": "DST", "sunrise": "Salida del Sol", "sunset": "Puesta del Sol", "active": "Activo", "inactive": "Inactivo" },
+  "common": { "language": "Idioma", "theme": "Tema", "dark": "Oscuro", "light": "Claro", "back": "Atrás", "search": "Buscar", "loading": "Cargando...", "error": "Error", "success": "Éxito", "close": "Cerrar", "save": "Guardar", "cancel": "Cancelar", "delete": "Eliminar", "edit": "Editar", "add": "Agregar", "remove": "Eliminar" }
+}

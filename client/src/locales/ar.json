@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "دائماً في الوقت", "description": "مزامنة وقت دقيقة لعالم متصل" },
+  "nav": { "home": "الرئيسية", "worldClock": "الساعة العالمية", "converter": "المحول", "meetings": "دعوات الاجتماع", "countdown": "العد التنازلي", "dst": "متتبع التوقيت الصيفي", "team": "لوحة فريق العمل", "countries": "الدول والمدن", "widget": "الأداة", "dashboard": "لوحة التحكم" },
+  "common": { "language": "اللغة", "theme": "المظهر", "dark": "مظلم", "light": "فاتح", "back": "رجوع", "search": "بحث", "loading": "جاري التحميل...", "error": "خطأ", "success": "نجح", "close": "إغلاق", "save": "حفظ", "cancel": "إلغاء", "delete": "حذف", "edit": "تعديل", "add": "إضافة", "remove": "إزالة" }
+}

@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "Sempre Puntuale", "description": "Sincronizzazione temporale precisa per un mondo connesso" },
+  "nav": { "home": "Home", "worldClock": "Orologio Mondiale", "converter": "Convertitore", "meetings": "Inviti Riunione", "countdown": "Conto alla Rovescia", "dst": "Tracker Ora Legale", "team": "Pannello Team", "countries": "Paesi e Città", "widget": "Widget", "dashboard": "Pannello" },
+  "common": { "language": "Lingua", "theme": "Tema", "dark": "Scuro", "light": "Chiaro", "back": "Indietro", "search": "Cerca", "loading": "Caricamento...", "error": "Errore", "success": "Successo", "close": "Chiudi", "save": "Salva", "cancel": "Annulla", "delete": "Elimina", "edit": "Modifica", "add": "Aggiungi", "remove": "Rimuovi" }
+}

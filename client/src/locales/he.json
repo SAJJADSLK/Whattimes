@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "תמיד בזמן", "description": "סנכרון זמן מדויק לעולם מחובר" },
+  "nav": { "home": "בית", "worldClock": "שעון עולמי", "converter": "ממיר", "meetings": "הזמנות לפגישה", "countdown": "ספירה לאחור", "dst": "עקוב שעון קיץ", "team": "לוח בקרה של צוות", "countries": "מדינות וערים", "widget": "וידג'ט", "dashboard": "לוח בקרה" },
+  "common": { "language": "שפה", "theme": "ערכת עיצוב", "dark": "כהה", "light": "בהיר", "back": "חזור", "search": "חיפוש", "loading": "טוען...", "error": "שגיאה", "success": "הצלחה", "close": "סגור", "save": "שמור", "cancel": "בטל", "delete": "מחק", "edit": "ערוך", "add": "הוסף", "remove": "הסר" }
+}

@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "Immer Pünktlich", "description": "Präzise Zeitsynchronisation für eine vernetzte Welt" },
+  "nav": { "home": "Startseite", "worldClock": "Weltuhr", "converter": "Konverter", "meetings": "Besprechungseinladungen", "countdown": "Countdown", "dst": "DST-Tracker", "team": "Team-Dashboard", "countries": "Länder und Städte", "widget": "Widget", "dashboard": "Dashboard" },
+  "common": { "language": "Sprache", "theme": "Design", "dark": "Dunkel", "light": "Hell", "back": "Zurück", "search": "Suchen", "loading": "Wird geladen...", "error": "Fehler", "success": "Erfolg", "close": "Schließen", "save": "Speichern", "cancel": "Abbrechen", "delete": "Löschen", "edit": "Bearbeiten", "add": "Hinzufügen", "remove": "Entfernen" }
+}

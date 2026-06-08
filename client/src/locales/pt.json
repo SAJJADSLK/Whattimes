@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "Sempre no Horário", "description": "Sincronização de tempo precisa para um mundo conectado" },
+  "nav": { "home": "Início", "worldClock": "Relógio Mundial", "converter": "Conversor", "meetings": "Convites de Reunião", "countdown": "Contagem Regressiva", "dst": "Rastreador de Horário de Verão", "team": "Painel de Equipe", "countries": "Países e Cidades", "widget": "Widget", "dashboard": "Painel" },
+  "common": { "language": "Idioma", "theme": "Tema", "dark": "Escuro", "light": "Claro", "back": "Voltar", "search": "Pesquisar", "loading": "Carregando...", "error": "Erro", "success": "Sucesso", "close": "Fechar", "save": "Salvar", "cancel": "Cancelar", "delete": "Excluir", "edit": "Editar", "add": "Adicionar", "remove": "Remover" }
+}

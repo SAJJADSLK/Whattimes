@@ -1,0 +1,5 @@
+{
+  "app": { "title": "Chronos", "tagline": "始终准时", "description": "为互联世界提供精确的时间同步" },
+  "nav": { "home": "首页", "worldClock": "世界时钟", "converter": "转换器", "meetings": "会议邀请", "countdown": "倒计时", "dst": "夏令时追踪", "team": "团队仪表板", "countries": "国家和城市", "widget": "小部件", "dashboard": "仪表板" },
+  "common": { "language": "语言", "theme": "主题", "dark": "深色", "light": "浅色", "back": "返回", "search": "搜索", "loading": "加载中...", "error": "错误", "success": "成功", "close": "关闭", "save": "保存", "cancel": "取消", "delete": "删除", "edit": "编辑", "add": "添加", "remove": "移除" }
+}
