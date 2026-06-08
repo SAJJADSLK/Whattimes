@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
+import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { userFavoriteCities, cities } from "../../drizzle/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 
 export const favoritesRouter = router({
   /**
@@ -32,7 +32,7 @@ export const favoritesRouter = router({
         .where(eq(userFavoriteCities.userId, ctx.user.id))
         .orderBy(userFavoriteCities.order);
 
-      return favorites;
+      return favorites || [];
     } catch (error) {
       console.error("[Favorites] Failed to list favorites:", error);
       return [];
@@ -49,18 +49,18 @@ export const favoritesRouter = router({
       if (!db) throw new Error("Database not available");
 
       try {
-        // Get the highest order number
-        const existing = await db
-          .select({ maxOrder: userFavoriteCities.order })
+        // 💡 FIX: Let the database calculate the MAX order value natively (Much faster!)
+        const [result] = await db
+          .select({ maxOrder: sql<number>`COALESCE(MAX(${userFavoriteCities.order}), 0)` })
           .from(userFavoriteCities)
           .where(eq(userFavoriteCities.userId, ctx.user.id));
 
-        const maxOrder = existing.length > 0 ? Math.max(...existing.map(e => e.maxOrder || 0)) : 0;
+        const nextOrder = (result?.maxOrder ?? 0) + 1;
 
         await db.insert(userFavoriteCities).values({
           userId: ctx.user.id,
           cityId: input.cityId,
-          order: maxOrder + 1,
+          order: nextOrder,
         });
 
         return { success: true };
@@ -106,18 +106,20 @@ export const favoritesRouter = router({
       if (!db) throw new Error("Database not available");
 
       try {
-        // Update order for each favorite
-        for (let i = 0; i < input.favoriteIds.length; i++) {
-          await db
-            .update(userFavoriteCities)
-            .set({ order: i })
-            .where(
-              and(
-                eq(userFavoriteCities.id, input.favoriteIds[i]),
-                eq(userFavoriteCities.userId, ctx.user.id)
+        // 💡 FIX: Run operations in parallel using Promise.all() to prevent sequential N+1 network blockages
+        await Promise.all(
+          input.favoriteIds.map((id, index) =>
+            db
+              .update(userFavoriteCities)
+              .set({ order: index })
+              .where(
+                and(
+                  eq(userFavoriteCities.id, id),
+                  eq(userFavoriteCities.userId, ctx.user.id)
+                )
               )
-            );
-        }
+          )
+        );
 
         return { success: true };
       } catch (error) {
@@ -137,7 +139,7 @@ export const favoritesRouter = router({
 
       try {
         const result = await db
-          .select()
+          .select({ id: userFavoriteCities.id }) // Select only the ID field instead of the entire row to save bandwidth
           .from(userFavoriteCities)
           .where(
             and(
