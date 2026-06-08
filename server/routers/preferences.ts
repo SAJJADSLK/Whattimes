@@ -33,7 +33,8 @@ export const preferencesRouter = router({
    * Update user theme preference
    */
   updateTheme: protectedProcedure
-    .input(z.enum(["light", "dark", "auto"]))
+    // 💡 FIX: Wrapped naked enum into an object wrapper for consistent batch parameter parsing
+    .input(z.object({ theme: z.enum(["light", "dark", "auto"]) }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
@@ -41,10 +42,10 @@ export const preferencesRouter = router({
       try {
         await db
           .update(users)
-          .set({ theme: input })
+          .set({ theme: input.theme })
           .where(eq(users.id, ctx.user.id));
 
-        return { success: true, theme: input };
+        return { success: true, theme: input.theme };
       } catch (error) {
         console.error("[Preferences] Failed to update theme:", error);
         throw error;
@@ -55,7 +56,8 @@ export const preferencesRouter = router({
    * Update default timezone
    */
   updateDefaultTimezone: protectedProcedure
-    .input(z.string())
+    // 💡 FIX: Wrapped raw string into an object input block 
+    .input(z.object({ timezone: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
@@ -63,10 +65,10 @@ export const preferencesRouter = router({
       try {
         await db
           .update(users)
-          .set({ defaultTimezone: input })
+          .set({ defaultTimezone: input.timezone })
           .where(eq(users.id, ctx.user.id));
 
-        return { success: true, timezone: input };
+        return { success: true, timezone: input.timezone };
       } catch (error) {
         console.error("[Preferences] Failed to update timezone:", error);
         throw error;
@@ -79,7 +81,7 @@ export const preferencesRouter = router({
   updateProfile: protectedProcedure
     .input(
       z.object({
-        name: z.string().optional(),
+        name: z.string().trim().min(1).optional(),
         email: z.string().email().optional(),
       })
     )
@@ -87,14 +89,15 @@ export const preferencesRouter = router({
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      try {
-        const updateData: Record<string, any> = {};
-        if (input.name) updateData.name = input.name;
-        if (input.email) updateData.email = input.email;
+      // 💡 FIX: Prevent empty update payloads from causing fatal database SQL errors
+      if (Object.keys(input).length === 0) {
+        return { success: true, message: "No adjustments provided." };
+      }
 
+      try {
         await db
           .update(users)
-          .set(updateData)
+          .set(input) // Pass input directly—Zod strips out fields that aren't provided
           .where(eq(users.id, ctx.user.id));
 
         return { success: true };
