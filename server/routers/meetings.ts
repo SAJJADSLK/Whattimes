@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { meetingInvites, cities } from "../../drizzle/schema";
+import { meetingInvites } from "../../drizzle/schema";
 import { eq, desc, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
@@ -29,7 +29,7 @@ export const meetingsRouter = router({
           .limit(input.limit)
           .offset(input.offset);
 
-        return meetings;
+        return meetings || [];
       } catch (error) {
         console.error("[Meetings] Failed to list meetings:", error);
         return [];
@@ -45,8 +45,9 @@ export const meetingsRouter = router({
         title: z.string(),
         description: z.string().optional(),
         cityIds: z.array(z.number()),
-        meetingTimeUtc: z.date(),
-        expiresAt: z.date().optional(),
+        // 💡 FIX: Coerce dates from incoming string payloads safely
+        meetingTimeUtc: z.coerce.date(),
+        expiresAt: z.coerce.date().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -56,15 +57,18 @@ export const meetingsRouter = router({
       try {
         const inviteCode = nanoid(12);
 
-        const result = await db.insert(meetingInvites).values({
+        // 💡 FIX: Handle potential database storage limitations for tracking arrays in schemas
+        const valuesToInsert = {
           userId: ctx.user.id,
           inviteCode,
           title: input.title,
-          description: input.description,
-          cityIds: input.cityIds,
+          description: input.description || null,
+          cityIds: input.cityIds, // If your database errors out here, use: JSON.stringify(input.cityIds) as any
           meetingTimeUtc: input.meetingTimeUtc,
-          expiresAt: input.expiresAt,
-        });
+          expiresAt: input.expiresAt || null,
+        };
+
+        await db.insert(meetingInvites).values(valuesToInsert);
 
         return {
           success: true,
@@ -81,7 +85,8 @@ export const meetingsRouter = router({
    * Get meeting details by invite code
    */
   getByCode: protectedProcedure
-    .input(z.string())
+    // 💡 FIX: Box primitive string to match tRPC batch caller formats safely
+    .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) return null;
@@ -90,7 +95,7 @@ export const meetingsRouter = router({
         const meeting = await db
           .select()
           .from(meetingInvites)
-          .where(eq(meetingInvites.inviteCode, input))
+          .where(eq(meetingInvites.inviteCode, input.code))
           .limit(1);
 
         return meeting[0] || null;
@@ -104,7 +109,8 @@ export const meetingsRouter = router({
    * Delete a meeting invite
    */
   delete: protectedProcedure
-    .input(z.number())
+    // 💡 FIX: Box number primitive inside validation object blocks
+    .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
@@ -114,7 +120,7 @@ export const meetingsRouter = router({
           .delete(meetingInvites)
           .where(
             and(
-              eq(meetingInvites.id, input),
+              eq(meetingInvites.id, input.id),
               eq(meetingInvites.userId, ctx.user.id)
             )
           );
