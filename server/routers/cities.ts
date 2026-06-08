@@ -40,7 +40,11 @@ export const citiesRouter = router({
    */
   getRegions: publicProcedure.query(async () => {
     try {
-      const allCities = getAllCitiesFromCache() || [];
+      const allCities = getAllCitiesFromCache();
+      
+      // 💡 FIX: Force array safety check before executing .map()
+      if (!allCities || !Array.isArray(allCities)) return [];
+
       const regions = [...new Set(allCities.map(c => c.region))].sort();
       return regions;
     } catch (e) {
@@ -56,7 +60,11 @@ export const citiesRouter = router({
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       try {
-        const allCities = getAllCitiesFromCache() || [];
+        const allCities = getAllCitiesFromCache();
+        
+        // 💡 FIX: Force array safety check before executing .find()
+        if (!allCities || !Array.isArray(allCities)) return null;
+
         return allCities.find(c => c.id === input.id) || null;
       } catch (e) {
         console.error("Cache error in getById:", e);
@@ -71,7 +79,11 @@ export const citiesRouter = router({
     .input(z.object({ ids: z.array(z.number()) }))
     .query(async ({ input }) => {
       try {
-        const allCities = getAllCitiesFromCache() || [];
+        const allCities = getAllCitiesFromCache();
+        
+        // 💡 FIX: Force array safety check before executing .filter()
+        if (!allCities || !Array.isArray(allCities)) return [];
+
         const idSet = new Set(input.ids);
         return allCities.filter(c => idSet.has(c.id));
       } catch (e) {
@@ -87,7 +99,11 @@ export const citiesRouter = router({
     .input(z.object({ limit: z.number().default(20) }))
     .query(async ({ input }) => {
       try {
-        const allCities = getAllCitiesFromCache() || [];
+        const allCities = getAllCitiesFromCache();
+        
+        // 💡 FIX: Force array safety check before running spread/sort mutations
+        if (!allCities || !Array.isArray(allCities)) return [];
+
         return [...allCities]
           .sort((a, b) => (b.population || 0) - (a.population || 0))
           .slice(0, input.limit);
@@ -111,16 +127,16 @@ export const citiesRouter = router({
         const targetLimit = input?.limit ?? 200;
         const allCities = getAllCitiesFromCache();
         
-        // 💡 CRITICAL FIX: Fallback to an empty array if cache returns undefined/null
+        // 💡 FIX: Safely fallback to an empty array to eliminate the 500 batch error
         if (!allCities || !Array.isArray(allCities)) {
-          console.warn("getAllCitiesFromCache returned an empty dataset or failed to resolve.");
+          console.warn("getAllCitiesFromCache is uninitialized or missing on Vercel.");
           return []; 
         }
         
         return allCities.slice(0, targetLimit);
       } catch (error) {
         console.error("Fatal exception in cities.getAll router:", error);
-        return []; // Prevents the 500 server crash by returning a safe default
+        return []; 
       }
     }),
 
@@ -129,8 +145,12 @@ export const citiesRouter = router({
    */
   getAllForSitemap: publicProcedure.query(async () => {
     try {
-      const allCities = getAllCitiesFromCache() || [];
-      return allCities.sort((a, b) => a.name.localeCompare(b.name));
+      const allCities = getAllCitiesFromCache();
+      
+      // 💡 FIX: Force array safety check before executing .sort()
+      if (!allCities || !Array.isArray(allCities)) return [];
+
+      return [...allCities].sort((a, b) => a.name.localeCompare(b.name));
     } catch (e) {
       console.error("Cache error in getAllForSitemap:", e);
       return [];
@@ -142,7 +162,11 @@ export const citiesRouter = router({
    */
   getAllCountries: publicProcedure.query(async () => {
     try {
-      const allCities = getAllCitiesFromCache() || [];
+      const allCities = getAllCitiesFromCache();
+      
+      // 💡 FIX: Force array safety check before executing .map()
+      if (!allCities || !Array.isArray(allCities)) return [];
+
       return [...new Set(allCities.map(c => c.country))].sort();
     } catch (e) {
       console.error("Cache error in getAllCountries:", e);
@@ -157,7 +181,11 @@ export const citiesRouter = router({
     .input(z.object({ country: z.string() }))
     .query(async ({ input }) => {
       try {
-        const allCities = getAllCitiesFromCache() || [];
+        const allCities = getAllCitiesFromCache();
+        
+        // 💡 FIX: Force array safety check before executing .filter()
+        if (!allCities || !Array.isArray(allCities)) return [];
+
         return allCities
           .filter(c => c.country === input.country)
           .sort((a, b) => a.name.localeCompare(b.name));
@@ -174,7 +202,11 @@ export const citiesRouter = router({
     .input(z.object({ name: z.string() }))
     .query(async ({ input }) => {
       try {
-        const allCities = getAllCitiesFromCache() || [];
+        const allCities = getAllCitiesFromCache();
+        
+        // 💡 FIX: Force array safety check before executing .find()
+        if (!allCities || !Array.isArray(allCities)) return null;
+
         const normalizedName = input.name.toLowerCase();
         return allCities.find(c => c.name.toLowerCase() === normalizedName) || null;
       } catch (e) {
