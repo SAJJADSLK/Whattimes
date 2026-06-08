@@ -7,9 +7,12 @@ export const timeRouter = router({
    * Get server time offset for client-side clock synchronization
    * Client receives this on page load to calculate accurate local time
    */
-  getOffset: publicProcedure.input(z.void()).query(() => {
-    return getServerTimeOffset();
-  }),
+  getOffset: publicProcedure
+    // 💡 FIX: Accept void, null, or optional inputs gracefully to prevent 500 validation crashes
+    .input(z.any().optional()) 
+    .query(() => {
+      return getServerTimeOffset();
+    }),
 
   /**
    * Get current time in a specific timezone
