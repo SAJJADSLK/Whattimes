@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../../server/routers";
+import { appRouter } from "../../server/routers/index.js";
 import { createContext } from "../../server/_core/context";
 import { initCityCache } from "../../server/lib/cityCache";
 import { getDb } from "../../server/db";
