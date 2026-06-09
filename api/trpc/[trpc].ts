@@ -1,26 +1,22 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../../server/routers/index.js";
-import { createContext } from "../../server/_core/context";
-import { initCityCache } from "../../server/lib/cityCache";
-import { getDb } from "../../server/db";
+import { appRouter } from "../../server/routers.js";
+import { createContext } from "../../server/_core/context.js";
+import { initCityCache } from "../../server/lib/cityCache.js";
+import { getDb } from "../../server/db.js";
 
 let cacheInitialized = false;
 let cacheInitPromise: Promise<void> | null = null;
 
 async function ensureCacheInitialized() {
-  // If already initialized, return immediately
   if (cacheInitialized) return;
   
-  // If initialization is in progress, wait for it
   if (cacheInitPromise) return cacheInitPromise;
   
-  // Start initialization
   cacheInitPromise = (async () => {
     try {
       console.log("[API] Starting cache initialization...");
       
-      // Ensure database connection is ready
       const db = await getDb();
       if (!db) {
         console.error("[API] Database connection failed - cannot initialize cache");
@@ -42,10 +38,8 @@ async function ensureCacheInitialized() {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    // Ensure cache is initialized on first request
     await ensureCacheInitialized();
 
-    // CORS headers
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Request-Method", "*");
     res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
@@ -56,7 +50,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.end();
     }
 
-    // Polyfill Express-like response methods for Vercel
     if (!res.clearCookie) {
       res.clearCookie = (name: string, options?: any) => {
         const serialize = (n: string, v: string, opts: any = {}) => {
@@ -75,7 +68,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
     }
 
-    // Create and run tRPC middleware
     const trpcMiddleware = createExpressMiddleware({
       router: appRouter,
       createContext: createContext,
