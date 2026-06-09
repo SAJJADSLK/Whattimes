@@ -5,7 +5,7 @@
 "type": "module",
 "license": "MIT",
 "engines": {
-"node": "22.x"
+"node": "20.x"
 },
 "scripts": {
 "dev": "vite",
@@ -54,7 +54,6 @@
 "@trpc/client": "^11.6.0",
 "@trpc/react-query": "^11.6.0",
 "@trpc/server": "^11.6.0",
-"@vercel/node": "^5.3.24",
 "axios": "^1.12.0",
 "class-variance-authority": "^0.7.1",
 "clsx": "^2.1.1",
@@ -77,9 +76,9 @@
 "nanoid": "^5.1.5",
 "next-themes": "^0.4.6",
 "postgres": "^3.4.9",
-"react": "^19.2.1",
+"react": "^18.3.1",
 "react-day-picker": "^9.11.1",
-"react-dom": "^19.2.1",
+"react-dom": "^18.3.1",
 "react-hook-form": "^7.64.0",
 "react-i18next": "^17.0.8",
 "react-resizable-panels": "^3.0.6",
@@ -107,7 +106,6 @@
 "autoprefixer": "^10.4.20",
 "drizzle-kit": "^0.31.4",
 "esbuild": "^0.25.0",
-"pnpm": "^10.15.1",
 "postcss": "^8.4.47",
 "prettier": "^3.6.2",
 "tailwindcss": "^4.1.14",
