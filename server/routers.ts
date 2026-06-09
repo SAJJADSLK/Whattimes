@@ -1,13 +1,12 @@
-import { COOKIE_NAME } from "../shared/const.js";
-import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
-import { timeRouter } from "./routers/time";
-import { citiesRouter } from "./routers/cities";
-import { favoritesRouter } from "./routers/favorites";
-import { preferencesRouter } from "./routers/preferences";
-import { meetingsRouter } from "./routers/meetings";
-import { countdownsRouter } from "./routers/countdowns";
+import { getSessionCookieOptions } from "./_core/cookies.js";
+import { systemRouter } from "./_core/systemRouter.js";
+import { publicProcedure, router } from "./_core/trpc.js";
+import { timeRouter } from "./routers/time.js";
+import { citiesRouter } from "./routers/cities.js";
+import { favoritesRouter } from "./routers/favorites.js";
+import { preferencesRouter } from "./routers/preferences.js";
+import { meetingsRouter } from "./routers/meetings.js";
+import { countdownsRouter } from "./routers/countdowns.js";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
