@@ -40,12 +40,12 @@ export default function Home() {
   useEffect(() => {
     if (detectedTimezone) {
       try {
-        const saved = localStorage.getItem('chronos-user-timezone');
+        const saved = localStorage.getItem('whattime-user-timezone');
         if (saved) {
           setUserTimezone(saved);
         } else {
           setUserTimezone(detectedTimezone.name);
-          localStorage.setItem('chronos-user-timezone', detectedTimezone.name);
+          localStorage.setItem('whattime-user-timezone', detectedTimezone.name);
         }
       } catch (e) {
         setUserTimezone(detectedTimezone.name);
@@ -56,7 +56,7 @@ export default function Home() {
   const handleTimezoneChange = (tz: string) => {
     setUserTimezone(tz);
     try {
-      localStorage.setItem('chronos-user-timezone', tz);
+      localStorage.setItem('whattime-user-timezone', tz);
     } catch (e) {
       console.error('Failed to save timezone preference');
     }
@@ -66,25 +66,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Navigation */}
-      <nav className="border-b border-slate-200 sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Clock className="w-8 h-8 text-blue-600" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              Chronos
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="#features" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              Features
-            </a>
-            <a href="#about" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              About
-            </a>
-          </div>
-        </div>
-      </nav>
+      {/* NO DUPLICATE NAV - MobileNav is global in App.tsx */}
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -292,7 +274,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-blue-600 to-cyan-600 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Ready to master time zones?</h2>
-          <p className="text-blue-100 mb-8">Start using Chronos today for seamless global coordination</p>
+          <p className="text-blue-100 mb-8">Start using WhatTime today for seamless global coordination</p>
           <Button size="lg" variant="secondary" className="gap-2">
             Get Started <ArrowRight className="w-4 h-4" />
           </Button>
@@ -306,7 +288,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Clock className="w-6 h-6 text-blue-400" />
-                <span className="font-bold text-white">Chronos</span>
+                <span className="font-bold text-white">WhatTime</span>
               </div>
               <p className="text-sm">Precision timekeeping for a connected world</p>
             </div>
@@ -331,12 +313,16 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="hover:text-white transition">Privacy</a></li>
                 <li><a href="#" className="hover:text-white transition">Terms</a></li>
-                <li><a href="#" className="hover:text-white transition">Security</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-800 pt-8 text-center text-sm">
-            <p>&copy; 2026 Chronos. All rights reserved.</p>
+          <div className="border-t border-slate-800 pt-8 flex justify-between items-center">
+            <p className="text-sm">© 2024 WhatTime. All rights reserved.</p>
+            <div className="flex gap-4">
+              <a href="#" className="text-slate-400 hover:text-white transition">Twitter</a>
+              <a href="#" className="text-slate-400 hover:text-white transition">GitHub</a>
+              <a href="#" className="text-slate-400 hover:text-white transition">LinkedIn</a>
+            </div>
           </div>
         </div>
       </footer>
