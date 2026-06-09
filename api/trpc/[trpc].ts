@@ -49,18 +49,32 @@ function setCorsHeaders(res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Headers", "*");
 }
 
-function addClearCookie(res: VercelResponse) {
-  const response = res as VercelResponse & {
-    clearCookie?: (name: string, options?: any) => void;
-  };
+type ExtendedResponse = VercelResponse & {
+  clearCookie?: (
+    name: string,
+    options?: {
+      path?: string;
+      domain?: string;
+      httpOnly?: boolean;
+      secure?: boolean;
+      sameSite?: string;
+    }
+  ) => void;
+};
+
+function addClearCookie(res: VercelResponse): ExtendedResponse {
+  const response = res as ExtendedResponse;
 
   if (!response.clearCookie) {
-    response.clearCookie = (name: string, options: any = {}) => {
+    response.clearCookie = (
+      name: string,
+      options = {}
+    ) => {
       const cookieParts = [
         `${name}=`,
         "Max-Age=0",
         "Expires=Thu, 01 Jan 1970 00:00:00 GMT",
-        `Path=${options.path || "/"}`,
+        `Path=${options.path || "/"}`
       ];
 
       if (options.domain) {
@@ -79,7 +93,10 @@ function addClearCookie(res: VercelResponse) {
         cookieParts.push(`SameSite=${options.sameSite}`);
       }
 
-      res.setHeader("Set-Cookie", cookieParts.join("; "));
+      res.setHeader(
+        "Set-Cookie",
+        cookieParts.join("; ")
+      );
     };
   }
 
@@ -96,14 +113,15 @@ export default async function handler(
     setCorsHeaders(res);
 
     if (req.method === "OPTIONS") {
-      return res.status(200).end();
+      res.status(200).end();
+      return;
     }
 
     const response = addClearCookie(res);
 
     const middleware = createExpressMiddleware({
       router: appRouter,
-      createContext,
+      createContext
     });
 
     await new Promise<void>((resolve, reject) => {
@@ -112,11 +130,14 @@ export default async function handler(
         response as any,
         (err?: unknown) => {
           if (err) {
-            console.error("[tRPC Middleware Error]", err);
+            console.error(
+              "[tRPC Middleware Error]",
+              err
+            );
 
             if (!response.headersSent) {
               response.status(500).json({
-                error: "Internal server error",
+                error: "Internal server error"
               });
             }
 
@@ -129,11 +150,14 @@ export default async function handler(
       );
     });
   } catch (error) {
-    console.error("[API Handler Error]", error);
+    console.error(
+      "[API Handler Error]",
+      error
+    );
 
     if (!res.headersSent) {
       res.status(500).json({
-        error: "Internal server error",
+        error: "Internal server error"
       });
     }
   }
