@@ -1,14 +1,9 @@
-```json id="md5e7w"
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "framework": "vite",
 
   "installCommand": "pnpm install",
 
   "buildCommand": "pnpm build",
-
-  "devCommand": "vite",
 
   "functions": {
     "api/**/*.ts": {
@@ -19,7 +14,7 @@
 
   "headers": [
     {
-      "source": "/api/trpc/:path*",
+      "source": "/api/trpc/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -43,11 +38,11 @@
 
   "rewrites": [
     {
-      "source": "/manus-storage/:path*",
-      "destination": "/api/manus-storage/:path*"
+      "source": "/manus-storage/(.*)",
+      "destination": "/api/manus-storage/$1"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!api).*)",
       "destination": "/index.html"
     }
   ]
