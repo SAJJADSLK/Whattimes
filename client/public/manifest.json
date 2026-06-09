@@ -1,6 +1,6 @@
 {
-  "name": "Chronos - Premium World Clock & Timezone Suite",
-  "short_name": "Chronos",
+  "name": "WhatTime - Premium World Clock & Timezone Suite",
+  "short_name": "WhatTime",
   "description": "Real-time world clock, timezone converter, and team scheduling tool",
   "start_url": "/",
   "scope": "/",
