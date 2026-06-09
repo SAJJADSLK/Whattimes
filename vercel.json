@@ -1,4 +1,4 @@
-```json id="1b4v7d"
+```json id="md5e7w"
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
 
@@ -10,11 +10,8 @@
 
   "devCommand": "vite",
 
-  "outputDirectory": "dist",
-
   "functions": {
     "api/**/*.ts": {
-      "runtime": "nodejs22.x",
       "memory": 1024,
       "maxDuration": 60
     }
