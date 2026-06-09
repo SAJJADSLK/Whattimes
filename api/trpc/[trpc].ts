@@ -1,4 +1,3 @@
-```ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 
@@ -139,4 +138,3 @@ export default async function handler(
     }
   }
 }
-```
