@@ -1,3 +1,4 @@
+```json id="0xhj8w"
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
 
@@ -14,7 +15,7 @@
 
   "headers": [
     {
-      "source": "/api/trpc/(.*)",
+      "source": "/api/trpc/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -38,12 +39,8 @@
 
   "rewrites": [
     {
-      "source": "/manus-storage/(.*)",
-      "destination": "/api/manus-storage/$1"
-    },
-    {
-      "source": "/((?!api).*)",
-      "destination": "/index.html"
+      "source": "/manus-storage/:path*",
+      "destination": "/api/manus-storage/:path*"
     }
   ]
 }
