@@ -1,5 +1,7 @@
+```ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+
 import { appRouter } from "../../server/routers.js";
 import { createContext } from "../../server/_core/context.js";
 import { initCityCache } from "../../server/lib/cityCache.js";
@@ -10,85 +12,131 @@ let cacheInitPromise: Promise<void> | null = null;
 
 async function ensureCacheInitialized() {
   if (cacheInitialized) return;
-  
-  if (cacheInitPromise) return cacheInitPromise;
-  
+
+  if (cacheInitPromise) {
+    return cacheInitPromise;
+  }
+
   cacheInitPromise = (async () => {
     try {
       console.log("[API] Starting cache initialization...");
-      
+
       const db = await getDb();
+
       if (!db) {
-        console.error("[API] Database connection failed - cannot initialize cache");
+        console.error("[API] Database connection failed");
         return;
       }
-      
-      console.log("[API] Database connected, initializing city cache...");
+
+      console.log("[API] Database connected");
+
       await initCityCache();
+
       cacheInitialized = true;
+
       console.log("[API] Cache initialization complete");
     } catch (error) {
       console.error("[API] Cache initialization failed:", error);
       cacheInitialized = false;
     }
   })();
-  
+
   return cacheInitPromise;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+function setCorsHeaders(res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+}
+
+function addClearCookie(res: VercelResponse) {
+  const response = res as VercelResponse & {
+    clearCookie?: (name: string, options?: any) => void;
+  };
+
+  if (!response.clearCookie) {
+    response.clearCookie = (name: string, options: any = {}) => {
+      const cookieParts = [
+        `${name}=`,
+        "Max-Age=0",
+        "Expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        `Path=${options.path || "/"}`,
+      ];
+
+      if (options.domain) {
+        cookieParts.push(`Domain=${options.domain}`);
+      }
+
+      if (options.httpOnly) {
+        cookieParts.push("HttpOnly");
+      }
+
+      if (options.secure) {
+        cookieParts.push("Secure");
+      }
+
+      if (options.sameSite) {
+        cookieParts.push(`SameSite=${options.sameSite}`);
+      }
+
+      res.setHeader("Set-Cookie", cookieParts.join("; "));
+    };
+  }
+
+  return response;
+}
+
+export default async function handler(
+  req: VercelRequest,
+  res: VercelResponse
+) {
   try {
     await ensureCacheInitialized();
 
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Request-Method", "*");
-    res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
-    res.setHeader("Access-Control-Allow-Headers", "*");
+    setCorsHeaders(res);
 
     if (req.method === "OPTIONS") {
-      res.writeHead(200);
-      return res.end();
+      return res.status(200).end();
     }
 
-    if (!res.clearCookie) {
-      res.clearCookie = (name: string, options?: any) => {
-        const serialize = (n: string, v: string, opts: any = {}) => {
-          let pairs = [`${n}=${v}`];
-          if (opts.maxAge) pairs.push(`Max-Age=${opts.maxAge}`);
-          if (opts.domain) pairs.push(`Domain=${opts.domain}`);
-          if (opts.path) pairs.push(`Path=${opts.path}`);
-          if (opts.expires) pairs.push(`Expires=${opts.expires.toUTCString()}`);
-          if (opts.httpOnly) pairs.push("HttpOnly");
-          if (opts.secure) pairs.push("Secure");
-          if (opts.sameSite) pairs.push(`SameSite=${opts.sameSite}`);
-          return pairs.join("; ");
-        };
-        res.setHeader("Set-Cookie", serialize(name, "", { ...options, maxAge: -1, expires: new Date(0) }));
-        return res;
-      };
-    }
+    const response = addClearCookie(res);
 
-    const trpcMiddleware = createExpressMiddleware({
+    const middleware = createExpressMiddleware({
       router: appRouter,
-      createContext: createContext,
+      createContext,
     });
 
-    return new Promise<void>((resolve, reject) => {
-      trpcMiddleware(req as any, res as any, (err: any) => {
-        if (err) {
-          console.error("[tRPC] Middleware error:", err);
-          if (!res.headersSent) {
-            res.status(500).json({ error: "Internal server error" });
+    await new Promise<void>((resolve, reject) => {
+      middleware(
+        req as any,
+        response as any,
+        (err?: unknown) => {
+          if (err) {
+            console.error("[tRPC Middleware Error]", err);
+
+            if (!response.headersSent) {
+              response.status(500).json({
+                error: "Internal server error",
+              });
+            }
+
+            reject(err);
+            return;
           }
-          return reject(err);
+
+          resolve();
         }
-        resolve();
-      });
+      );
     });
   } catch (error) {
-    console.error("[API] Handler error:", error);
+    console.error("[API Handler Error]", error);
+
     if (!res.headersSent) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({
+        error: "Internal server error",
+      });
     }
   }
 }
+```
