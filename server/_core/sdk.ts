@@ -256,9 +256,7 @@ class SDKServer {
     } as GetUserInfoWithJwtResponse;
   }
 
-async authenticateRequest(
-  req: ExpressRequest
-): Promise<AuthenticatedUser> {
+async authenticateRequest(req: Request): Promise<AuthenticatedUser> {
     // Regular authentication flow
     const cookies = this.parseCookies(
   typeof req.headers.cookie === "string"
