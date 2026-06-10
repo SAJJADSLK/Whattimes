@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
-import { getDb } from "../db";
-import { countdownTimers } from "../../drizzle/schema";
+import { protectedProcedure, publicProcedure, router } from "../_core/trpc.js";
+import { getDb } from "../db.js";
+import { countdownTimers } from "../../drizzle/schema.js";
 import { eq, desc, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
 

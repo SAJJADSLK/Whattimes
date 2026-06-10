@@ -1,6 +1,6 @@
-import { publicProcedure, router } from '../_core/trpc';
-import { cities } from '../../drizzle/schema';
-import { getDb } from '../db';
+import { publicProcedure, router } from "../_core/trpc.js";
+import { cities } from '../../drizzle/schema.js';
+import { getDb } from '../db.js';
 import { z } from 'zod';
 import { eq, sql } from 'drizzle-orm';
 import { searchCitiesInCache, getCitiesByRegionFromCache, getAllCitiesFromCache } from '../lib/cityCache';

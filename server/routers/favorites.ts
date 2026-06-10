@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../_core/trpc";
-import { getDb } from "../db";
-import { userFavoriteCities, cities } from "../../drizzle/schema";
+import { protectedProcedure, router } from "../_core/trpc.js";
+import { getDb } from "../db.js";
+import { userFavoriteCities, cities } from "../../drizzle/schema.js";
 import { eq, and, sql } from "drizzle-orm";
 
 export const favoritesRouter = router({

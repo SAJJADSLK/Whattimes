@@ -1,13 +1,6 @@
-import { z } from "zod";
-import { publicProcedure, router } from "../_core/trpc.js";
-import {
-  getServerTimeOffset,
-  getTimeInTimezone,
-  getUtcOffsetMinutes,
-  isDstActive,
-  calculateOverlapHours,
-  getSunTimes,
-} from "../time.js";
+import { z } from 'zod';
+import { publicProcedure, router } from '../_core/trpc.js';
+import { getServerTimeOffset, getTimeInTimezone, getUtcOffsetMinutes, isDstActive, calculateOverlapHours, getSunTimes } from '../time.js';
 
 export const timeRouter = router({
   /**
@@ -15,7 +8,8 @@ export const timeRouter = router({
    * Client receives this on page load to calculate accurate local time
    */
   getOffset: publicProcedure
-    .input(z.any().optional())
+    // 💡 FIX: Accept void, null, or optional inputs gracefully to prevent 500 validation crashes
+    .input(z.any().optional()) 
     .query(() => {
       return getServerTimeOffset();
     }),
@@ -39,7 +33,7 @@ export const timeRouter = router({
     }),
 
   /**
-   * Get current time for multiple timezones
+   * Get current time for multiple timezones (for world clock grid)
    */
   getMultipleTimezones: publicProcedure
     .input(z.object({ timezones: z.array(z.string()) }))
@@ -58,28 +52,28 @@ export const timeRouter = router({
       });
     }),
 
+  /**
+   * Calculate working hours overlap between timezones
+   * Used for team dashboard to show green/yellow/red coding
+   */
   calculateOverlap: publicProcedure
     .input(z.object({ timezones: z.array(z.string()) }))
     .query(({ input }) => {
       return calculateOverlapHours(input.timezones);
     }),
 
+  /**
+   * Get sunrise and sunset times for a location
+   */
   getSunTimes: publicProcedure
-    .input(
-      z.object({
-        latitude: z.number(),
-        longitude: z.number(),
-        timezone: z.string(),
-      })
-    )
+    .input(z.object({ latitude: z.number(), longitude: z.number(), timezone: z.string() }))
     .query(({ input }) => {
-      return getSunTimes(
-        input.latitude,
-        input.longitude,
-        input.timezone
-      );
+      return getSunTimes(input.latitude, input.longitude, input.timezone);
     }),
 
+  /**
+   * Get UTC offset in minutes for a timezone
+   */
   getUtcOffset: publicProcedure
     .input(z.object({ timezone: z.string() }))
     .query(({ input }) => {
