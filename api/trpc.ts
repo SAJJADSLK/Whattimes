@@ -1,8 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-
-import { appRouter } from "../../server/routers.ts";
-import { createContext } from "../../server/_core/context.ts";
+import { appRouter } from "../server/routers";
+import { createContext } from "../server/_core/context";
 
 export const config = {
   runtime: "nodejs",
