@@ -1,5 +1,5 @@
 import type { Express, Request, Response } from "express";
-import { ENV } from "./env";
+import { ENV } from "./env.js";
 
 async function handleStorageProxy(req: Request, res: Response) {
   const key = (req.params as Record<string, string>)[0];
