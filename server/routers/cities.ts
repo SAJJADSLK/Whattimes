@@ -3,7 +3,7 @@ import { cities } from '../../drizzle/schema.js';
 import { getDb } from '../db.js';
 import { z } from 'zod';
 import { eq, sql } from 'drizzle-orm';
-import { searchCitiesInCache, getCitiesByRegionFromCache, getAllCitiesFromCache } from '../lib/cityCache';
+import { searchCitiesInCache, getCitiesByRegionFromCache, getAllCitiesFromCache } from '../lib/cityCache.js';
 
 export const citiesRouter = router({
   /**
