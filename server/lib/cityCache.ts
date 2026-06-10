@@ -1,5 +1,5 @@
-import { cities } from '../../drizzle/schema';
-import { getDb } from '../db';
+import { cities } from '../../drizzle/schema.js';
+import { getDb } from '../db.js';
 
 interface City {
   id: number;
