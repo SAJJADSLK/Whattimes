@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicProcedure, router } from '../_core/trpc';
+import { publicProcedure, router } from "../_core/trpc.js";
 import { getServerTimeOffset, getTimeInTimezone, getUtcOffsetMinutes, isDstActive, calculateOverlapHours, getSunTimes } from '../time';
 
 export const timeRouter = router({
