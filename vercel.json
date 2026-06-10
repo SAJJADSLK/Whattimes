@@ -1,4 +1,15 @@
 {
-  "buildCommand": "pnpm run build:client",
-  "outputDirectory": "dist/public"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "installCommand": "npm install",
+
+  "buildCommand": "vite build",
+
+  "outputDirectory": "dist",
+
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 60
+    }
+  }
 }
