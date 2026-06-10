@@ -1,4 +1,4 @@
-import { COOKIE_NAME } from "../../shared/const.js";
+import { COOKIE_NAME } from "../../shared/const.ts";
 
 import { getSessionCookieOptions } from "./_core/cookies.js";
 import { systemRouter } from "./_core/systemRouter.js";
