@@ -1,15 +1,9 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "installCommand": "npm install",
-
-  "buildCommand": "vite build",
-
+  "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-
-  "functions": {
-    "api/**/*.ts": {
-      "maxDuration": 60
-    }
+  "framework": "other",
+  "nodeVersion": "22.x",
+  "env": {
+    "NODE_ENV": "production"
   }
 }
