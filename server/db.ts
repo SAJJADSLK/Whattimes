@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { InsertUser, users } from "../drizzle/schema";
-import { ENV } from "./_core/env";
+import { InsertUser, users } from "../drizzle/schema.js";
+import { ENV } from "./_core/env.js";
 
 type PostgresClient = ReturnType<typeof postgres>;
 type DbClient = ReturnType<typeof drizzle>;
