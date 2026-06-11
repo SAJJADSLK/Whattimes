@@ -6,15 +6,15 @@ export const config = {
   runtime: "nodejs",
 };
 
-export default async function handler(req, res) {
+export default function handler(req: Request) {
   return fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
     router: appRouter,
-    createContext: async () => {
+    createContext: async ({ req, res }) => {
       return createContext({
-        req,
-        res,
+        req: req as any,
+        res: res as any,
       });
     },
   });
