@@ -19,15 +19,23 @@ export async function initCityCache() {
   if (isInitialized) return;
 
   try {
-    const db = getDb();
+    const db = await getDb();  // ✅ await it — getDb() is async
+
+    if (!db) {
+      console.error("[CityCache] No database connection available. Check DATABASE_URL.");
+      return;
+    }
+
     const results = await db.select().from(cities);
     console.log("[CityCache] Results:", results?.length);
+
     cityCache = results.map((c) => ({
       ...c,
       population: c.population
         ? parseInt(c.population.toString())
         : null,
     }));
+
     isInitialized = true;
     console.log("[CityCache] Cached:", cityCache.length);
   } catch (error) {
@@ -39,14 +47,10 @@ export function getAllCitiesFromCache(): City[] {
   return cityCache;
 }
 
-export function searchCitiesInCache(
-  query: string,
-  limit: number = 20
-): City[] {
+export function searchCitiesInCache(query: string, limit: number = 20): City[] {
   const normalizedQuery = query.toLowerCase().trim();
-  if (!normalizedQuery) {
-    return [];
-  }
+  if (!normalizedQuery) return [];
+
   return cityCache
     .filter(
       (city) =>
@@ -58,10 +62,7 @@ export function searchCitiesInCache(
     .slice(0, limit);
 }
 
-export function getCitiesByRegionFromCache(
-  region: string,
-  limit: number = 50
-): City[] {
+export function getCitiesByRegionFromCache(region: string, limit: number = 50): City[] {
   return cityCache
     .filter((city) => city.region === region)
     .slice(0, limit);
