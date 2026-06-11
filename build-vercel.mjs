@@ -2,7 +2,7 @@
 
 /**
  * Vercel Build Script
- * Compiles both the Vite client and the API functions for Vercel deployment
+ * Builds Vite frontend and copies API functions to dist/api
  */
 
 import { execSync } from "child_process";
@@ -14,88 +14,51 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 console.log("[BUILD] Starting Vercel build process...");
 
-// Step 1: Build the client with Vite
-console.log("[BUILD] Building client with Vite...");
+// Build frontend
+console.log("[BUILD] Building frontend...");
 try {
   execSync("npm run build", {
     cwd: __dirname,
     stdio: "inherit",
   });
-  console.log("[BUILD] ✓ Client build complete");
+  console.log("[BUILD] ✓ Frontend build complete");
 } catch (error) {
-  console.error("[BUILD] ✗ Client build failed");
+  console.error("[BUILD] ✗ Frontend build failed");
   process.exit(1);
 }
 
-// Step 2: Compile API functions with esbuild from source
-console.log("[BUILD] Compiling API functions...");
 const apiSrcDir = path.join(__dirname, "api");
 const apiDistDir = path.join(__dirname, "dist", "api");
 
-// Create dist/api directory
-if (!fs.existsSync(apiDistDir)) {
-  fs.mkdirSync(apiDistDir, { recursive: true });
-}
+// Create dist/api
+fs.mkdirSync(apiDistDir, { recursive: true });
 
-// Find all .ts files in api directory
-function findTypeScriptFiles(dir, fileList = []) {
-  const files = fs.readdirSync(dir);
+// Copy API folder recursively
+function copyRecursive(src, dest) {
+  const stat = fs.statSync(src);
 
-  for (const file of files) {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
+  if (stat.isDirectory()) {
+    fs.mkdirSync(dest, { recursive: true });
 
-    if (stat.isDirectory()) {
-      findTypeScriptFiles(filePath, fileList);
-    } else if (file.endsWith(".ts")) {
-      fileList.push(filePath);
+    for (const file of fs.readdirSync(src)) {
+      copyRecursive(
+        path.join(src, file),
+        path.join(dest, file)
+      );
     }
+  } else {
+    fs.copyFileSync(src, dest);
+    console.log(`[BUILD] Copied: ${path.relative(__dirname, src)}`);
   }
-
-  return fileList;
 }
 
-const apiFiles = findTypeScriptFiles(apiSrcDir);
-
-if (apiFiles.length === 0) {
-  console.warn("[BUILD] ⚠ No TypeScript files found in api/");
+if (fs.existsSync(apiSrcDir)) {
+  console.log("[BUILD] Copying API functions...");
+  copyRecursive(apiSrcDir, apiDistDir);
+  console.log("[BUILD] ✓ API copied");
 } else {
-  console.log(`[BUILD] Found ${apiFiles.length} API files to compile`);
-
-  try {
-    // Compile each API file
-    for (const file of apiFiles) {
-      const relativePath = path.relative(apiSrcDir, file);
-      const outFile = path.join(apiDistDir, relativePath.replace(/\.ts$/, ".js"));
-      const outDir = path.dirname(outFile);
-
-      if (!fs.existsSync(outDir)) {
-        fs.mkdirSync(outDir, { recursive: true });
-      }
-
-      console.log(`[BUILD] Compiling ${relativePath}...`);
-
-      try {
-        execSync(
-          `npx esbuild "${file}" --platform=node --target=node20 --format=esm --outfile="${outFile}" --bundle --external:@vercel/node --external:@trpc/server --external:express --external:drizzle-orm --external:postgres --external:mysql2 --external:luxon --external:jose --external:cookie --external:nanoid --external:zod --external:superjson`,
-          {
-            cwd: __dirname,
-            stdio: "pipe",
-          }
-        );
-      } catch (e) {
-        console.error(`[BUILD] Warning: Failed to compile ${relativePath}, but continuing...`);
-      }
-    }
-
-    console.log("[BUILD] ✓ API functions compiled");
-  } catch (error) {
-    console.error("[BUILD] ✗ API compilation failed:", error.message);
-    process.exit(1);
-  }
+  console.warn("[BUILD] No api directory found");
 }
 
-console.log("[BUILD] ✓ Vercel build complete!");
-console.log("[BUILD] Output directory: dist/");
-console.log("[BUILD] Client: dist/index.html");
-console.log("[BUILD] API: dist/api/");
+console.log("[BUILD] ✓ Build complete");
+console.log("[BUILD] Output: dist/");
