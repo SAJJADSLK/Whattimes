@@ -2,5 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install",
   "buildCommand": "node build-vercel.mjs",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/trpc/(.*)", "destination": "/api/trpc/[trpc]" },
+    { "source": "/((?!api).*)", "destination": "/index.html" }
+  ]
 }
