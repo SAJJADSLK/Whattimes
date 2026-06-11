@@ -1,5 +1,5 @@
 import { protectedProcedure, router } from "../_core/trpc.js";
-import { db } from "../db.js";
+import { getDb } from "../db.js";
 import { favorites } from "../../drizzle/schema.js";
 import { eq, and } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
@@ -11,16 +11,18 @@ export const favoritesRouter = router({
       return val;
     })
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.user?.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       const existing = await db
         .select()
         .from(favorites)
         .where(
           and(
-            eq(favorites.userId, ctx.user.id),
+            eq(favorites.userId, userId),
             eq(favorites.cityId, input.cityId)
           )
         )
@@ -34,7 +36,7 @@ export const favoritesRouter = router({
       }
 
       await db.insert(favorites).values({
-        userId: ctx.user.id,
+        userId,
         cityId: input.cityId,
       });
 
@@ -47,15 +49,17 @@ export const favoritesRouter = router({
       return val;
     })
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.user?.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       await db
         .delete(favorites)
         .where(
           and(
-            eq(favorites.userId, ctx.user.id),
+            eq(favorites.userId, userId),
             eq(favorites.cityId, input.cityId)
           )
         );
@@ -64,14 +68,16 @@ export const favoritesRouter = router({
     }),
 
   list: protectedProcedure.query(async ({ ctx }) => {
-    if (!ctx.user?.id) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
+    const userId = ctx.user?.id;
+    if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const db = await getDb();
+    if (!db) throw new Error("Database not available");
 
     const userFavorites = await db
       .select()
       .from(favorites)
-      .where(eq(favorites.userId, ctx.user.id));
+      .where(eq(favorites.userId, userId));
 
     return userFavorites;
   }),
@@ -82,16 +88,18 @@ export const favoritesRouter = router({
       return val;
     })
     .query(async ({ ctx, input }) => {
-      if (!ctx.user?.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       const favorite = await db
         .select()
         .from(favorites)
         .where(
           and(
-            eq(favorites.userId, ctx.user.id),
+            eq(favorites.userId, userId),
             eq(favorites.cityId, input.cityId)
           )
         )
