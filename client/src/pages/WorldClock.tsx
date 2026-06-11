@@ -26,7 +26,7 @@ export default function WorldClock() {
 
   // Fetch default cities for initial load
   const { data: defaultCities, isLoading: defaultLoading } = trpc.cities.getAll.useQuery(
-    { limit: 20 },
+    { limit: 100 },
     { enabled: !searchQuery && !selectedRegion }
   );
 
