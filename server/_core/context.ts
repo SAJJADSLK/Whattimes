@@ -1,13 +1,13 @@
-import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
+import type { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 
 export type TrpcContext = {
-  req: CreateExpressContextOptions["req"];
-  res: CreateExpressContextOptions["res"];
+  req: CreateHTTPContextOptions["req"];
+  res: CreateHTTPContextOptions["res"];
   user: null;
 };
 
 export async function createContext(
-  opts: CreateExpressContextOptions
+  opts: CreateHTTPContextOptions
 ): Promise<TrpcContext> {
   return {
     req: opts.req,
