@@ -15,15 +15,18 @@ let cacheInitialized = false;
 const handler = createHTTPHandler({
   router: appRouter,
   createContext: async ({ req, res }) => {
+    // TEMPORARY: Disable city cache initialization for testing
     if (!cacheInitialized) {
-      console.log("[TRPC] Initializing city cache...");
-      await initCityCache();
+      console.log("[TRPC] Skipping city cache initialization");
       cacheInitialized = true;
+
+      // Original code:
+      // await initCityCache();
     }
 
     return createContext({
-      req: req as any,
-      res: res as any,
+      req: req,
+      res: res,
     });
   },
 });
@@ -36,6 +39,13 @@ export default async function (
     method: req.method,
     url: req.url,
   });
+
+  // Fix path issue on Vercel
+  if (req.url?.startsWith("/api/trpc/")) {
+    req.url = req.url.replace("/api/trpc/", "/");
+  }
+
+  console.log("[TRPC] Rewritten URL:", req.url);
 
   return handler(req as any, res as any);
 }
