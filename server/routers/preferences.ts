@@ -3,6 +3,7 @@ import { protectedProcedure, router } from "../_core/trpc.js";
 import { getDb } from "../db.js";
 import { users } from "../../drizzle/schema.js";
 import { eq } from "drizzle-orm";
+import { TRPCError } from "@trpc/server";
 
 export const preferencesRouter = router({
   /**
@@ -11,6 +12,7 @@ export const preferencesRouter = router({
   get: protectedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
     if (!db) return null;
+    if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
     try {
       const user = await db
@@ -38,6 +40,7 @@ export const preferencesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
@@ -61,6 +64,7 @@ export const preferencesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
@@ -88,6 +92,7 @@ export const preferencesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       // 💡 FIX: Prevent empty update payloads from causing fatal database SQL errors
       if (Object.keys(input).length === 0) {

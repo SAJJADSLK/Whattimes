@@ -4,6 +4,7 @@ import { getDb } from "../db.js";
 import { meetingInvites } from "../../drizzle/schema.js";
 import { eq, desc, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { TRPCError } from "@trpc/server";
 
 export const meetingsRouter = router({
   /**
@@ -19,6 +20,7 @@ export const meetingsRouter = router({
     .query(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) return [];
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const meetings = await db
@@ -53,6 +55,7 @@ export const meetingsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const inviteCode = nanoid(12);
@@ -114,6 +117,7 @@ export const meetingsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db

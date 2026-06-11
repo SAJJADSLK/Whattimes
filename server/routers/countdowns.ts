@@ -4,6 +4,7 @@ import { getDb } from "../db.js";
 import { countdownTimers } from "../../drizzle/schema.js";
 import { eq, desc, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { TRPCError } from "@trpc/server";
 
 export const countdownsRouter = router({
   /**
@@ -19,6 +20,7 @@ export const countdownsRouter = router({
     .query(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) return [];
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const countdowns = await db
@@ -53,6 +55,7 @@ export const countdownsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const countdownCode = nanoid(12);
@@ -116,6 +119,7 @@ export const countdownsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
@@ -142,6 +146,7 @@ export const countdownsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
+      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
