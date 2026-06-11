@@ -20,13 +20,15 @@ export const countdownsRouter = router({
     .query(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) return [];
-      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
+      
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const countdowns = await db
           .select()
           .from(countdownTimers)
-          .where(eq(countdownTimers.userId, ctx.user.id))
+          .where(eq(countdownTimers.userId, userId))
           .orderBy(desc(countdownTimers.createdAt))
           .limit(input.limit)
           .offset(input.offset);
@@ -45,7 +47,6 @@ export const countdownsRouter = router({
     .input(
       z.object({
         title: z.string(),
-        // 💡 FIX: Use z.coerce.date() so stringified ISO dates from the frontend are parsed correctly
         targetTimeUtc: z.coerce.date(),
         timezone: z.string(),
         isPublic: z.boolean().default(true),
@@ -55,13 +56,15 @@ export const countdownsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
+      
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         const countdownCode = nanoid(12);
 
         await db.insert(countdownTimers).values({
-          userId: ctx.user.id,
+          userId,
           countdownCode,
           title: input.title,
           targetTimeUtc: input.targetTimeUtc,
@@ -85,7 +88,6 @@ export const countdownsRouter = router({
    * Get countdown by code (public)
    */
   getByCode: publicProcedure
-    // 💡 FIX: Safe wrapping of primitives inside objects for unified tRPC client network calls
     .input(z.object({ code: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
@@ -114,12 +116,13 @@ export const countdownsRouter = router({
    * Delete a countdown
    */
   delete: protectedProcedure
-    // 💡 FIX: Safe wrapper object matching tRPC call schema rules
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
+      
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
@@ -127,7 +130,7 @@ export const countdownsRouter = router({
           .where(
             and(
               eq(countdownTimers.id, input.id),
-              eq(countdownTimers.userId, ctx.user.id)
+              eq(countdownTimers.userId, userId)
             )
           );
 
@@ -146,7 +149,9 @@ export const countdownsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      if (!ctx.user?.id) throw new TRPCError({ code: "UNAUTHORIZED" });
+      
+      const userId = ctx.user?.id;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
       try {
         await db
@@ -155,7 +160,7 @@ export const countdownsRouter = router({
           .where(
             and(
               eq(countdownTimers.id, input.id),
-              eq(countdownTimers.userId, ctx.user.id)
+              eq(countdownTimers.userId, userId)
             )
           );
 
