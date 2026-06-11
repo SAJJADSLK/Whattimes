@@ -16,25 +16,19 @@ let cityCache: City[] = [];
 let isInitialized = false;
 
 export async function initCityCache() {
-  console.log("[CityCache] SKIPPED FOR TEST");
-  isInitialized = true;
-  return;
-}
+  if (isInitialized) return;
 
   try {
+    const db = getDb();
     const results = await db.select().from(cities);
-
     console.log("[CityCache] Results:", results?.length);
-
     cityCache = results.map((c) => ({
       ...c,
       population: c.population
         ? parseInt(c.population.toString())
         : null,
     }));
-
     isInitialized = true;
-
     console.log("[CityCache] Cached:", cityCache.length);
   } catch (error) {
     console.error("[CityCache] Failed to initialize cache:", error);
@@ -50,11 +44,9 @@ export function searchCitiesInCache(
   limit: number = 20
 ): City[] {
   const normalizedQuery = query.toLowerCase().trim();
-
   if (!normalizedQuery) {
     return [];
   }
-
   return cityCache
     .filter(
       (city) =>
