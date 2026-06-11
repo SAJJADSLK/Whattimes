@@ -51,7 +51,31 @@ export function searchCitiesInCache(query: string, limit: number = 20) {
     .sort((a, b) => (b.population || 0) - (a.population || 0))
     .slice(0, limit);
 }
+export async function initCityCache() {
+  console.log("[CityCache] Starting");
 
+  const db = await getDb();
+
+  console.log("[CityCache] DB exists:", !!db);
+
+  if (!db) {
+    console.error("[CityCache] DB NOT AVAILABLE");
+    return;
+  }
+
+  const results = await db.select().from(cities);
+
+  console.log("[CityCache] Results:", results?.length);
+
+  cityCache = results.map(c => ({
+    ...c,
+    population: c.population
+      ? parseInt(c.population.toString())
+      : null,
+  }));
+
+  console.log("[CityCache] Cached:", cityCache.length);
+}
 export function getAllCitiesFromCache() {
   return cityCache;
 }
