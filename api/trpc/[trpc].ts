@@ -25,10 +25,9 @@ export default async function handler(
     }
 
     console.log("[TRPC] Incoming request:", {
-      method: req.method,
-      url: req.url,
-      path: req.path,
-    });
+  method: req.method,
+  url: req.url,
+});
 
     const middleware = createExpressMiddleware({
       router: appRouter,
