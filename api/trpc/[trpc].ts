@@ -15,18 +15,15 @@ let cacheInitialized = false;
 const handler = createHTTPHandler({
   router: appRouter,
   createContext: async ({ req, res }) => {
-    // TEMPORARY: Disable city cache initialization for testing
     if (!cacheInitialized) {
-      console.log("[TRPC] Skipping city cache initialization");
+      console.log("[TRPC] Initializing city cache...");
+      await initCityCache();
       cacheInitialized = true;
-
-      // Original code:
-      // await initCityCache();
     }
 
     return createContext({
-      req: req,
-      res: res,
+      req: req as any,
+      res: res as any,
     });
   },
 });
@@ -40,12 +37,10 @@ export default async function (
     url: req.url,
   });
 
-  // Fix path issue on Vercel
+  // Keep this fix - it solved the tRPC routing issue
   if (req.url?.startsWith("/api/trpc/")) {
     req.url = req.url.replace("/api/trpc/", "/");
   }
-
-  console.log("[TRPC] Rewritten URL:", req.url);
 
   return handler(req as any, res as any);
 }
