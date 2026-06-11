@@ -1,42 +1,21 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../server/routers";
-import { createContext } from "../server/_core/context";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { appRouter } from "../server/routers.js";
+import { createContext } from "../server/_core/context.js";
 
 export const config = {
   runtime: "nodejs",
 };
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  try {
-    const middleware = createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    });
-
-    await new Promise<void>((resolve, reject) => {
-      middleware(
-        req as any,
-        res as any,
-        (err?: unknown) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve();
-        }
-      );
-    });
-  } catch (error) {
-    console.error("[TRPC ERROR]", error);
-
-    if (!res.headersSent) {
-      res.status(500).json({
-        error: "Internal server error",
+export default async function handler(req, res) {
+  return fetchRequestHandler({
+    endpoint: "/api/trpc",
+    req,
+    router: appRouter,
+    createContext: async () => {
+      return createContext({
+        req,
+        res,
       });
-    }
-  }
+    },
+  });
 }
