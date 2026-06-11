@@ -116,30 +116,45 @@ export const citiesRouter = router({
   /**
    * Get all cities (Ultra-fast In-Memory)
    */
-  getAll: publicProcedure
-    .input(
-      z.object({ 
-        limit: z.number().default(200).nullable().optional() 
-      }).optional()
-    )
-    .query(async ({ input }) => {
-      try {
-        const targetLimit = input?.limit ?? 200;
-        const allCities = getAllCitiesFromCache();
-        
-        // 💡 FIX: Safely fallback to an empty array to eliminate the 500 batch error
-        if (!allCities || !Array.isArray(allCities)) {
-          console.warn("getAllCitiesFromCache is uninitialized or missing on Vercel.");
-          return []; 
-        }
-        
-        return allCities.slice(0, targetLimit);
-      } catch (error) {
-        console.error("Fatal exception in cities.getAll router:", error);
-        return []; 
-      }
-    }),
+  /**
+ * Get all cities
+ */
+getAll: publicProcedure
+  .input(z.any().optional())
+  .query(async ({ input }) => {
+    try {
+      console.log("[cities.getAll] input:", input);
 
+      const allCities = getAllCitiesFromCache();
+
+      console.log(
+        "[cities.getAll] cache:",
+        Array.isArray(allCities),
+        allCities?.length
+      );
+
+      if (!Array.isArray(allCities)) {
+        console.error("[cities.getAll] Cache is not initialized");
+        return [];
+      }
+
+      let limit = 200;
+
+      if (
+        input &&
+        typeof input === "object" &&
+        "limit" in input &&
+        typeof (input as any).limit === "number"
+      ) {
+        limit = (input as any).limit;
+      }
+
+      return allCities.slice(0, limit);
+    } catch (error) {
+      console.error("[cities.getAll] Fatal Error:", error);
+      return [];
+    }
+  }),
   /**
    * Get ALL cities without limit (for SEO sitemap generation)
    */
