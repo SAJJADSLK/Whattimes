@@ -16,8 +16,7 @@ Disallow: /__manus__/
 Disallow: /.env
 Disallow: /node_modules/
 
-Sitemap: https://chronosclock-jbvr5r7i.manus.space/sitemap.xml
-Sitemap: https://chronosclock-jbvr5r7i.manus.space/sitemap-cities.xml
+Sitemap: https://www.worldclock.info/sitemap.xml
 
 Crawl-delay: 1
 Request-rate: 30/60
