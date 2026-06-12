@@ -43,76 +43,101 @@
 }
 
 :root {
-  /* Luxury Theme: Gold & Charcoal */
-  --primary: oklch(0.5 0.15 70);/* Deep Gold */
-  --primary-foreground: oklch(0.98 0.01 70);/* Light Gold */
-  --sidebar-primary: oklch(0.45 0.12 70);/* Dark Gold */
-  --sidebar-primary-foreground: oklch(0.98 0.01 70);
-  --chart-1: oklch(0.7 0.15 70);
-  --chart-2: oklch(0.6 0.15 70);
-  --chart-3: oklch(0.5 0.15 70);
-  --chart-4: oklch(0.45 0.12 70);
-  --chart-5: oklch(0.4 0.1 70);
-  --radius: 0.5rem;/* Subtle corners */
-  --background: oklch(0.15 0.01 0);/* Charcoal */
-  --foreground: oklch(0.95 0.01 70);/* Light Gold text */
-  --card: oklch(0.2 0.01 0);/* Dark Charcoal */
-  --card-foreground: oklch(0.95 0.01 70);
-  --popover: oklch(0.2 0.01 0);
-  --popover-foreground: oklch(0.95 0.01 70);
-  --secondary: oklch(0.3 0.02 0);/* Medium Charcoal */
-  --secondary-foreground: oklch(0.9 0.01 70);
-  --muted: oklch(0.25 0.01 0);
-  --muted-foreground: oklch(0.7 0.08 70);
-  --accent: oklch(0.65 0.18 70);/* Bright Gold */
-  --accent-foreground: oklch(0.15 0.01 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.3 0.02 0);
-  --input: oklch(0.25 0.01 0);
-  --ring: oklch(0.65 0.18 70);
-  --sidebar: oklch(0.18 0.01 0);
-  --sidebar-foreground: oklch(0.95 0.01 70);
-  --sidebar-accent: oklch(0.65 0.18 70);
-  --sidebar-accent-foreground: oklch(0.15 0.01 0);
-  --sidebar-border: oklch(0.3 0.02 0);
-  --sidebar-ring: oklch(0.65 0.18 70);
+  --radius: 0.75rem;
+
+  --background: oklch(0.98 0.005 240);
+  --foreground: oklch(0.18 0.015 240);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.015 240);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.015 240);
+
+  --primary: oklch(0.58 0.22 250);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.95 0.01 240);
+  --secondary-foreground: oklch(0.18 0.015 240);
+
+  --muted: oklch(0.96 0.01 240);
+  --muted-foreground: oklch(0.45 0.01 240);
+
+  --accent: oklch(0.72 0.16 230);
+  --accent-foreground: oklch(0.99 0 0);
+
+  --destructive: oklch(0.62 0.24 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.9 0.01 240);
+  --input: oklch(0.96 0.01 240);
+  --ring: oklch(0.58 0.22 250);
+
+  --chart-1: oklch(0.58 0.22 250);
+  --chart-2: oklch(0.68 0.18 220);
+  --chart-3: oklch(0.78 0.12 190);
+  --chart-4: oklch(0.52 0.18 280);
+  --chart-5: oklch(0.65 0.14 160);
+
+  --sidebar: oklch(0.985 0.005 240);
+  --sidebar-foreground: oklch(0.18 0.015 240);
+
+  --sidebar-primary: oklch(0.58 0.22 250);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+
+  --sidebar-accent: oklch(0.95 0.01 240);
+  --sidebar-accent-foreground: oklch(0.18 0.015 240);
+
+  --sidebar-border: oklch(0.9 0.01 240);
+  --sidebar-ring: oklch(0.58 0.22 250);
 }
 
 .dark {
-  /* Dark Luxury Theme */
-  --primary: oklch(0.5 0.15 70);
-  --primary-foreground: oklch(0.98 0.01 70);
-  --sidebar-primary: oklch(0.45 0.12 70);
-  --sidebar-primary-foreground: oklch(0.98 0.01 70);
-  --background: oklch(0.1 0.005 0);
-  --foreground: oklch(0.95 0.01 70);
-  --card: oklch(0.15 0.005 0);
-  --card-foreground: oklch(0.95 0.01 70);
-  --popover: oklch(0.15 0.005 0);
-  --popover-foreground: oklch(0.95 0.01 70);
-  --secondary: oklch(0.2 0.01 0);
-  --secondary-foreground: oklch(0.9 0.01 70);
-  --muted: oklch(0.25 0.01 0);
-  --muted-foreground: oklch(0.7 0.08 70);
-  --accent: oklch(0.65 0.18 70);
-  --accent-foreground: oklch(0.1 0.005 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.3 0.02 0);
-  --input: oklch(0.2 0.01 0);
-  --ring: oklch(0.65 0.18 70);
-  --chart-1: oklch(0.7 0.15 70);
-  --chart-2: oklch(0.6 0.15 70);
-  --chart-3: oklch(0.5 0.15 70);
-  --chart-4: oklch(0.45 0.12 70);
-  --chart-5: oklch(0.4 0.1 70);
-  --sidebar: oklch(0.12 0.005 0);
-  --sidebar-foreground: oklch(0.95 0.01 70);
-  --sidebar-accent: oklch(0.65 0.18 70);
-  --sidebar-accent-foreground: oklch(0.1 0.005 0);
-  --sidebar-border: oklch(0.3 0.02 0);
-  --sidebar-ring: oklch(0.65 0.18 70);
+  --background: oklch(0.12 0.01 250);
+  --foreground: oklch(0.97 0.005 240);
+
+  --card: oklch(0.16 0.01 250);
+  --card-foreground: oklch(0.97 0.005 240);
+
+  --popover: oklch(0.16 0.01 250);
+  --popover-foreground: oklch(0.97 0.005 240);
+
+  --primary: oklch(0.68 0.22 250);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.2 0.01 250);
+  --secondary-foreground: oklch(0.97 0.005 240);
+
+  --muted: oklch(0.22 0.01 250);
+  --muted-foreground: oklch(0.72 0.01 240);
+
+  --accent: oklch(0.72 0.16 230);
+  --accent-foreground: oklch(0.99 0 0);
+
+  --destructive: oklch(0.68 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.28 0.01 250);
+  --input: oklch(0.22 0.01 250);
+  --ring: oklch(0.68 0.22 250);
+
+  --chart-1: oklch(0.68 0.22 250);
+  --chart-2: oklch(0.75 0.16 220);
+  --chart-3: oklch(0.8 0.12 190);
+  --chart-4: oklch(0.62 0.18 280);
+  --chart-5: oklch(0.72 0.14 160);
+
+  --sidebar: oklch(0.1 0.01 250);
+  --sidebar-foreground: oklch(0.97 0.005 240);
+
+  --sidebar-primary: oklch(0.68 0.22 250);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+
+  --sidebar-accent: oklch(0.2 0.01 250);
+  --sidebar-accent-foreground: oklch(0.97 0.005 240);
+
+  --sidebar-border: oklch(0.28 0.01 250);
+  --sidebar-ring: oklch(0.68 0.22 250);
 }
 
 @layer base {
@@ -156,7 +181,38 @@
     padding-left: 1rem; /* 16px - mobile padding */
     padding-right: 1rem;
   }
+.clock-display {
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-family: ui-monospace, monospace;
+}
 
+.glass-card {
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, white 10%, transparent);
+}
+
+.city-card {
+  transition: all 0.25s ease;
+}
+
+.city-card:hover {
+  transform: translateY(-4px);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  max-width: 720px;
+}
   .flex {
     min-height: 0;
     min-width: 0;
