@@ -14,6 +14,7 @@ import DSTTracker from "./pages/DSTTracker";
 import TeamDashboard from "./pages/TeamDashboard";
 import CityDetail from "./pages/CityDetail";
 import CityDetailPage from "./pages/CityDetailPage";
+import CityStaticPage from "./pages/CityStaticPage";
 import Countries from "./pages/Countries";
 import CountryDetail from "./pages/CountryDetail";
 import Widget from "./pages/Widget";
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/team-dashboard" component={TeamDashboard} />
       <Route path="/city/:timezone" component={CityDetail} />
       <Route path="/city-detail/:city" component={CityDetailPage} />
+      <Route path="/pages/city-:cityId" component={CityStaticPage} />
       <Route path="/countries" component={Countries} />
       <Route path="/country/:country" component={CountryDetail} />
       <Route path="/widget" component={Widget} />
