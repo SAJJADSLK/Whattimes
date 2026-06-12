@@ -25,9 +25,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
+      {/* Static/exact routes first — must come before any wildcards */}
       <Route path="/" component={Home} />
       <Route path="/world-clock" component={WorldClock} />
       <Route path="/converter" component={Converter} />
@@ -35,21 +35,24 @@ function Router() {
       <Route path="/countdown" component={Countdown} />
       <Route path="/dst-tracker" component={DSTTracker} />
       <Route path="/team-dashboard" component={TeamDashboard} />
+      <Route path="/countries" component={Countries} />
+      <Route path="/country/:country" component={CountryDetail} />
       <Route path="/city/:timezone" component={CityDetail} />
       <Route path="/city-detail/:city" component={CityDetailPage} />
       <Route path="/pages/city-:cityId" component={CityStaticPage} />
-      <Route path="/countries" component={Countries} />
-      <Route path="/country/:country" component={CountryDetail} />
-      {/* Dynamic routing for Time.is SEO strategy */}
-      <Route path="/:country/:city" component={CityDetailPage} />
-      <Route path="/:country" component={CountryPage} />
       <Route path="/widget" component={Widget} />
       <Route path="/invite/:inviteId" component={InviteDetail} />
       <Route path="/countdown/:countdownId" component={CountdownDetail} />
       <Route path="/admin/analytics" component={AdminDashboard} />
       <Route path="/dashboard" component={UserDashboard} />
       <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
+
+      {/* Wildcard SEO routes last — /:country/:city and /:country will match
+          anything not caught above, so they must be at the bottom */}
+      <Route path="/:country/:city" component={CityDetailPage} />
+      <Route path="/:country" component={CountryPage} />
+
+      {/* Final fallback */}
       <Route component={NotFound} />
     </Switch>
   );
