@@ -15,6 +15,7 @@ import TeamDashboard from "./pages/TeamDashboard";
 import CityDetail from "./pages/CityDetail";
 import CityDetailPage from "./pages/CityDetailPage";
 import CityStaticPage from "./pages/CityStaticPage";
+import CountryPage from "./pages/CountryPage";
 import Countries from "./pages/Countries";
 import CountryDetail from "./pages/CountryDetail";
 import Widget from "./pages/Widget";
@@ -39,6 +40,9 @@ function Router() {
       <Route path="/pages/city-:cityId" component={CityStaticPage} />
       <Route path="/countries" component={Countries} />
       <Route path="/country/:country" component={CountryDetail} />
+      {/* Dynamic routing for Time.is SEO strategy */}
+      <Route path="/:country/:city" component={CityDetailPage} />
+      <Route path="/:country" component={CountryPage} />
       <Route path="/widget" component={Widget} />
       <Route path="/invite/:inviteId" component={InviteDetail} />
       <Route path="/countdown/:countdownId" component={CountdownDetail} />
