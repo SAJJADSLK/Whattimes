@@ -1,5 +1,5 @@
 import { useParams } from 'wouter';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,23 +11,34 @@ export default function CountryPage() {
   const [, navigate] = useLocation();
   const countryParam = params.country || '';
 
-  // Format country name: united-arab-emirates -> United Arab Emirates
+  // Convert URL slug to proper country name for DB matching
+  // e.g. "united-arab-emirates" -> "United Arab Emirates"
   const formattedCountry = useMemo(() => {
     return countryParam
       .replace(/-/g, ' ')
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }, [countryParam]);
 
-  // Fetch all cities
-  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
+  // FIX: Use getByCountry instead of getAll+filter
+  // getAll has a 200-item default limit and may not return all cities for a country
+  const { data: citiesInCountry = [], isLoading } = trpc.cities.getByCountry.useQuery(
+    { country: formattedCountry },
+    { enabled: !!formattedCountry }
+  );
 
-  // Filter cities by country
-  const citiesInCountry = useMemo(() => {
-    if (!allCities) return [];
-    return allCities.filter((city) =>
-      city.country.toLowerCase() === formattedCountry.toLowerCase()
-    );
-  }, [allCities, formattedCountry]);
+  // Update page title dynamically
+  useEffect(() => {
+    if (formattedCountry) {
+      document.title = `Time in ${formattedCountry} - All Cities & Timezones`;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          'content',
+          `Check current local time in all cities of ${formattedCountry}. Real-time clocks, timezone info, and UTC offsets.`
+        );
+      }
+    }
+  }, [formattedCountry]);
 
   const handleCityClick = (cityName: string) => {
     const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
@@ -55,7 +66,7 @@ export default function CountryPage() {
                 {formattedCountry}
               </h1>
               <p className="text-slate-600 mt-1">
-                {citiesInCountry.length} cities • Time zones and current time
+                {isLoading ? 'Loading...' : `${citiesInCountry.length} cities • Time zones and current time`}
               </p>
             </div>
           </div>
@@ -64,7 +75,17 @@ export default function CountryPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {citiesInCountry.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Card key={i} className="p-6 animate-pulse">
+                <div className="h-6 bg-slate-200 rounded mb-3 w-3/4" />
+                <div className="h-4 bg-slate-100 rounded mb-2 w-1/2" />
+                <div className="h-4 bg-slate-100 rounded w-2/3" />
+              </Card>
+            ))}
+          </div>
+        ) : citiesInCountry.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {citiesInCountry.map((city) => (
               <Card
@@ -100,7 +121,10 @@ export default function CountryPage() {
 
                   <Button
                     className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
-                    onClick={() => handleCityClick(city.name)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCityClick(city.name);
+                    }}
                   >
                     View Time
                   </Button>
@@ -123,7 +147,7 @@ export default function CountryPage() {
         )}
       </div>
 
-      {/* SEO Meta Tags */}
+      {/* SEO Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',
