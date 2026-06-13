@@ -4,7 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { MobileNav } from "./components/MobileNav";
+import { PublicLayout } from "./components/PublicLayout";
 import Home from "./pages/Home";
 import WorldClock from "./pages/WorldClock";
 import Converter from "./pages/Converter";
@@ -27,33 +27,36 @@ import UserDashboard from "./pages/UserDashboard";
 function Router() {
   return (
     <Switch>
-      {/* Static/exact routes first — must come before any wildcards */}
-      <Route path="/" component={Home} />
-      <Route path="/world-clock" component={WorldClock} />
-      <Route path="/converter" component={Converter} />
-      <Route path="/meeting-invite" component={MeetingInvite} />
-      <Route path="/countdown" component={Countdown} />
-      <Route path="/dst-tracker" component={DSTTracker} />
-      <Route path="/team-dashboard" component={TeamDashboard} />
-      <Route path="/countries" component={Countries} />
-      <Route path="/country/:country" component={CountryDetail} />
-      <Route path="/city/:timezone" component={CityDetail} />
-      <Route path="/city-detail/:city" component={CityDetailPage} />
-      <Route path="/pages/city-:cityId" component={CityStaticPage} />
-      <Route path="/widget" component={Widget} />
-      <Route path="/invite/:inviteId" component={InviteDetail} />
-      <Route path="/countdown/:countdownId" component={CountdownDetail} />
+      {/* Admin/Dashboard routes usually have their own layout, but we'll wrap them for now or exclude if needed */}
       <Route path="/admin/analytics" component={AdminDashboard} />
       <Route path="/dashboard" component={UserDashboard} />
-      <Route path="/404" component={NotFound} />
 
-      {/* Wildcard SEO routes last — /:country/:city and /:country will match
-          anything not caught above, so they must be at the bottom */}
-      <Route path="/:country/:city" component={CityDetailPage} />
-      <Route path="/:country" component={CountryPage} />
-
-      {/* Final fallback */}
-      <Route component={NotFound} />
+      {/* Public routes wrapped in PublicLayout */}
+      <Route path="/:rest*">
+        <PublicLayout>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/world-clock" component={WorldClock} />
+            <Route path="/converter" component={Converter} />
+            <Route path="/meeting-invite" component={MeetingInvite} />
+            <Route path="/countdown" component={Countdown} />
+            <Route path="/dst-tracker" component={DSTTracker} />
+            <Route path="/team-dashboard" component={TeamDashboard} />
+            <Route path="/countries" component={Countries} />
+            <Route path="/country/:country" component={CountryDetail} />
+            <Route path="/city/:timezone" component={CityDetail} />
+            <Route path="/city-detail/:city" component={CityDetailPage} />
+            <Route path="/pages/city-:cityId" component={CityStaticPage} />
+            <Route path="/widget" component={Widget} />
+            <Route path="/invite/:inviteId" component={InviteDetail} />
+            <Route path="/countdown/:countdownId" component={CountdownDetail} />
+            <Route path="/404" component={NotFound} />
+            <Route path="/:country/:city" component={CityDetailPage} />
+            <Route path="/:country" component={CountryPage} />
+            <Route component={NotFound} />
+          </Switch>
+        </PublicLayout>
+      </Route>
     </Switch>
   );
 }
@@ -72,7 +75,6 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <MobileNav />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
