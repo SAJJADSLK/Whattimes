@@ -15,189 +15,30 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
 
   return (
-    <div
-      className="min-h-screen text-[var(--t1)] font-[var(--sans)]"
-      style={{ background: "var(--bg)" }}
-    >
-      <style>{`
-        .wt-logo {
-          font-family: var(--mono);
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: -0.03em;
-          color: var(--t1);
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          margin-right: 32px;
-          transition: opacity 0.15s;
-        }
-        .wt-logo:hover { opacity: 0.75; }
-        .wt-logo-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: var(--accent);
-          flex-shrink: 0;
-          box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
-          animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
-          50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent); }
-        }
-
-        .wt-nav-link {
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.01em;
-          padding: 0 12px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          white-space: nowrap;
-          text-decoration: none;
-          color: var(--t3);
-          position: relative;
-          transition: color 0.15s;
-        }
-        .wt-nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 12px;
-          right: 12px;
-          height: 1.5px;
-          background: var(--accent);
-          transform: scaleX(0);
-          transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: left;
-        }
-        .wt-nav-link:hover { color: var(--t1); }
-        .wt-nav-link:hover::after { transform: scaleX(0.5); }
-        .wt-nav-link.active { color: var(--t1); }
-        .wt-nav-link.active::after { transform: scaleX(1); }
-
-        .wt-search {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: 6px;
-          padding: 0 11px;
-          height: 30px;
-          transition: border-color 0.15s, box-shadow 0.15s;
-        }
-        .wt-search:focus-within {
-          border-color: var(--accent);
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
-        }
-        .wt-search input {
-          border: none;
-          background: transparent;
-          font-size: 12.5px;
-          color: var(--t1);
-          font-family: var(--sans);
-          width: 140px;
-          outline: none;
-        }
-        .wt-search input::placeholder { color: var(--t3); }
-
-        .wt-header {
-          position: sticky;
-          top: 0;
-          z-index: 200;
-          height: 48px;
-          background: color-mix(in srgb, var(--bg) 92%, transparent);
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
-          border-bottom: 1px solid var(--border);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 28px;
-        }
-
-        .wt-header-left {
-          display: flex;
-          align-items: center;
-        }
-
-        .wt-footer {
-          max-width: 980px;
-          margin: 0 auto;
-          padding: 20px 28px 28px;
-          border-top: 1px solid var(--border);
-          margin-top: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-        .wt-footer-links {
-          display: flex;
-          gap: 20px;
-          flex-wrap: wrap;
-        }
-        .wt-footer-link {
-          font-size: 11.5px;
-          color: var(--t3);
-          text-decoration: none;
-          transition: color 0.12s;
-          letter-spacing: 0.01em;
-        }
-        .wt-footer-link:hover { color: var(--t2); }
-        .wt-footer-copy {
-          font-family: var(--mono);
-          font-size: 10.5px;
-          color: var(--t3);
-          letter-spacing: 0.04em;
-        }
-
-        /* Ad slot */
-        .wt-ad {
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin: 24px 0;
-        }
-        .wt-ad-label {
-          font-size: 8.5px;
-          color: var(--t3);
-          text-transform: uppercase;
-          letter-spacing: 0.12em;
-          margin-bottom: 5px;
-          font-family: var(--mono);
-        }
-        .wt-ad-box {
-          width: 100%;
-          background: var(--bg2, var(--surface));
-          border: 1px solid var(--border);
-          border-radius: 6px;
-          min-height: 90px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      `}</style>
-
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--t1)] font-[var(--sans)]">
       {/* TOPBAR */}
-      <header className="wt-header">
-        <div className="wt-header-left">
-          <Link href="/" className="wt-logo">
-            <span className="wt-logo-dot" />
+      <header className="sticky top-0 z-[200] h-[48px] bg-[var(--bg)]/95 backdrop-blur-[14px] border-b border-[var(--border)] flex items-center justify-between px-7">
+        {/* Left: logo + nav */}
+        <div className="flex items-center">
+          <Link
+            href="/"
+            className="flex items-center gap-[7px] font-[var(--mono)] text-[14px] font-semibold tracking-[-0.03em] text-[var(--t1)] no-underline mr-8 opacity-100 hover:opacity-70 transition-opacity"
+          >
+            <span className="w-[7px] h-[7px] rounded-full bg-[var(--accent)] flex-shrink-0 shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_20%,transparent)] animate-pulse" />
             WhatTime
           </Link>
+
           <nav className="hidden md:flex">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`wt-nav-link${location === item.href ? " active" : ""}`}
+                className={`relative text-[12px] font-medium px-3 h-[48px] flex items-center whitespace-nowrap no-underline transition-colors
+                  after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[1.5px] after:bg-[var(--accent)] after:transition-transform after:duration-200
+                  ${location === item.href
+                    ? "text-[var(--t1)] after:scale-x-100"
+                    : "text-[var(--t3)] hover:text-[var(--t1)] after:scale-x-0 hover:after:scale-x-50"
+                  }`}
               >
                 {item.name}
               </Link>
@@ -205,30 +46,35 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
 
-        <div className="wt-search">
-          <Search width={12} height={12} color="var(--t3)" />
+        {/* Right: search */}
+        <div className="flex items-center gap-[7px] bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-[11px] h-[30px] transition-all focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_3px_var(--aclo)]">
+          <Search className="w-[12px] h-[12px] text-[var(--t3)] flex-shrink-0" />
           <input
             type="text"
             placeholder="Search city or country…"
+            className="border-none bg-transparent text-[12.5px] text-[var(--t1)] font-[var(--sans)] w-[100px] md:w-[140px] outline-none placeholder:text-[var(--t3)]"
           />
         </div>
       </header>
 
-      <main style={{ maxWidth: 980, margin: "0 auto", padding: "0 28px" }}>
+      <main className="max-w-[980px] mx-auto px-7">
         {children}
       </main>
 
       {/* FOOTER */}
-      <footer className="wt-footer">
-        <div className="wt-footer-links">
-          <Link href="/" className="wt-footer-link">Home</Link>
-          <Link href="/world-clock" className="wt-footer-link">World Clock</Link>
-          <Link href="/converter" className="wt-footer-link">Converter</Link>
-          <Link href="/countdown" className="wt-footer-link">Countdown</Link>
-          <Link href="/countries" className="wt-footer-link">Countries</Link>
-          <Link href="/meeting-invite" className="wt-footer-link">Meeting</Link>
+      <footer className="max-w-[980px] mx-auto px-7 flex items-center justify-between py-5 pb-7 flex-wrap gap-3 border-t border-[var(--border)] mt-10">
+        <div className="flex gap-5 flex-wrap">
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-[11.5px] text-[var(--t3)] hover:text-[var(--t2)] transition-colors no-underline"
+            >
+              {item.name}
+            </Link>
+          ))}
         </div>
-        <span className="wt-footer-copy">
+        <span className="font-[var(--mono)] text-[10.5px] text-[var(--t3)] tracking-[0.04em]">
           © {new Date().getFullYear()} WhatTime
         </span>
       </footer>
@@ -247,9 +93,11 @@ export function AdSlot({ className = "", slot = "default" }: { className?: strin
   }, []);
 
   return (
-    <div className={`wt-ad ${className}`}>
-      <span className="wt-ad-label">Advertisement</span>
-      <div className="wt-ad-box">
+    <div className={`my-6 overflow-hidden flex flex-col items-center ${className}`}>
+      <span className="font-[var(--mono)] text-[8.5px] text-[var(--t3)] uppercase tracking-[0.12em] mb-[5px]">
+        Advertisement
+      </span>
+      <div className="w-full bg-[var(--bg2,var(--surface))] border border-[var(--border)] rounded-[6px] min-h-[90px] flex items-center justify-center">
         <ins
           className="adsbygoogle"
           style={{ display: "block", textAlign: "center" }}
