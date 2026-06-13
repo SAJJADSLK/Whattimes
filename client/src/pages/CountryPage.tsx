@@ -1,69 +1,164 @@
-import { useParams, Link } from 'wouter';
+import { useParams } from 'wouter';
 import { useMemo, useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
-import { AdSlot } from '@/components/PublicLayout';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { ArrowLeft, MapPin, Clock } from 'lucide-react';
+import { useLocation } from 'wouter';
 
 export default function CountryPage() {
   const params = useParams();
+  const [, navigate] = useLocation();
   const countryParam = params.country || '';
 
+  // Convert URL slug to proper country name for DB matching
+  // e.g. "united-arab-emirates" -> "United Arab Emirates"
   const formattedCountry = useMemo(() => {
     return countryParam
       .replace(/-/g, ' ')
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }, [countryParam]);
 
+  // FIX: Use getByCountry instead of getAll+filter
+  // getAll has a 200-item default limit and may not return all cities for a country
   const { data: citiesInCountry = [], isLoading } = trpc.cities.getByCountry.useQuery(
     { country: formattedCountry },
     { enabled: !!formattedCountry }
   );
 
+  // Update page title dynamically
   useEffect(() => {
     if (formattedCountry) {
       document.title = `Time in ${formattedCountry} - All Cities & Timezones`;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          'content',
+          `Check current local time in all cities of ${formattedCountry}. Real-time clocks, timezone info, and UTC offsets.`
+        );
+      }
     }
   }, [formattedCountry]);
 
+  const handleCityClick = (cityName: string) => {
+    const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/${countryParam}/${citySlug}`);
+  };
+
   return (
-    <div className="space-y-6">
-      {/* BREADCRUMB */}
-      <nav className="flex items-center gap-[5px] text-[11.5px] text-[var(--t3)] pt-[14px]">
-        <Link href="/" className="hover:text-[var(--accent)] transition-colors">Home</Link>
-        <span className="text-[var(--brd2)]">/</span>
-        <span className="text-[var(--t2)]">{formattedCountry}</span>
-      </nav>
-
-      <section className="py-9 border-b border-[var(--border)]">
-        <h1 className="text-[10.5px] font-bold text-[var(--t3)] tracking-[.11em] uppercase mb-2">Country</h1>
-        <h2 className="text-3xl font-bold text-[var(--t1)]">{formattedCountry}</h2>
-        <p className="text-[var(--t2)] mt-2">
-          {isLoading ? 'Loading...' : `${citiesInCountry.length} cities in ${formattedCountry}`}
-        </p>
-      </section>
-
-      <AdSlot />
-
-      {isLoading ? (
-        <div className="py-12 text-center text-[var(--t3)]">Loading cities...</div>
-      ) : citiesInCountry.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--r)] overflow-hidden">
-          {citiesInCountry.map((city) => (
-            <Link 
-              key={city.id} 
-              href={`/city-detail/${city.name.toLowerCase().replace(/\s+/g, '-')}`}
-              className="bg-[var(--surface)] p-[13px_15px] hover:bg-[var(--bg)] transition-colors flex flex-col gap-[2px]"
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Header */}
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/')}
+              className="gap-2"
             >
-              <div className="text-[11px] font-semibold text-[var(--t3)] tracking-[.02em] truncate">{city.name}</div>
-              <div className="font-[var(--mono)] text-[18px] font-light text-[var(--t1)] tracking-[-0.03em]">12:45</div>
-              <div className="text-[10px] text-[var(--t3)] truncate">{city.timezone}</div>
-            </Link>
-          ))}
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
+                <MapPin className="w-8 h-8 text-blue-600" />
+                {formattedCountry}
+              </h1>
+              <p className="text-slate-600 mt-1">
+                {isLoading ? 'Loading...' : `${citiesInCountry.length} cities • Time zones and current time`}
+              </p>
+            </div>
+          </div>
         </div>
-      ) : (
-        <div className="py-12 text-center text-[var(--t3)]">No cities found for this country.</div>
-      )}
+      </div>
 
-      <AdSlot />
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Card key={i} className="p-6 animate-pulse">
+                <div className="h-6 bg-slate-200 rounded mb-3 w-3/4" />
+                <div className="h-4 bg-slate-100 rounded mb-2 w-1/2" />
+                <div className="h-4 bg-slate-100 rounded w-2/3" />
+              </Card>
+            ))}
+          </div>
+        ) : citiesInCountry.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {citiesInCountry.map((city) => (
+              <Card
+                key={city.id}
+                className="p-6 hover:shadow-lg transition-shadow cursor-pointer group"
+                onClick={() => handleCityClick(city.name)}
+              >
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        {city.name}
+                      </h3>
+                      <p className="text-sm text-slate-600 mt-1">{city.country}</p>
+                    </div>
+                    <Clock className="w-5 h-5 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-600">Timezone:</span>
+                      <span className="font-mono text-sm font-semibold text-slate-900">
+                        {city.timezone}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-600">UTC Offset:</span>
+                      <span className="font-mono text-sm font-semibold text-slate-900">
+                        {city.utcOffset || 'N/A'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCityClick(city.name);
+                    }}
+                  >
+                    View Time
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-slate-600 text-lg">
+              No cities found for {formattedCountry}
+            </p>
+            <Button
+              className="mt-6"
+              onClick={() => navigate('/')}
+            >
+              Go Back Home
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* SEO Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: `Time in ${formattedCountry} - All Cities`,
+          description: `Check current time in all cities of ${formattedCountry}. Real-time clock, timezone converter, and DST information.`,
+          url: `https://www.worldclock.info/${countryParam}`,
+          areaServed: formattedCountry,
+          numberOfItems: citiesInCountry.length,
+        })}
+      </script>
     </div>
   );
 }

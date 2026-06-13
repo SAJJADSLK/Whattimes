@@ -1,141 +1,331 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Globe, Zap, Users, Share2, BarChart3, Clock, Code, ArrowRight, MapPin, Edit2, Check, X } from 'lucide-react';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { useTimezoneDetection } from '@/hooks/useTimezoneDetection';
+import { Input } from '@/components/ui/input';
+import { LanguageSelector } from '@/components/LanguageSelector';
 import { trpc } from '@/lib/trpc';
-import { Link } from 'wouter';
-import { AdSlot } from '@/components/PublicLayout';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
-  const { timezone: detectedTimezone } = useTimezoneDetection();
+  const { t } = useTranslation();
+  const { timezone: detectedTimezone, isLoading: tzLoading } = useTimezoneDetection();
   const userTz = detectedTimezone?.name || Intl.DateTimeFormat().resolvedOptions().timeZone;
   const { time, isLoading } = useRealTimeClock(userTz);
+  const [userTimezone, setUserTimezone] = useState(userTz);
+  const [isEditingTz, setIsEditingTz] = useState(false);
+  const [tzSearch, setTzSearch] = useState('');
+  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
   
-  const [dayProgress, setDayProgress] = useState(0);
+  const filteredCities = useMemo(() => {
+    if (!allCities || !tzSearch) return [];
+    const query = tzSearch.toLowerCase();
+    return allCities.filter(c => 
+      c.timezone.toLowerCase().includes(query) ||
+      c.name.toLowerCase().includes(query)
+    ).slice(0, 8);
+  }, [allCities, tzSearch]);
+
+  // Get sunrise/sunset times
+  const { data: sunTimes } = trpc.time.getSunTimes.useQuery(
+    {
+      latitude: 0,
+      longitude: 0,
+      timezone: userTimezone,
+    },
+    { enabled: !!time }
+  );
 
   useEffect(() => {
-    if (time) {
-      const now = new Date(time.date);
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
-      const progress = (totalSeconds / 86400) * 100;
-      setDayProgress(progress);
+    if (detectedTimezone) {
+      try {
+        const saved = localStorage.getItem('whattime-user-timezone');
+        if (saved) {
+          setUserTimezone(saved);
+        } else {
+          setUserTimezone(detectedTimezone.name);
+          localStorage.setItem('whattime-user-timezone', detectedTimezone.name);
+        }
+      } catch (e) {
+        setUserTimezone(detectedTimezone.name);
+      }
     }
-  }, [time]);
+  }, [detectedTimezone]);
 
-  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 12 });
+  const handleTimezoneChange = (tz: string) => {
+    setUserTimezone(tz);
+    try {
+      localStorage.setItem('whattime-user-timezone', tz);
+    } catch (e) {
+      console.error('Failed to save timezone preference');
+    }
+    setIsEditingTz(false);
+    setTzSearch('');
+  };
 
   return (
-    <div className="space-y-6">
-      {/* HERO */}
-      <section className="grid grid-cols-1 md:grid-cols-[1fr_140px] gap-6 items-center py-9 border-b border-[var(--border)]">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-[7px] text-[11px] font-semibold tracking-[.09em] uppercase text-[var(--t3)]">
-            <span className="w-[7px] h-[7px] rounded-full bg-[var(--green)] animate-pulse" />
-            {detectedTimezone?.city || detectedTimezone?.name || 'Local Time'} · {detectedTimezone?.country || ''} · Live
-          </div>
-          
-          <div className="font-[var(--mono)] text-[clamp(58px,9vw,100px)] font-light tracking-[-0.04em] text-[var(--t1)] leading-none select-none">
-            {isLoading ? (
-              <span>--:--:--</span>
-            ) : (
-              <>
-                <span>{formatClockTime(time).split(':')[0]}</span>
-                <span className="text-[var(--accent)] animate-pulse mx-1">:</span>
-                <span>{formatClockTime(time).split(':')[1]}</span>
-                <span className="text-[var(--accent)] animate-pulse mx-1">:</span>
-                <span>{formatClockTime(time).split(':')[2]}</span>
-              </>
-            )}
-          </div>
+    <div className="min-h-screen bg-white text-slate-900">
+      {/* NO DUPLICATE NAV - MobileNav is global in App.tsx */}
 
-          <div className="text-[15px] text-[var(--t2)] flex items-center gap-[10px] flex-wrap">
-            <span>{time?.date ? new Date(time.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'Loading…'}</span>
-            <span className="font-[var(--mono)] text-[10.5px] text-[var(--t3)] bg-[var(--bg2)] border border-[var(--border)] px-2 py-[2px] rounded-[20px]">{userTz}</span>
-            <span className="font-[var(--mono)] text-[12.5px] text-[var(--t2)]">UTC {detectedTimezone?.offsetString || ''}</span>
-          </div>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-cyan-50 opacity-60" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Clock Display */}
+            <div className="flex flex-col items-center lg:items-start gap-8">
+              <div className="space-y-4">
+                <h1 className="text-6xl lg:text-7xl font-bold tracking-tight">
+                  <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                    Always On Time
+                  </span>
+                </h1>
+                <p className="text-xl text-slate-600 max-w-lg">
+                  Precision timekeeping for a connected world. Real-time clock synchronization, timezone conversion, and team coordination tools.
+                </p>
+              </div>
 
-          <div className="mt-[13px] space-y-1">
-            <div className="flex justify-between text-[10.5px] text-[var(--t3)] font-[var(--mono)]">
-              <span>00:00</span>
-              <span>{dayProgress.toFixed(1)}%</span>
-              <span>24:00</span>
+              {/* Large Clock Display */}
+              <div className="w-full max-w-md">
+                <div className="bg-white border-2 border-slate-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="space-y-6">
+                    {/* Time */}
+                    <div className="text-center">
+                      <div className="text-7xl font-mono font-bold text-blue-600 tracking-wider">
+                        {isLoading ? '00:00:00' : formatClockTime(time)}
+                      </div>
+                      <div className="text-sm text-slate-500 mt-2">
+                        {time?.timezone || 'Loading...'}
+                      </div>
+                    </div>
+
+                    {/* Detected Timezone Card */}
+                    {detectedTimezone && (
+                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <MapPin className="w-4 h-4 text-blue-600" />
+                          <span className="text-sm font-semibold text-slate-700">Your Timezone</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-slate-600 text-sm">Location:</span>
+                            <span className="font-medium text-slate-900">{detectedTimezone.city || detectedTimezone.name}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-slate-600 text-sm">UTC Offset:</span>
+                            <span className="font-mono font-medium text-blue-600">{detectedTimezone.offsetString}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-slate-600 text-sm">DST Status:</span>
+                            <span className={`text-sm font-medium ${detectedTimezone.isDST ? 'text-amber-600' : 'text-green-600'}`}>
+                              {detectedTimezone.isDST ? 'Active' : 'Inactive'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Date & Info */}
+                    <div className="border-t border-slate-200 pt-4 space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Date</span>
+                        <span className="font-medium text-slate-900">
+                          {time?.date ? new Date(time.date).toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          }) : 'Loading...'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">Week</span>
+                        <span className="font-medium text-slate-900">
+                          {time?.weekNumber ? `Week ${time.weekNumber}` : 'Loading...'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">DST</span>
+                        <span className={`font-medium ${time?.isDst ? 'text-amber-600' : 'text-green-600'}`}>
+                          {time?.isDst ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Sunrise/Sunset */}
+                    {sunTimes && (
+                      <div className="border-t border-slate-200 pt-4 space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">Sunrise</span>
+                          <span className="font-medium text-slate-900">{sunTimes.sunrise}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">Sunset</span>
+                          <span className="font-medium text-slate-900">{sunTimes.sunset}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="h-[3px] bg-[var(--bg2)] border border-[var(--border)] rounded-[10px] overflow-hidden">
-              <div 
-                className="h-full rounded-[10px] bg-gradient-to-r from-[var(--accent)] to-[#f97316] transition-all duration-1000 linear" 
-                style={{ width: `${dayProgress}%` }}
-              />
+
+            {/* Right: Feature Cards */}
+            <div className="grid grid-cols-1 gap-4">
+              {/* Feature Cards */}
+              {[
+                {
+                  icon: Globe,
+                  title: 'World Clock',
+                  desc: '100+ cities at a glance with real-time updates',
+                  href: '/world-clock',
+                  color: 'from-blue-500 to-blue-600',
+                },
+                {
+                  icon: Zap,
+                  title: 'Instant Converter',
+                  desc: 'Compare times across multiple timezones',
+                  href: '/converter',
+                  color: 'from-cyan-500 to-cyan-600',
+                },
+                {
+                  icon: Users,
+                  title: 'Team Dashboard',
+                  desc: 'Find perfect meeting times for distributed teams',
+                  href: '/team-dashboard',
+                  color: 'from-purple-500 to-purple-600',
+                },
+                {
+                  icon: Share2,
+                  title: 'Smart Invites',
+                  desc: 'Share meeting times with automatic localization',
+                  href: '/meeting-invite',
+                  color: 'from-pink-500 to-pink-600',
+                },
+                {
+                  icon: BarChart3,
+                  title: 'DST Tracker',
+                  desc: 'Never miss daylight saving time changes',
+                  href: '/dst-tracker',
+                  color: 'from-amber-500 to-amber-600',
+                },
+                {
+                  icon: Clock,
+                  title: 'Countdown Timer',
+                  desc: 'Shareable countdowns for events and launches',
+                  href: '/countdown',
+                  color: 'from-red-500 to-red-600',
+                },
+                {
+                  icon: MapPin,
+                  title: 'Countries & Cities',
+                  desc: 'Browse all countries and their timezones',
+                  href: '/countries',
+                  color: 'from-emerald-500 to-emerald-600',
+                },
+              ].map((feature, idx) => (
+                <a
+                  key={idx}
+                  href={feature.href}
+                  className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`bg-gradient-to-br ${feature.color} p-3 rounded-lg group-hover:scale-110 transition-transform`}>
+                      <feature.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-slate-600 mt-1">{feature.desc}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </a>
+              ))}
+
+              {/* Widget Card */}
+              <a
+                href="/widget"
+                className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                    <Code className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                      Embed Widget
+                    </h3>
+                    <p className="text-sm text-slate-600 mt-1">Add a customizable clock to your website</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                </div>
+              </a>
             </div>
           </div>
-        </div>
-
-        {/* ANALOG CLOCK (Hidden on mobile) */}
-        <div className="hidden md:flex items-center justify-center">
-          <svg className="w-[130px] h-[130px] drop-shadow-sm" viewBox="0 0 130 130">
-            <circle cx="65" cy="65" r="62" fill="white" stroke="var(--border)" strokeWidth="1"/>
-            <circle cx="65" cy="65" r="58" fill="none" stroke="var(--bg2)" strokeWidth="1"/>
-            {/* Simple Hands - in a real app these would rotate */}
-            <line x1="65" y1="65" x2="65" y2="33" stroke="var(--t1)" strokeWidth="3.5" strokeLinecap="round" transform="rotate(30 65 65)"/>
-            <line x1="65" y1="65" x2="65" y2="22" stroke="var(--t2)" strokeWidth="2" strokeLinecap="round" transform="rotate(180 65 65)"/>
-            <line x1="65" y1="74" x2="65" y2="18" stroke="var(--accent)" strokeWidth="1.2" strokeLinecap="round" transform="rotate(270 65 65)"/>
-            <circle cx="65" cy="65" r="4" fill="var(--accent)"/>
-            <circle cx="65" cy="65" r="1.8" fill="white"/>
-          </svg>
         </div>
       </section>
 
-      {/* INFO STRIP */}
-      <div className="grid grid-cols-3 md:grid-cols-6 bg-[var(--surface)] border-b border-[var(--border)]">
-        <div className="p-[13px_16px] border-r border-[var(--border)] hover:bg-[var(--bg)] transition-colors">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">UTC Offset</div>
-          <div className="font-[var(--mono)] text-[14px] text-[var(--t1)]">{detectedTimezone?.offsetString || '+00:00'}</div>
-        </div>
-        <div className="p-[13px_16px] border-r border-[var(--border)] hover:bg-[var(--bg)] transition-colors">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">DST</div>
-          <div className={`font-[var(--mono)] text-[14px] ${detectedTimezone?.isDST ? 'text-[var(--accent)]' : 'text-[var(--t1)]'}`}>
-            {detectedTimezone?.isDST ? 'Active' : 'No DST'}
-          </div>
-        </div>
-        <div className="p-[13px_16px] border-r border-[var(--border)] hover:bg-[var(--bg)] transition-colors">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">Sunrise</div>
-          <div className="font-[var(--mono)] text-[14px] text-[var(--amber)]">05:32 AM</div>
-        </div>
-        <div className="p-[13px_16px] border-r border-[var(--border)] hover:bg-[var(--bg)] transition-colors md:border-r">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">Sunset</div>
-          <div className="font-[var(--mono)] text-[14px] text-[var(--amber)]">07:14 PM</div>
-        </div>
-        <div className="p-[13px_16px] border-r border-[var(--border)] hover:bg-[var(--bg)] transition-colors">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">Day Length</div>
-          <div className="font-[var(--mono)] text-[14px] text-[var(--t1)]">13h 42m</div>
-        </div>
-        <div className="p-[13px_16px] hover:bg-[var(--bg)] transition-colors">
-          <div className="text-[10px] font-semibold text-[var(--t3)] tracking-[.09em] uppercase mb-1">Population</div>
-          <div className="font-[var(--mono)] text-[14px] text-[var(--t1)]">3.33M</div>
-        </div>
-      </div>
-
-      <AdSlot />
-
-      {/* WORLD CLOCK SECTION */}
-      <section className="py-[26px] border-b border-[var(--border)]">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-[10.5px] font-bold text-[var(--t3)] tracking-[.11em] uppercase">World Clock</span>
-          <Link href="/world-clock" className="text-[12px] text-[var(--t3)] hover:text-[var(--accent)] transition-colors">View All</Link>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--r)] overflow-hidden">
-          {allCities?.map((city) => (
-            <Link key={city.id} href={`/city-detail/${city.name.toLowerCase().replace(/\s+/g, '-')}`} className="bg-[var(--surface)] p-[13px_15px] hover:bg-[var(--bg)] transition-colors flex flex-col gap-[2px]">
-              <div className="text-[11px] font-semibold text-[var(--t3)] tracking-[.02em] truncate">{city.name}</div>
-              <div className="font-[var(--mono)] text-[21px] font-light text-[var(--t1)] tracking-[-0.03em] leading-[1.2]">12:45</div>
-              <div className="font-[var(--mono)] text-[10px] font-medium p-[2px_6px] rounded-[4px] mt-[2px] w-fit bg-[var(--gnlo)] text-[var(--green)]">Ahead</div>
-            </Link>
-          ))}
+      {/* CTA Section */}
+      <section className="bg-gradient-to-r from-blue-600 to-cyan-600 py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to master time zones?</h2>
+          <p className="text-blue-100 mb-8">Start using WhatTime today for seamless global coordination</p>
+          <Button size="lg" variant="secondary" className="gap-2">
+            Get Started <ArrowRight className="w-4 h-4" />
+          </Button>
         </div>
       </section>
 
-      <AdSlot />
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Clock className="w-6 h-6 text-blue-400" />
+                <span className="font-bold text-white">WhatTime</span>
+              </div>
+              <p className="text-sm">Precision timekeeping for a connected world</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:text-white transition">Features</a></li>
+                <li><a href="#" className="hover:text-white transition">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition">API</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Company</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:text-white transition">About</a></li>
+                <li><a href="#" className="hover:text-white transition">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:text-white transition">Privacy</a></li>
+                <li><a href="#" className="hover:text-white transition">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-slate-800 pt-8 flex justify-between items-center">
+            <p className="text-sm">© 2024 WhatTime. All rights reserved.</p>
+            <div className="flex gap-4">
+              <a href="#" className="text-slate-400 hover:text-white transition">Twitter</a>
+              <a href="#" className="text-slate-400 hover:text-white transition">GitHub</a>
+              <a href="#" className="text-slate-400 hover:text-white transition">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
