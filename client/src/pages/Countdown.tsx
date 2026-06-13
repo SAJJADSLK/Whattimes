@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ArrowLeft, Copy, Share2, Play, Pause, RotateCcw } from 'lucide-react';
+import { AdSlot } from '@/components/PublicLayout';
+import { Copy, Share2, Play, Pause, RotateCcw } from 'lucide-react';
 
 export default function Countdown() {
   const [eventName, setEventName] = useState('New Year 2027');
@@ -17,7 +16,6 @@ export default function Countdown() {
   const [shareLink, setShareLink] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Calculate time remaining
   useEffect(() => {
     const interval = setInterval(() => {
       const target = new Date(`${targetDate}T${targetTime}`);
@@ -32,188 +30,112 @@ export default function Countdown() {
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
         setTimeRemaining({ days, hours, minutes, seconds });
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, [targetDate, targetTime, isRunning]);
 
   const generateShareLink = () => {
     const countdownId = Math.random().toString(36).substring(2, 11);
-    const params = new URLSearchParams({
-      id: countdownId,
-      name: eventName,
-      date: targetDate,
-      time: targetTime,
-    });
-    const link = `${window.location.origin}/countdown/${countdownId}?${params.toString()}`;
+    const link = `${window.location.origin}/countdown/${countdownId}`;
     setShareLink(link);
   };
 
-  const copyToClipboard = () => {
-    if (shareLink) {
-      navigator.clipboard.writeText(shareLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const resetCountdown = () => {
-    setIsRunning(false);
-  };
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="border-b border-slate-200 sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => (window.location.href = '/')}
-              className="text-slate-600 hover:text-slate-900"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-            <span className="text-xl font-bold text-slate-900">Countdown Timer</span>
+    <div className="space-y-6">
+      <section className="py-9 border-b border-[var(--border)]">
+        <h1 className="text-[10.5px] font-bold text-[var(--t3)] tracking-[.11em] uppercase mb-2">Countdown</h1>
+        <h2 className="text-3xl font-bold text-[var(--t1)]">Countdown to Your Event</h2>
+        <p className="text-[var(--t2)] mt-2">Create shareable countdowns for events and launches</p>
+      </section>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-[var(--r)] p-6 space-y-4">
+          <div className="space-y-1">
+            <label className="text-[10px] font-bold text-[var(--t3)] uppercase tracking-wider">Event Name</label>
+            <input 
+              type="text" 
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              className="w-full bg-[var(--bg)] border border-[var(--brd2)] rounded-[var(--r)] px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+            />
           </div>
-        </div>
-      </nav>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Countdown to Your Event</h1>
-          <p className="text-lg text-slate-600">Create shareable countdowns for events and launches</p>
-        </div>
-
-        <div className="space-y-8">
-          {/* Event Details */}
-          <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-6">
-            <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-2">
-                Event Name
-              </label>
-              <Input
-                type="text"
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-                className="w-full border-2 border-slate-200 focus:border-blue-600 rounded-lg py-3"
-                placeholder="e.g., New Year 2027"
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-[var(--t3)] uppercase tracking-wider">Date</label>
+              <input 
+                type="date" 
+                value={targetDate}
+                onChange={(e) => setTargetDate(e.target.value)}
+                className="w-full bg-[var(--bg)] border border-[var(--brd2)] rounded-[var(--r)] px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
               />
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  Target Date
-                </label>
-                <Input
-                  type="date"
-                  value={targetDate}
-                  onChange={(e) => setTargetDate(e.target.value)}
-                  className="w-full border-2 border-slate-200 focus:border-blue-600 rounded-lg py-3"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  Target Time
-                </label>
-                <Input
-                  type="time"
-                  value={targetTime}
-                  onChange={(e) => setTargetTime(e.target.value)}
-                  className="w-full border-2 border-slate-200 focus:border-blue-600 rounded-lg py-3"
-                />
-              </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-[var(--t3)] uppercase tracking-wider">Time</label>
+              <input 
+                type="time" 
+                value={targetTime}
+                onChange={(e) => setTargetTime(e.target.value)}
+                className="w-full bg-[var(--bg)] border border-[var(--brd2)] rounded-[var(--r)] px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+              />
             </div>
           </div>
-
-          {/* Countdown Display */}
-          {timeRemaining && (
-            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-12 text-white text-center space-y-8">
-              <h2 className="text-3xl font-bold">{eventName}</h2>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <CountdownUnit label="Days" value={timeRemaining.days} />
-                <CountdownUnit label="Hours" value={timeRemaining.hours} />
-                <CountdownUnit label="Minutes" value={timeRemaining.minutes} />
-                <CountdownUnit label="Seconds" value={timeRemaining.seconds} />
-              </div>
-
-              {/* Controls */}
-              <div className="flex justify-center gap-4">
-                <Button
-                  onClick={() => setIsRunning(!isRunning)}
-                  className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3"
-                >
-                  {isRunning ? (
-                    <>
-                      <Pause className="w-4 h-4 mr-2" />
-                      Pause
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 mr-2" />
-                      Start
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={resetCountdown}
-                  className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Reset
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Generate Share Link */}
-          <Button
+          <button 
             onClick={generateShareLink}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 text-lg"
+            className="w-full bg-[var(--accent)] text-white py-2 rounded-[var(--r)] text-sm font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
-            <Share2 className="w-5 h-5 mr-2" />
-            Generate Shareable Link
-          </Button>
+            <Share2 size={16} /> Generate Link
+          </button>
+        </div>
 
-          {/* Share Link Display */}
-          {shareLink && (
-            <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-green-900">Countdown Link Generated!</h3>
-              <div className="bg-white border-2 border-green-200 rounded-lg p-4 flex items-center justify-between">
-                <code className="text-sm text-slate-600 break-all">{shareLink}</code>
-                <Button
-                  onClick={copyToClipboard}
-                  className="ml-4 bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  {copied ? 'Copied!' : 'Copy'}
-                </Button>
-              </div>
-              <p className="text-sm text-green-700">
-                Share this link with anyone to let them watch the countdown in real-time.
-              </p>
-            </div>
-          )}
+        <div className="bg-[var(--t1)] text-white rounded-[var(--r)] p-8 flex flex-col items-center justify-center space-y-6 text-center">
+          <div className="text-[10px] font-bold text-[var(--t3)] uppercase tracking-widest">{eventName}</div>
+          <div className="grid grid-cols-4 gap-4 w-full">
+            <CountdownUnit label="Days" value={timeRemaining?.days || 0} />
+            <CountdownUnit label="Hrs" value={timeRemaining?.hours || 0} />
+            <CountdownUnit label="Min" value={timeRemaining?.minutes || 0} />
+            <CountdownUnit label="Sec" value={timeRemaining?.seconds || 0} />
+          </div>
+          <div className="flex gap-4">
+            <button onClick={() => setIsRunning(!isRunning)} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+              {isRunning ? <Pause size={20} /> : <Play size={20} />}
+            </button>
+            <button onClick={() => setTimeRemaining(null)} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+              <RotateCcw size={20} />
+            </button>
+          </div>
         </div>
       </div>
+
+      <AdSlot />
+
+      {shareLink && (
+        <div className="bg-[var(--gnlo)] border border-[var(--green)] rounded-[var(--r)] p-4 flex items-center justify-between gap-4">
+          <div className="truncate text-xs font-[var(--mono)] text-[var(--green)]">{shareLink}</div>
+          <button 
+            onClick={() => {
+              navigator.clipboard.writeText(shareLink);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }}
+            className="shrink-0 bg-[var(--green)] text-white px-3 py-1.5 rounded-[var(--r)] text-xs font-medium"
+          >
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
+      )}
+
+      <AdSlot />
     </div>
   );
 }
 
 function CountdownUnit({ label, value }: { label: string; value: number }) {
   return (
-    <div className="bg-white/20 rounded-lg p-4 backdrop-blur-sm">
-      <div className="text-4xl font-bold mb-2">{String(value).padStart(2, '0')}</div>
-      <div className="text-sm font-semibold opacity-90">{label}</div>
+    <div className="space-y-1">
+      <div className="font-[var(--mono)] text-3xl font-light">{String(value).padStart(2, '0')}</div>
+      <div className="text-[9px] font-bold text-[var(--t3)] uppercase tracking-tighter">{label}</div>
     </div>
   );
 }
