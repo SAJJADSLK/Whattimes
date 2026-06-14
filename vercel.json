@@ -3,8 +3,23 @@
   "installCommand": "npm install",
   "buildCommand": "node build-vercel.mjs",
   "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/xml; charset=utf-8"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "identity"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/api/trpc/(.*)", "destination": "/api/trpc/[trpc]" },
-    { "source": "/((?!api).*)", "destination": "/index.html" }
+    { "source": "/((?!api|sitemap.xml).*)", "destination": "/index.html" }
   ]
 }
