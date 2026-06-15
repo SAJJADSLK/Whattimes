@@ -157,12 +157,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.whattime.info/brazil/s%C3%A3o-paulo</loc>
-    <lastmod>2026-06-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://www.whattime.info/brazil/rio-de-janeiro</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>daily</changefreq>
