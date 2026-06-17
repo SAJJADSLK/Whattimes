@@ -99,7 +99,7 @@ export default function CityDetailPage() {
     );
   }
 
-  const canonicalUrl = `https://www.worldclock.info/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
+  const canonicalUrl = `https://www.whattime.info/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
     <>
