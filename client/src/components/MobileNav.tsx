@@ -3,6 +3,7 @@ import { Menu, X, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Link } from 'wouter';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663685753987/jbVr5R7iZyNr82uvFXU7st/whattime-icon-gd9dA8fSGqFXBABhPzefAD.webp';
 
@@ -33,6 +34,7 @@ export function MobileNav() {
           </Link>
 
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <Button
               variant="ghost"
               size="sm"
@@ -101,6 +103,7 @@ export function MobileNav() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <Button
               variant="ghost"
               size="sm"
