@@ -126,7 +126,7 @@ export default function CityPage() {
                   </div>
                   <div className="space-y-2">
                     <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Coordinates</span>
-                    <p className="text-sm font-mono">{cityData.latitude.toFixed(2)}°, {cityData.longitude.toFixed(2)}°</p>
+                    <p className="text-sm font-mono">{Number(cityData.latitude).toFixed(2)}°, {Number(cityData.longitude).toFixed(2)}°</p>
                   </div>
                 </div>
 
