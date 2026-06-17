@@ -67,13 +67,38 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO SECTION - Minimalist + Art Deco */}
       <section className="relative overflow-hidden">
-        {/* Subtle Art Deco background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
+        {/* Art Deco background pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+          {/* Sunburst rays anchoring the top of the hero, just under the nav */}
+          <svg
+            className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-4xl opacity-[0.07] pointer-events-none"
+            viewBox="0 0 800 200"
+            fill="none"
+          >
+            {Array.from({ length: 17 }).map((_, i) => {
+              const angle = (i / 16) * 180;
+              const rad = (angle * Math.PI) / 180;
+              const x2 = 400 + 700 * Math.cos(rad);
+              const y2 = 200 - 700 * Math.sin(rad);
+              return (
+                <line
+                  key={i}
+                  x1="400"
+                  y1="200"
+                  x2={x2}
+                  y2={y2}
+                  stroke="currentColor"
+                  className="text-accent"
+                  strokeWidth="2"
+                />
+              );
+            })}
+          </svg>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-24 lg:pt-20 lg:pb-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left: Premium Typography */}
             <div className="flex flex-col gap-8">
