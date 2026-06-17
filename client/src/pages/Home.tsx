@@ -73,7 +73,7 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left: Premium Typography */}
             <div className="flex flex-col gap-8">
