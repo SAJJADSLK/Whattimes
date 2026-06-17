@@ -27,7 +27,6 @@ export default function Home() {
     ).slice(0, 8);
   }, [allCities, tzSearch]);
 
-  // Get sunrise/sunset times
   const { data: sunTimes } = trpc.time.getSunTimes.useQuery(
     {
       latitude: 0,
@@ -65,106 +64,81 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      {/* NO DUPLICATE NAV - MobileNav is global in App.tsx */}
-
-      {/* Hero Section */}
+    <div className="min-h-screen bg-background text-foreground">
+      {/* HERO SECTION - Minimalist + Art Deco */}
       <section className="relative overflow-hidden">
-        {/* Subtle gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-cyan-50 opacity-60" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Clock Display */}
-            <div className="flex flex-col items-center lg:items-start gap-8">
-              <div className="space-y-4">
-                <h1 className="text-6xl lg:text-7xl font-bold tracking-tight">
-                  <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                    Always On Time
-                  </span>
+        {/* Subtle Art Deco background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Premium Typography */}
+            <div className="flex flex-col gap-8">
+              <div className="space-y-6">
+                <div className="inline-block">
+                  <span className="text-xs font-semibold tracking-widest text-accent uppercase">Precision Timekeeping</span>
+                </div>
+                
+                <h1 className="text-6xl lg:text-7xl font-light tracking-tight leading-tight">
+                  <span className="text-foreground">Always</span>
+                  <br />
+                  <span className="font-semibold text-accent">On Time</span>
                 </h1>
-                <p className="text-xl text-slate-600 max-w-lg">
-                  Precision timekeeping for a connected world. Real-time clock synchronization, timezone conversion, and team coordination tools.
+                
+                <p className="text-lg text-foreground/70 max-w-lg leading-relaxed">
+                  Synchronize with precision. Connect globally. Coordinate seamlessly across every timezone on Earth.
                 </p>
               </div>
 
-              {/* Large Clock Display */}
-              <div className="w-full max-w-md">
-                <div className="bg-white border-2 border-slate-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="space-y-6">
-                    {/* Time */}
-                    <div className="text-center">
-                      <div className="text-7xl font-mono font-bold text-blue-600 tracking-wider">
+              {/* CTA Buttons */}
+              <div className="flex gap-4 pt-4">
+                <button className="btn-premium bg-foreground text-background hover:bg-foreground/90">
+                  Get Started
+                </button>
+                <button className="btn-premium border border-foreground/20 hover:border-foreground/40">
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Premium Clock Display */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-sm">
+                {/* Decorative Art Deco frame */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-accent/20 to-accent/5 rounded-lg blur-2xl" />
+                
+                <div className="relative bg-card border border-border rounded-lg p-8 luxury-shadow">
+                  {/* Art Deco corner accents */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-accent rounded-tl-lg" />
+                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-accent rounded-tr-lg" />
+                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-accent rounded-bl-lg" />
+                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-accent rounded-br-lg" />
+
+                  <div className="space-y-8">
+                    {/* Large Clock */}
+                    <div className="text-center space-y-3">
+                      <div className="text-6xl font-light font-mono tracking-wider text-foreground">
                         {isLoading ? '00:00:00' : formatClockTime(time)}
                       </div>
-                      <div className="text-sm text-slate-500 mt-2">
+                      <div className="art-deco-divider" />
+                      <div className="text-sm font-semibold tracking-widest text-foreground/60 uppercase">
                         {time?.timezone || 'Loading...'}
                       </div>
                     </div>
 
-                    {/* Detected Timezone Card */}
+                    {/* Timezone Info */}
                     {detectedTimezone && (
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <MapPin className="w-4 h-4 text-blue-600" />
-                          <span className="text-sm font-semibold text-slate-700">Your Timezone</span>
+                      <div className="space-y-4 pt-4 border-t border-border">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-foreground/60">Location</span>
+                          <span className="font-semibold">{detectedTimezone.city || detectedTimezone.name}</span>
                         </div>
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-600 text-sm">Location:</span>
-                            <span className="font-medium text-slate-900">{detectedTimezone.city || detectedTimezone.name}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-600 text-sm">UTC Offset:</span>
-                            <span className="font-mono font-medium text-blue-600">{detectedTimezone.offsetString}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-600 text-sm">DST Status:</span>
-                            <span className={`text-sm font-medium ${detectedTimezone.isDST ? 'text-amber-600' : 'text-green-600'}`}>
-                              {detectedTimezone.isDST ? 'Active' : 'Inactive'}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Date & Info */}
-                    <div className="border-t border-slate-200 pt-4 space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Date</span>
-                        <span className="font-medium text-slate-900">
-                          {time?.date ? new Date(time.date).toLocaleDateString('en-US', {
-                            weekday: 'short',
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          }) : 'Loading...'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">Week</span>
-                        <span className="font-medium text-slate-900">
-                          {time?.weekNumber ? `Week ${time.weekNumber}` : 'Loading...'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-600">DST</span>
-                        <span className={`font-medium ${time?.isDst ? 'text-amber-600' : 'text-green-600'}`}>
-                          {time?.isDst ? 'Active' : 'Inactive'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Sunrise/Sunset */}
-                    {sunTimes && (
-                      <div className="border-t border-slate-200 pt-4 space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-slate-600">Sunrise</span>
-                          <span className="font-medium text-slate-900">{sunTimes.sunrise}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-600">Sunset</span>
-                          <span className="font-medium text-slate-900">{sunTimes.sunset}</span>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-foreground/60">UTC Offset</span>
+                          <span className="font-mono font-semibold text-accent">{detectedTimezone.offsetString}</span>
                         </div>
                       </div>
                     )}
@@ -172,156 +146,132 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Right: Feature Cards */}
-            <div className="grid grid-cols-1 gap-4">
-              {/* Feature Cards */}
-              {[
-                {
-                  icon: Globe,
-                  title: 'World Clock',
-                  desc: '100+ cities at a glance with real-time updates',
-                  href: '/world-clock',
-                  color: 'from-blue-500 to-blue-600',
-                },
-                {
-                  icon: Zap,
-                  title: 'Instant Converter',
-                  desc: 'Compare times across multiple timezones',
-                  href: '/converter',
-                  color: 'from-cyan-500 to-cyan-600',
-                },
-                {
-                  icon: Users,
-                  title: 'Team Dashboard',
-                  desc: 'Find perfect meeting times for distributed teams',
-                  href: '/team-dashboard',
-                  color: 'from-purple-500 to-purple-600',
-                },
-                {
-                  icon: Share2,
-                  title: 'Smart Invites',
-                  desc: 'Share meeting times with automatic localization',
-                  href: '/meeting-invite',
-                  color: 'from-pink-500 to-pink-600',
-                },
-                {
-                  icon: BarChart3,
-                  title: 'DST Tracker',
-                  desc: 'Never miss daylight saving time changes',
-                  href: '/dst-tracker',
-                  color: 'from-amber-500 to-amber-600',
-                },
-                {
-                  icon: Clock,
-                  title: 'Countdown Timer',
-                  desc: 'Shareable countdowns for events and launches',
-                  href: '/countdown',
-                  color: 'from-red-500 to-red-600',
-                },
-                {
-                  icon: MapPin,
-                  title: 'Countries & Cities',
-                  desc: 'Browse all countries and their timezones',
-                  href: '/countries',
-                  color: 'from-emerald-500 to-emerald-600',
-                },
-              ].map((feature, idx) => (
-                <a
-                  key={idx}
-                  href={feature.href}
-                  className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-md transition-all"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`bg-gradient-to-br ${feature.color} p-3 rounded-lg group-hover:scale-110 transition-transform`}>
-                      <feature.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-                        {feature.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 mt-1">{feature.desc}</p>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+      {/* FEATURES SECTION - Minimalist Grid */}
+      <section className="relative py-32 border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 space-y-4">
+            <span className="text-xs font-semibold tracking-widest text-accent uppercase">Capabilities</span>
+            <h2 className="text-5xl font-light">
+              <span className="font-semibold">Premium Features</span> for Global Teams
+            </h2>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Globe,
+                title: 'Global Coverage',
+                desc: '180+ timezones with real-time synchronization',
+              },
+              {
+                icon: Zap,
+                title: 'Instant Conversion',
+                desc: 'Convert times across multiple zones instantly',
+              },
+              {
+                icon: Users,
+                title: 'Team Coordination',
+                desc: 'Find perfect meeting times for distributed teams',
+              },
+              {
+                icon: Clock,
+                title: 'Precision Tracking',
+                desc: 'Atomic clock accuracy for critical operations',
+              },
+              {
+                icon: BarChart3,
+                title: 'Analytics',
+                desc: 'Track timezone patterns and team availability',
+              },
+              {
+                icon: Share2,
+                title: 'Easy Sharing',
+                desc: 'Share meeting times with automatic localization',
+              },
+            ].map((feature, idx) => (
+              <div key={idx} className="minimalist-card group">
+                <div className="flex flex-col gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-luxury">
+                    <feature.icon className="w-6 h-6 text-accent" />
                   </div>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold">{feature.title}</h3>
+                    <p className="text-sm text-foreground/60">{feature.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA SECTION - Art Deco Inspired */}
+      <section className="relative py-32 bg-foreground text-background overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-1 h-32 bg-accent" />
+        <div className="absolute bottom-0 right-0 w-1 h-32 bg-accent" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-4xl font-light">
+              <span className="font-semibold">Ready to master</span> global timekeeping?
+            </h2>
+            <p className="text-lg text-background/70">
+              Join thousands of professionals coordinating across continents
+            </p>
+          </div>
+
+          <button className="btn-premium bg-accent text-foreground hover:bg-accent/90 mx-auto">
+            Get Started Free <ArrowRight className="w-4 h-4 ml-2" />
+          </button>
+        </div>
+      </section>
+
+      {/* FOOTER - Minimalist */}
+      <footer className="border-t border-border py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Clock className="w-6 h-6 text-accent" />
+                <span className="font-semibold text-lg">WhatTime</span>
+              </div>
+              <p className="text-sm text-foreground/60">Precision timekeeping for a connected world</p>
+            </div>
+
+            {[
+              { title: 'Product', links: ['Features', 'Pricing', 'API'] },
+              { title: 'Company', links: ['About', 'Blog', 'Contact'] },
+              { title: 'Legal', links: ['Privacy', 'Terms', 'Security'] },
+            ].map((col, idx) => (
+              <div key={idx} className="space-y-4">
+                <h4 className="font-semibold text-sm">{col.title}</h4>
+                <ul className="space-y-2">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <a href="#" className="text-sm text-foreground/60 hover:text-foreground transition-luxury">
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-border pt-8 flex justify-between items-center text-sm text-foreground/60">
+            <p>&copy; 2026 WhatTime. All rights reserved.</p>
+            <div className="flex gap-4">
+              {['Twitter', 'GitHub', 'LinkedIn'].map((social) => (
+                <a key={social} href="#" className="hover:text-foreground transition-luxury">
+                  {social}
                 </a>
               ))}
-
-              {/* Widget Card */}
-              <a
-                href="/widget"
-                className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-md transition-all"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-3 rounded-lg group-hover:scale-110 transition-transform">
-                    <Code className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      Embed Widget
-                    </h3>
-                    <p className="text-sm text-slate-600 mt-1">Add a customizable clock to your website</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-cyan-600 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to master time zones?</h2>
-          <p className="text-blue-100 mb-8">Start using WhatTime today for seamless global coordination</p>
-          <Button size="lg" variant="secondary" className="gap-2">
-            Get Started <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Clock className="w-6 h-6 text-blue-400" />
-                <span className="font-bold text-white">WhatTime</span>
-              </div>
-              <p className="text-sm">Precision timekeeping for a connected world</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition">Features</a></li>
-                <li><a href="#" className="hover:text-white transition">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition">API</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition">About</a></li>
-                <li><a href="#" className="hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition">Terms</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-slate-800 pt-8 flex justify-between items-center">
-            <p className="text-sm">© 2024 WhatTime. All rights reserved.</p>
-            <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-white transition">Twitter</a>
-              <a href="#" className="text-slate-400 hover:text-white transition">GitHub</a>
-              <a href="#" className="text-slate-400 hover:text-white transition">LinkedIn</a>
             </div>
           </div>
         </div>

@@ -47,10 +47,10 @@ export default function Countries() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-slate-200 sticky top-0 z-40">
+      <div className="bg-gradient-to-r from-slate-50 to-cyan-50 border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-3 mb-6">
-            <Globe className="w-8 h-8 text-blue-600" />
+            <Globe className="w-8 h-8 text-accent" />
             <h1 className="text-3xl font-bold text-slate-900">Countries & Timezones</h1>
           </div>
           <p className="text-slate-600 mb-6">
@@ -92,7 +92,7 @@ export default function Countries() {
                           {countryCities.length} {countryCities.length === 1 ? 'city' : 'cities'}
                         </p>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <ArrowRight className="w-5 h-5 text-accent flex-shrink-0" />
                     </div>
                     
                     <div className="space-y-2">
@@ -100,7 +100,7 @@ export default function Countries() {
                         <p className="text-xs text-slate-600 font-semibold">TIMEZONES</p>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {Array.from(timezones).slice(0, 3).map(tz => (
-                            <span key={tz} className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
+                            <span key={tz} className="inline-block bg-slate-100 text-blue-700 text-xs px-2 py-1 rounded">
                               {tz.split('/')[1] || tz}
                             </span>
                           ))}
@@ -135,15 +135,15 @@ export default function Countries() {
         <div className="mt-16 pt-12 border-t border-slate-200">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <p className="text-4xl font-bold text-blue-600">{countries.length}</p>
+              <p className="text-4xl font-bold text-accent">{countries.length}</p>
               <p className="text-slate-600 mt-2">Countries</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-blue-600">{cities?.length || 0}</p>
+              <p className="text-4xl font-bold text-accent">{cities?.length || 0}</p>
               <p className="text-slate-600 mt-2">Cities</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-blue-600">
+              <p className="text-4xl font-bold text-accent">
                 {new Set(cities?.map(c => c.timezone)).size}
               </p>
               <p className="text-slate-600 mt-2">Timezones</p>

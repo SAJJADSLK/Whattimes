@@ -35,7 +35,7 @@ export default function Widget() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <Code className="w-6 h-6 text-blue-600" />
+              <Code className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">Embed Widget</span>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function Widget() {
               </div>
               <Button
                 onClick={() => copyToClipboard(iframeCode)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-foreground hover:bg-blue-700 text-white"
               >
                 <Copy className="w-4 h-4 mr-2" />
                 {copied ? 'Copied!' : 'Copy Code'}
@@ -178,7 +178,7 @@ export default function Widget() {
               </div>
               <Button
                 onClick={() => copyToClipboard(scriptCode)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-foreground hover:bg-blue-700 text-white"
               >
                 <Copy className="w-4 h-4 mr-2" />
                 {copied ? 'Copied!' : 'Copy Code'}
@@ -186,7 +186,7 @@ export default function Widget() {
             </div>
 
             {/* Features */}
-            <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-8 space-y-4">
+            <div className="bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
               <h3 className="text-lg font-semibold text-blue-900">Widget Features</h3>
               <ul className="space-y-2 text-blue-800">
                 <li className="flex gap-2">

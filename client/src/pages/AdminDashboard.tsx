@@ -149,7 +149,7 @@ export default function AdminDashboard() {
           ].map((metric) => (
             <Card key={metric.label} className="p-6">
               <div className="text-gray-600 text-sm font-medium mb-2">{metric.label}</div>
-              <div className="text-4xl font-bold text-blue-600">{metric.value}</div>
+              <div className="text-4xl font-bold text-accent">{metric.value}</div>
             </Card>
           ))}
         </div>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center gap-3">
                   <div className="w-32 bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-blue-600 h-2 rounded-full"
+                      className="bg-foreground h-2 rounded-full"
                       style={{
                         width: `${(page.count / Math.max(...analyticsData.topPages.map((p) => p.count))) * 100}%`,
                       }}

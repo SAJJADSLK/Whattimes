@@ -54,7 +54,7 @@ export default function WorldClock() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <Globe className="w-6 h-6 text-blue-600" />
+              <Globe className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">World Clock</span>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function WorldClock() {
                 <Button
                   onClick={() => setSelectedRegion(null)}
                   variant={selectedRegion === null ? 'default' : 'outline'}
-                  className={selectedRegion === null ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                  className={selectedRegion === null ? 'bg-foreground hover:bg-blue-700' : ''}
                 >
                   All Regions
                 </Button>
@@ -100,7 +100,7 @@ export default function WorldClock() {
                     key={region}
                     onClick={() => setSelectedRegion(region)}
                     variant={selectedRegion === region ? 'default' : 'outline'}
-                    className={selectedRegion === region ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                    className={selectedRegion === region ? 'bg-foreground hover:bg-blue-700' : ''}
                   >
                     {region}
                   </Button>
@@ -163,8 +163,8 @@ function CityCard({ city }: { city: any }) {
 
       <div className="space-y-4">
         {/* Time Display */}
-        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-4">
-          <div className="text-3xl font-mono font-bold text-blue-600">
+        <div className="bg-gradient-to-r from-slate-50 to-cyan-50 rounded-lg p-4">
+          <div className="text-3xl font-mono font-bold text-accent">
             {time ? formatClockTime(time) : '00:00:00'}
           </div>
         </div>

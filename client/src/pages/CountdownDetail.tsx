@@ -73,10 +73,10 @@ export default function CountdownDetail() {
         </div>
 
         {/* Main Countdown Card */}
-        <Card className="mb-6 p-12 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100">
+        <Card className="mb-6 p-12 shadow-lg bg-gradient-to-br from-slate-50 to-slate-100">
           {isExpired ? (
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-blue-600 mb-2">🎉 Time's Up!</h2>
+              <h2 className="text-4xl font-bold text-accent mb-2">🎉 Time's Up!</h2>
               <p className="text-gray-600">The countdown has finished!</p>
             </div>
           ) : (
@@ -91,7 +91,7 @@ export default function CountdownDetail() {
                 ].map((item) => (
                   <div key={item.label} className="text-center">
                     <div className="bg-white rounded-lg p-4 mb-2 shadow">
-                      <div className="text-4xl font-bold text-blue-600">
+                      <div className="text-4xl font-bold text-accent">
                         {String(item.value).padStart(2, '0')}
                       </div>
                     </div>
@@ -103,7 +103,7 @@ export default function CountdownDetail() {
               {/* Progress Bar */}
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000"
+                  className="bg-gradient-to-r from-slate-500 to-foreground h-2 rounded-full transition-all duration-1000"
                   style={{
                     width: `${Math.max(0, Math.min(100, ((countdown.targetTime - Date.now()) / (15 * 24 * 60 * 60 * 1000)) * 100))}%`,
                   }}

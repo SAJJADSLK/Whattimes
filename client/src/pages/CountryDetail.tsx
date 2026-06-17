@@ -70,25 +70,25 @@ export default function CountryDetail() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Country Overview */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 mb-12">
+        <div className="bg-gradient-to-br from-slate-50 to-cyan-50 rounded-2xl p-8 mb-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <MapPin className="w-5 h-5 text-blue-600" />
+                <MapPin className="w-5 h-5 text-accent" />
                 <p className="text-sm text-slate-600">Cities</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{countryCities.length}</p>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-5 h-5 text-blue-600" />
+                <Clock className="w-5 h-5 text-accent" />
                 <p className="text-sm text-slate-600">Timezones</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{timezones.length}</p>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Globe className="w-5 h-5 text-blue-600" />
+                <Globe className="w-5 h-5 text-accent" />
                 <p className="text-sm text-slate-600">Region</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{countryCities[0]?.region || 'N/A'}</p>
@@ -156,8 +156,8 @@ function CityCard({ city }: { city: any }) {
           </div>
         </div>
         
-        <div className="bg-blue-50 rounded-lg p-3 mb-3">
-          <p className="text-2xl font-mono font-bold text-blue-600">
+        <div className="bg-slate-50 rounded-lg p-3 mb-3">
+          <p className="text-2xl font-mono font-bold text-accent">
             {time ? formatClockTime(time) : '00:00:00'}
           </p>
         </div>

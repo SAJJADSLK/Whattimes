@@ -80,7 +80,7 @@ export default function UserDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Card */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        <Card className="mb-8 p-6 bg-gradient-to-br from-slate-50 to-slate-100 border-border">
           <div className="flex justify-between items-start">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user.name}!</h2>
@@ -88,7 +88,7 @@ export default function UserDashboard() {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Current Time</p>
-              <p className="text-3xl font-bold text-blue-600 font-mono">
+              <p className="text-3xl font-bold text-accent font-mono">
                 {formatClockTime(time)}
               </p>
             </div>

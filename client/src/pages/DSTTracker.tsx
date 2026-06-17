@@ -91,7 +91,7 @@ export default function DSTTracker() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-6 h-6 text-blue-600" />
+              <AlertCircle className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">DST Tracker</span>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function DSTTracker() {
         </div>
 
         {/* Info Section */}
-        <div className="mt-16 bg-blue-50 border-2 border-blue-200 rounded-xl p-8 space-y-4">
+        <div className="mt-16 bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
           <h3 className="text-lg font-semibold text-blue-900">About Daylight Saving Time</h3>
           <ul className="space-y-3 text-blue-800">
             <li className="flex gap-3">

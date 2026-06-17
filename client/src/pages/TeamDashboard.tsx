@@ -90,7 +90,7 @@ export default function TeamDashboard() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <Users className="w-6 h-6 text-blue-600" />
+              <Users className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">Team Dashboard</span>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function TeamDashboard() {
               <div className="relative">
                 <Button
                   onClick={() => setShowSearch(!showSearch)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 justify-start"
+                  className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-3 justify-start"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Add Timezone
@@ -138,7 +138,7 @@ export default function TeamDashboard() {
                           <button
                             key={city.id}
                             onClick={() => addCity(city.timezone)}
-                            className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                            className="w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-colors"
                           >
                             <div className="font-semibold text-slate-900">{city.name}</div>
                             <div className="text-sm text-slate-500">{city.timezone}</div>
@@ -154,7 +154,7 @@ export default function TeamDashboard() {
                 {teamCities.map((tz) => (
                   <div
                     key={tz}
-                    className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-lg p-3"
+                    className="flex items-center justify-between bg-slate-50 border border-border rounded-lg p-3"
                   >
                     <span className="font-medium text-slate-900">{tz}</span>
                     <button
@@ -240,9 +240,9 @@ function TeamMemberCard({ timezone }: { timezone: string }) {
   const { time } = useRealTimeClock(timezone);
 
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-slate-200 rounded-lg p-4">
+    <div className="bg-gradient-to-r from-slate-50 to-cyan-50 border-2 border-slate-200 rounded-lg p-4">
       <div className="text-sm text-slate-600 mb-2">{timezone}</div>
-      <div className="text-3xl font-mono font-bold text-blue-600">
+      <div className="text-3xl font-mono font-bold text-accent">
         {time ? formatClockTime(time) : '00:00:00'}
       </div>
       <div className="text-xs text-slate-500 mt-2">

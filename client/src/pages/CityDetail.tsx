@@ -37,7 +37,7 @@ export default function CityDetail() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <MapPin className="w-6 h-6 text-blue-600" />
+              <MapPin className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">{cityName}</span>
             </div>
           </div>
@@ -53,7 +53,7 @@ export default function CityDetail() {
           </div>
 
           {/* Large Clock Display */}
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-12 text-white text-center space-y-6">
+          <div className="bg-gradient-to-r from-foreground to-cyan-600 rounded-2xl p-12 text-white text-center space-y-6">
             <div className="text-7xl font-mono font-bold">
               {time ? formatClockTime(time) : '00:00:00'}
             </div>
@@ -66,7 +66,7 @@ export default function CityDetail() {
           {/* Timezone Info */}
           <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-4">
             <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600" />
+              <Clock className="w-5 h-5 text-accent" />
               Timezone Information
             </h3>
             <div className="space-y-3 text-sm">
@@ -121,7 +121,7 @@ export default function CityDetail() {
         </div>
 
         {/* About Section */}
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-8 space-y-4">
+        <div className="bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
           <h3 className="text-lg font-semibold text-blue-900">About {cityName}</h3>
           <p className="text-blue-800">
             {cityName} is located in the {timezone} timezone. This page displays real-time information

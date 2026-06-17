@@ -81,7 +81,7 @@ export default function MeetingInvite() {
               Back
             </Button>
             <div className="flex items-center gap-2">
-              <Share2 className="w-6 h-6 text-blue-600" />
+              <Share2 className="w-6 h-6 text-accent" />
               <span className="text-xl font-bold text-slate-900">Meeting Invite</span>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function MeetingInvite() {
               <div className="relative mb-4">
                 <Button
                   onClick={() => setShowSearch(!showSearch)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 justify-start"
+                  className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-3 justify-start"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Add Timezone
@@ -157,7 +157,7 @@ export default function MeetingInvite() {
                           <button
                             key={city.id}
                             onClick={() => addTimezone(city.timezone)}
-                            className="w-full text-left p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                            className="w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-colors"
                           >
                             <div className="font-semibold text-slate-900">{city.name}</div>
                             <div className="text-sm text-slate-500">{city.timezone}</div>
@@ -174,7 +174,7 @@ export default function MeetingInvite() {
                 {selectedTimezones.map((tz) => (
                   <div
                     key={tz}
-                    className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 px-4 py-2 rounded-full"
+                    className="inline-flex items-center gap-2 bg-slate-100 text-blue-900 px-4 py-2 rounded-full"
                   >
                     <span className="font-medium">{tz}</span>
                     <button
@@ -190,7 +190,7 @@ export default function MeetingInvite() {
           </div>
 
           {/* Time Preview */}
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-8">
+          <div className="bg-gradient-to-r from-slate-50 to-cyan-50 border-2 border-border rounded-xl p-8">
             <h3 className="text-lg font-semibold text-slate-900 mb-6">Meeting Times</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {selectedTimezones.map((timezone) => (
@@ -206,7 +206,7 @@ export default function MeetingInvite() {
           {/* Generate Button */}
           <Button
             onClick={generateInvite}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 text-lg"
+            className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-6 text-lg"
           >
             <Share2 className="w-5 h-5 mr-2" />
             Generate Invite Link
@@ -264,7 +264,7 @@ function MeetingTimeCard({
   return (
     <div className="bg-white border-2 border-slate-200 rounded-lg p-4">
       <div className="text-sm text-slate-500 mb-1">{timezone}</div>
-      <div className="text-3xl font-mono font-bold text-blue-600">{localTime}</div>
+      <div className="text-3xl font-mono font-bold text-accent">{localTime}</div>
     </div>
   );
 }

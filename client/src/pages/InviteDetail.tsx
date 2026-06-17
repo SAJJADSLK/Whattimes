@@ -65,7 +65,7 @@ export default function InviteDetail() {
                   <Clock className="w-5 h-5 mr-2" />
                   <span className="text-sm font-medium">Proposed Time</span>
                 </div>
-                <p className="text-2xl font-bold text-blue-600">{invite.proposedTime}</p>
+                <p className="text-2xl font-bold text-accent">{invite.proposedTime}</p>
                 <p className="text-sm text-gray-500 mt-1">Duration: {invite.duration}</p>
               </div>
 
@@ -74,7 +74,7 @@ export default function InviteDetail() {
                   <Users className="w-5 h-5 mr-2" />
                   <span className="text-sm font-medium">Attendees</span>
                 </div>
-                <p className="text-2xl font-bold text-blue-600">{invite.cities.length}</p>
+                <p className="text-2xl font-bold text-accent">{invite.cities.length}</p>
                 <p className="text-sm text-gray-500 mt-1">Timezones</p>
               </div>
             </div>
@@ -84,15 +84,15 @@ export default function InviteDetail() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Local Times for Each City</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {invite.cities.map((city) => (
-                  <div key={city.name} className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg">
+                  <div key={city.name} className="bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-lg">
                     <div className="flex items-start justify-between">
                       <div>
                         <h3 className="font-semibold text-gray-900">{city.name}</h3>
                         <p className="text-sm text-gray-600 mt-1">{city.timezone}</p>
                       </div>
-                      <MapPin className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <MapPin className="w-5 h-5 text-accent flex-shrink-0" />
                     </div>
-                    <p className="text-2xl font-bold text-blue-600 mt-3">{city.localTime}</p>
+                    <p className="text-2xl font-bold text-accent mt-3">{city.localTime}</p>
                   </div>
                 ))}
               </div>

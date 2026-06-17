@@ -43,101 +43,105 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  --background: oklch(0.98 0.005 240);
-  --foreground: oklch(0.18 0.015 240);
+  /* Premium Luxury Palette: Deep Charcoal + Gold + Cream */
+  --background: oklch(0.98 0.002 0);
+  --foreground: oklch(0.15 0.01 0);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.015 240);
+  --card-foreground: oklch(0.15 0.01 0);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.015 240);
+  --popover-foreground: oklch(0.15 0.01 0);
 
-  --primary: oklch(0.58 0.22 250);
-  --primary-foreground: oklch(0.99 0 0);
+  /* Primary: Deep Charcoal */
+  --primary: oklch(0.2 0.01 0);
+  --primary-foreground: oklch(0.98 0.002 0);
 
-  --secondary: oklch(0.95 0.01 240);
-  --secondary-foreground: oklch(0.18 0.015 240);
+  --secondary: oklch(0.95 0.002 0);
+  --secondary-foreground: oklch(0.15 0.01 0);
 
-  --muted: oklch(0.96 0.01 240);
-  --muted-foreground: oklch(0.45 0.01 240);
+  --muted: oklch(0.92 0.002 0);
+  --muted-foreground: oklch(0.55 0.01 0);
 
-  --accent: oklch(0.72 0.16 230);
-  --accent-foreground: oklch(0.99 0 0);
+  /* Accent: Luxe Gold */
+  --accent: oklch(0.62 0.15 70);
+  --accent-foreground: oklch(0.15 0.01 0);
 
   --destructive: oklch(0.62 0.24 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.9 0.01 240);
-  --input: oklch(0.96 0.01 240);
-  --ring: oklch(0.58 0.22 250);
+  --border: oklch(0.9 0.002 0);
+  --input: oklch(0.98 0.002 0);
+  --ring: oklch(0.62 0.15 70);
 
-  --chart-1: oklch(0.58 0.22 250);
-  --chart-2: oklch(0.68 0.18 220);
-  --chart-3: oklch(0.78 0.12 190);
-  --chart-4: oklch(0.52 0.18 280);
-  --chart-5: oklch(0.65 0.14 160);
+  --chart-1: oklch(0.62 0.15 70);
+  --chart-2: oklch(0.52 0.12 70);
+  --chart-3: oklch(0.72 0.12 70);
+  --chart-4: oklch(0.2 0.01 0);
+  --chart-5: oklch(0.3 0.01 0);
 
-  --sidebar: oklch(0.985 0.005 240);
-  --sidebar-foreground: oklch(0.18 0.015 240);
+  --sidebar: oklch(0.99 0.001 0);
+  --sidebar-foreground: oklch(0.15 0.01 0);
 
-  --sidebar-primary: oklch(0.58 0.22 250);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-primary: oklch(0.2 0.01 0);
+  --sidebar-primary-foreground: oklch(0.98 0.002 0);
 
-  --sidebar-accent: oklch(0.95 0.01 240);
-  --sidebar-accent-foreground: oklch(0.18 0.015 240);
+  --sidebar-accent: oklch(0.92 0.002 0);
+  --sidebar-accent-foreground: oklch(0.15 0.01 0);
 
-  --sidebar-border: oklch(0.9 0.01 240);
-  --sidebar-ring: oklch(0.58 0.22 250);
+  --sidebar-border: oklch(0.9 0.002 0);
+  --sidebar-ring: oklch(0.62 0.15 70);
 }
 
 .dark {
-  --background: oklch(0.12 0.01 250);
-  --foreground: oklch(0.97 0.005 240);
+  /* Dark Mode: Deep Charcoal + Gold */
+  --background: oklch(0.08 0.005 0);
+  --foreground: oklch(0.96 0.002 0);
 
-  --card: oklch(0.16 0.01 250);
-  --card-foreground: oklch(0.97 0.005 240);
+  --card: oklch(0.12 0.005 0);
+  --card-foreground: oklch(0.96 0.002 0);
 
-  --popover: oklch(0.16 0.01 250);
-  --popover-foreground: oklch(0.97 0.005 240);
+  --popover: oklch(0.12 0.005 0);
+  --popover-foreground: oklch(0.96 0.002 0);
 
-  --primary: oklch(0.68 0.22 250);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.25 0.01 0);
+  --primary-foreground: oklch(0.96 0.002 0);
 
-  --secondary: oklch(0.2 0.01 250);
-  --secondary-foreground: oklch(0.97 0.005 240);
+  --secondary: oklch(0.18 0.005 0);
+  --secondary-foreground: oklch(0.96 0.002 0);
 
-  --muted: oklch(0.22 0.01 250);
-  --muted-foreground: oklch(0.72 0.01 240);
+  --muted: oklch(0.22 0.005 0);
+  --muted-foreground: oklch(0.72 0.01 0);
 
-  --accent: oklch(0.72 0.16 230);
-  --accent-foreground: oklch(0.99 0 0);
+  --accent: oklch(0.72 0.15 70);
+  --accent-foreground: oklch(0.08 0.005 0);
 
   --destructive: oklch(0.68 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.28 0.01 250);
-  --input: oklch(0.22 0.01 250);
-  --ring: oklch(0.68 0.22 250);
+  --border: oklch(0.22 0.005 0);
+  --input: oklch(0.15 0.005 0);
+  --ring: oklch(0.72 0.15 70);
 
-  --chart-1: oklch(0.68 0.22 250);
-  --chart-2: oklch(0.75 0.16 220);
-  --chart-3: oklch(0.8 0.12 190);
-  --chart-4: oklch(0.62 0.18 280);
-  --chart-5: oklch(0.72 0.14 160);
+  --chart-1: oklch(0.72 0.15 70);
+  --chart-2: oklch(0.62 0.12 70);
+  --chart-3: oklch(0.82 0.12 70);
+  --chart-4: oklch(0.25 0.01 0);
+  --chart-5: oklch(0.35 0.01 0);
 
-  --sidebar: oklch(0.1 0.01 250);
-  --sidebar-foreground: oklch(0.97 0.005 240);
+  --sidebar: oklch(0.06 0.003 0);
+  --sidebar-foreground: oklch(0.96 0.002 0);
 
-  --sidebar-primary: oklch(0.68 0.22 250);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-primary: oklch(0.25 0.01 0);
+  --sidebar-primary-foreground: oklch(0.96 0.002 0);
 
-  --sidebar-accent: oklch(0.2 0.01 250);
-  --sidebar-accent-foreground: oklch(0.97 0.005 240);
+  --sidebar-accent: oklch(0.18 0.005 0);
+  --sidebar-accent-foreground: oklch(0.96 0.002 0);
 
-  --sidebar-border: oklch(0.28 0.01 250);
-  --sidebar-ring: oklch(0.68 0.22 250);
+  --sidebar-border: oklch(0.22 0.005 0);
+  --sidebar-ring: oklch(0.72 0.15 70);
 }
 
 @layer base {
@@ -146,90 +150,136 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: -0.01em;
   }
   button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
+  [role="button"]:not(:disabled) {
     @apply cursor-pointer;
   }
+  a {
+    @apply text-foreground no-underline;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    @apply text-2xl;
+  }
+  h4 {
+    @apply text-xl;
+  }
+  h5 {
+    @apply text-lg;
+  }
+  h6 {
+    @apply text-base;
+  }
 }
 
+/* Premium Luxury Utilities */
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
-  }
-.clock-display {
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  font-family: ui-monospace, monospace;
-}
-
-.glass-card {
-  backdrop-filter: blur(12px);
-  border: 1px solid color-mix(in srgb, white 10%, transparent);
-}
-
-.city-card {
-  transition: all 0.25s ease;
-}
-
-.city-card:hover {
-  transform: translateY(-4px);
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.hero-subtitle {
-  font-size: 1.125rem;
-  color: var(--muted-foreground);
-  max-width: 720px;
-}
-  .flex {
-    min-height: 0;
-    min-width: 0;
+  /* Art Deco Divider */
+  .art-deco-divider {
+    @apply relative h-px bg-gradient-to-r from-transparent via-accent to-transparent;
   }
 
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
+  /* Luxury Shadow */
+  .luxury-shadow {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   }
 
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
-    }
+  .luxury-shadow-lg {
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Premium Gradient */
+  .premium-gradient {
+    @apply bg-gradient-to-br from-foreground/5 to-accent/10;
+  }
+
+  /* Minimalist Card */
+  .minimalist-card {
+    @apply relative bg-card border border-border rounded-lg p-6 transition-all duration-300;
+  }
+
+  .minimalist-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Geometric Pattern */
+  .geometric-pattern {
+    background-image: 
+      linear-gradient(45deg, transparent 48%, var(--tw-bg-opacity) 49%, var(--tw-bg-opacity) 51%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, var(--tw-bg-opacity) 49%, var(--tw-bg-opacity) 51%, transparent 52%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+  }
+
+  /* Premium Button */
+  .btn-premium {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    letter-spacing: -0.01em;
+  }
+
+  /* Luxury Text */
+  .text-luxury {
+    @apply text-foreground font-semibold tracking-tight;
+  }
+
+  /* Accent Line */
+  .accent-line {
+    @apply relative before:absolute before:bottom-0 before:left-0 before:h-1 before:w-12 before:bg-accent;
+  }
+}
+
+/* Smooth Transitions */
+@layer utilities {
+  .transition-smooth {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .transition-luxury {
+    @apply transition-all duration-300;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+}
+
+/* Premium Focus States */
+@layer components {
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2;
+  }
+
+  .dark button:focus-visible,
+  .dark a:focus-visible,
+  .dark input:focus-visible {
+    @apply ring-offset-background;
   }
 }

@@ -83,7 +83,7 @@ export default function Converter() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Time Scrubber Section */}
-        <div className="mb-12 bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-lg">
+        <div className="mb-12 bg-gradient-to-br from-slate-50 to-slate-100 p-8 rounded-lg">
           <h2 className="text-lg font-semibold text-gray-900 mb-6">Adjust Time</h2>
           <TimeScrubber value={scrubberTime} onChange={setScrubberTime} />
         </div>
@@ -96,7 +96,7 @@ export default function Converter() {
             {selectedTimezones.map((timezone) => (
               <div
                 key={timezone}
-                className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200 relative"
+                className="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-lg border border-border relative"
               >
                 <button
                   onClick={() => removeTimezone(timezone)}
@@ -107,11 +107,11 @@ export default function Converter() {
                 </button>
 
                 <div className="flex items-center gap-2 mb-4">
-                  <Clock className="w-5 h-5 text-blue-600" />
+                  <Clock className="w-5 h-5 text-accent" />
                   <h3 className="font-semibold text-gray-900">{timezone}</h3>
                 </div>
 
-                <div className="text-4xl font-bold text-blue-600 font-mono mb-2">
+                <div className="text-4xl font-bold text-accent font-mono mb-2">
                   {calculateTimeForTimezone(timezone)}
                 </div>
 
@@ -166,7 +166,7 @@ export default function Converter() {
         </div>
 
         {/* Info Section */}
-        <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+        <div className="bg-slate-50 border border-border p-6 rounded-lg">
           <h3 className="font-semibold text-gray-900 mb-2">💡 Tip</h3>
           <p className="text-gray-700">
             Use the time scrubber above to see how times change throughout the day across all selected timezones. This is perfect for finding the best meeting time for distributed teams.

@@ -164,3 +164,101 @@ export function generateCitySchema(city: {
     identifier: city.timezone,
   };
 }
+
+/**
+ * Generate breadcrumb schema for navigation
+ */
+export function generateBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+/**
+ * Generate FAQ schema
+ */
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
+ * Generate Tool/Utility schema
+ */
+export function generateToolSchema(name: string, description: string, url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name,
+    description,
+    url,
+    applicationCategory: 'UtilitiesApplication',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+}
+
+/**
+ * Generate Article schema for blog posts
+ */
+export function generateArticleSchema(article: {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  author: string;
+  publishedDate: string;
+  modifiedDate?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: article.image,
+    url: article.url,
+    author: {
+      '@type': 'Person',
+      name: article.author,
+    },
+    datePublished: article.publishedDate,
+    dateModified: article.modifiedDate || article.publishedDate,
+  };
+}
+
+/**
+ * Generate Local Business schema for city pages
+ */
+export function generateLocalBusinessSchema(city: string, timezone: string, country: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: `${city} Time Zone Information`,
+    description: `Current time and timezone information for ${city}, ${country}`,
+    areaServed: city,
+    geo: {
+      '@type': 'Place',
+      name: city,
+    },
+  };
+}

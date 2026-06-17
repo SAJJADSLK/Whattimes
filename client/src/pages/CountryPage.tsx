@@ -1,5 +1,5 @@
 import { useParams } from 'wouter';
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,34 +11,23 @@ export default function CountryPage() {
   const [, navigate] = useLocation();
   const countryParam = params.country || '';
 
-  // Convert URL slug to proper country name for DB matching
-  // e.g. "united-arab-emirates" -> "United Arab Emirates"
+  // Format country name: united-arab-emirates -> United Arab Emirates
   const formattedCountry = useMemo(() => {
     return countryParam
       .replace(/-/g, ' ')
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }, [countryParam]);
 
-  // FIX: Use getByCountry instead of getAll+filter
-  // getAll has a 200-item default limit and may not return all cities for a country
-  const { data: citiesInCountry = [], isLoading } = trpc.cities.getByCountry.useQuery(
-    { country: formattedCountry },
-    { enabled: !!formattedCountry }
-  );
+  // Fetch all cities
+  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
 
-  // Update page title dynamically
-  useEffect(() => {
-    if (formattedCountry) {
-      document.title = `Time in ${formattedCountry} - All Cities & Timezones`;
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute(
-          'content',
-          `Check current local time in all cities of ${formattedCountry}. Real-time clocks, timezone info, and UTC offsets.`
-        );
-      }
-    }
-  }, [formattedCountry]);
+  // Filter cities by country
+  const citiesInCountry = useMemo(() => {
+    if (!allCities) return [];
+    return allCities.filter((city) =>
+      city.country.toLowerCase() === formattedCountry.toLowerCase()
+    );
+  }, [allCities, formattedCountry]);
 
   const handleCityClick = (cityName: string) => {
     const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
@@ -62,11 +51,11 @@ export default function CountryPage() {
             </Button>
             <div>
               <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
-                <MapPin className="w-8 h-8 text-blue-600" />
+                <MapPin className="w-8 h-8 text-accent" />
                 {formattedCountry}
               </h1>
               <p className="text-slate-600 mt-1">
-                {isLoading ? 'Loading...' : `${citiesInCountry.length} cities • Time zones and current time`}
+                {citiesInCountry.length} cities • Time zones and current time
               </p>
             </div>
           </div>
@@ -75,17 +64,7 @@ export default function CountryPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i} className="p-6 animate-pulse">
-                <div className="h-6 bg-slate-200 rounded mb-3 w-3/4" />
-                <div className="h-4 bg-slate-100 rounded mb-2 w-1/2" />
-                <div className="h-4 bg-slate-100 rounded w-2/3" />
-              </Card>
-            ))}
-          </div>
-        ) : citiesInCountry.length > 0 ? (
+        {citiesInCountry.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {citiesInCountry.map((city) => (
               <Card
@@ -96,12 +75,12 @@ export default function CountryPage() {
                 <div className="space-y-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-accent transition-colors">
                         {city.name}
                       </h3>
                       <p className="text-sm text-slate-600 mt-1">{city.country}</p>
                     </div>
-                    <Clock className="w-5 h-5 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Clock className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
                   <div className="space-y-2">
@@ -120,11 +99,8 @@ export default function CountryPage() {
                   </div>
 
                   <Button
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCityClick(city.name);
-                    }}
+                    className="w-full mt-4 bg-foreground hover:bg-blue-700"
+                    onClick={() => handleCityClick(city.name)}
                   >
                     View Time
                   </Button>
@@ -147,7 +123,7 @@ export default function CountryPage() {
         )}
       </div>
 
-      {/* SEO Structured Data */}
+      {/* SEO Meta Tags */}
       <script type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',

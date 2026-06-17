@@ -4,7 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, MapPin, Clock, Sunrise, Compass } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, Sunrise, Sunset, Compass } from 'lucide-react';
 import { DateTime } from 'luxon';
 
 export default function CityDetailPage() {
@@ -15,38 +15,16 @@ export default function CityDetailPage() {
   const cityParam = params.city?.replace(/-/g, ' ') || params.city || '';
   const countryParam = params.country || '';
 
-  // FIX: Convert URL slug to proper country name for DB matching
-  // e.g. "united-arab-emirates" -> "United Arab Emirates"
-  const formattedCountry = useMemo(() => {
-    if (!countryParam) return '';
-    return countryParam
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, (l) => l.toUpperCase());
-  }, [countryParam]);
-
   // Fetch city data
   const { data: cities } = trpc.cities.getAll.useQuery({ limit: 500 });
-
   const city = useMemo(() => {
-    if (!cities) return undefined;
-    // FIX: Match by BOTH city name AND country to prevent cross-country mismatches
-    // e.g. /united-kingdom/dubai must NOT return Dubai (UAE)
-    if (formattedCountry) {
-      const match = cities.find(
-        (c) =>
-          c.name.toLowerCase() === cityParam.toLowerCase() &&
-          c.country.toLowerCase() === formattedCountry.toLowerCase()
-      );
-      // Fallback: if no country+city match (e.g. old /city-detail/:city route), match by name only
-      return match ?? cities.find((c) => c.name.toLowerCase() === cityParam.toLowerCase());
-    }
-    return cities.find((c) => c.name.toLowerCase() === cityParam.toLowerCase());
-  }, [cities, cityParam, formattedCountry]);
+    return cities?.find(c => c.name.toLowerCase() === cityParam.toLowerCase());
+  }, [cities, cityParam]);
 
   const { time } = useRealTimeClock(city?.timezone || 'UTC');
 
-  // Reuse the same query result — no need for a second getAll call
-  const allCities = cities;
+  // Fetch all cities for comparison table
+  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
 
   // Calculate time differences
   const timeDifferences = useMemo(() => {
@@ -60,7 +38,7 @@ export default function CityDetailPage() {
         const otherTime = DateTime.now().setZone(c.timezone);
         const diffMinutes = otherTime.diff(cityTime, 'minutes').minutes;
         const diffHours = Math.floor(diffMinutes / 60);
-        const diffMins = Math.round(diffMinutes % 60);
+        const diffMins = diffMinutes % 60;
         
         return {
           name: c.name,
@@ -99,6 +77,7 @@ export default function CityDetailPage() {
     if (city) {
       document.title = `Exact Time in ${city.name} Right Now - Live Clock`;
       
+      // Update meta description
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
         metaDescription.setAttribute(
@@ -120,11 +99,7 @@ export default function CityDetailPage() {
     );
   }
 
-  // FIX: Build canonical URL from the city's actual country, not the URL param
-  // This ensures the canonical is always correct even on fallback name-only matches
-  const cityCountrySlug = city.country.toLowerCase().replace(/\s+/g, '-');
-  const citySlug = city.name.toLowerCase().replace(/\s+/g, '-');
-  const canonicalUrl = `https://www.worldclock.info/${cityCountrySlug}/${citySlug}`;
+  const canonicalUrl = `https://www.worldclock.info/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
     <>

@@ -136,7 +136,7 @@ export default function Countdown() {
 
           {/* Countdown Display */}
           {timeRemaining && (
-            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-12 text-white text-center space-y-8">
+            <div className="bg-gradient-to-r from-foreground to-cyan-600 rounded-xl p-12 text-white text-center space-y-8">
               <h2 className="text-3xl font-bold">{eventName}</h2>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -150,7 +150,7 @@ export default function Countdown() {
               <div className="flex justify-center gap-4">
                 <Button
                   onClick={() => setIsRunning(!isRunning)}
-                  className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3"
+                  className="bg-white text-accent hover:bg-slate-50 font-semibold px-6 py-3"
                 >
                   {isRunning ? (
                     <>
@@ -166,7 +166,7 @@ export default function Countdown() {
                 </Button>
                 <Button
                   onClick={resetCountdown}
-                  className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 py-3"
+                  className="bg-white text-accent hover:bg-slate-50 font-semibold px-6 py-3"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
                   Reset
@@ -178,7 +178,7 @@ export default function Countdown() {
           {/* Generate Share Link */}
           <Button
             onClick={generateShareLink}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 text-lg"
+            className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-6 text-lg"
           >
             <Share2 className="w-5 h-5 mr-2" />
             Generate Shareable Link
