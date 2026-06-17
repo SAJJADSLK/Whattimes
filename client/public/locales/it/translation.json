@@ -1,0 +1,42 @@
+{
+  "common": {
+    "appName": "WhatTime",
+    "slogan": "Precision Timekeeping for a Connected World",
+    "description": "Real-time clock synchronization, timezone conversion, and team coordination tools"
+  },
+  "nav": {
+    "home": "Home",
+    "cities": "Cities",
+    "timezone": "Timezone",
+    "tools": "Tools",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Always On Time",
+    "subtitle": "Precision timekeeping for a connected world. Real-time clock synchronization, timezone conversion, and team coordination tools."
+  },
+  "clock": {
+    "yourTime": "Your Time",
+    "timeIn": "Time in",
+    "timezone": "Timezone",
+    "date": "Date",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset"
+  },
+  "features": {
+    "realTime": "Real-Time Updates",
+    "timezones": "180+ Timezones",
+    "accurate": "Atomic Accuracy",
+    "global": "Global Coverage",
+    "fast": "Lightning Fast",
+    "sync": "Auto Sync"
+  },
+  "buttons": {
+    "explore": "Explore Cities",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "search": "Search",
+    "close": "Close"
+  }
+}

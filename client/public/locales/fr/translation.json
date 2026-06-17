@@ -1,0 +1,42 @@
+{
+  "common": {
+    "appName": "WhatTime",
+    "slogan": "Chronométrage Précis pour un Monde Connecté",
+    "description": "Synchronisation d'horloge en temps réel, conversion de fuseau horaire et outils de coordination d'équipe"
+  },
+  "nav": {
+    "home": "Accueil",
+    "cities": "Villes",
+    "timezone": "Fuseau Horaire",
+    "tools": "Outils",
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Toujours à l'Heure",
+    "subtitle": "Chronométrage précis pour un monde connecté. Synchronisation d'horloge en temps réel, conversion de fuseau horaire et outils de coordination d'équipe."
+  },
+  "clock": {
+    "yourTime": "Votre Heure",
+    "timeIn": "Heure à",
+    "timezone": "Fuseau Horaire",
+    "date": "Date",
+    "sunrise": "Lever du Soleil",
+    "sunset": "Coucher du Soleil"
+  },
+  "features": {
+    "realTime": "Mises à Jour en Temps Réel",
+    "timezones": "180+ Fuseaux Horaires",
+    "accurate": "Précision Atomique",
+    "global": "Couverture Mondiale",
+    "fast": "Rapide comme l'Éclair",
+    "sync": "Synchronisation Automatique"
+  },
+  "buttons": {
+    "explore": "Explorer les Villes",
+    "getStarted": "Commencer",
+    "learnMore": "En Savoir Plus",
+    "search": "Rechercher",
+    "close": "Fermer"
+  }
+}

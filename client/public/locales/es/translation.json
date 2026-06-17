@@ -1,0 +1,42 @@
+{
+  "common": {
+    "appName": "WhatTime",
+    "slogan": "Cronometraje Preciso para un Mundo Conectado",
+    "description": "Sincronización de reloj en tiempo real, conversión de zonas horarias y herramientas de coordinación de equipos"
+  },
+  "nav": {
+    "home": "Inicio",
+    "cities": "Ciudades",
+    "timezone": "Zona Horaria",
+    "tools": "Herramientas",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title": "Siempre a Tiempo",
+    "subtitle": "Cronometraje preciso para un mundo conectado. Sincronización de reloj en tiempo real, conversión de zonas horarias y herramientas de coordinación de equipos."
+  },
+  "clock": {
+    "yourTime": "Tu Hora",
+    "timeIn": "Hora en",
+    "timezone": "Zona Horaria",
+    "date": "Fecha",
+    "sunrise": "Salida del Sol",
+    "sunset": "Puesta del Sol"
+  },
+  "features": {
+    "realTime": "Actualizaciones en Tiempo Real",
+    "timezones": "180+ Zonas Horarias",
+    "accurate": "Precisión Atómica",
+    "global": "Cobertura Global",
+    "fast": "Rápido como el Rayo",
+    "sync": "Sincronización Automática"
+  },
+  "buttons": {
+    "explore": "Explorar Ciudades",
+    "getStarted": "Comenzar",
+    "learnMore": "Más Información",
+    "search": "Buscar",
+    "close": "Cerrar"
+  }
+}
