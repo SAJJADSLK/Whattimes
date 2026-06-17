@@ -130,7 +130,7 @@ export default function CountryPage() {
           '@type': 'CollectionPage',
           name: `Time in ${formattedCountry} - All Cities`,
           description: `Check current time in all cities of ${formattedCountry}. Real-time clock, timezone converter, and DST information.`,
-          url: `https://www.worldclock.info/${countryParam}`,
+          url: `https://www.whattime.info/${countryParam}`,
           areaServed: formattedCountry,
           numberOfItems: citiesInCountry.length,
         })}
