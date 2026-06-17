@@ -6,8 +6,8 @@ interface City {
   name: string;
   country: string;
   timezone: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   region: string;
   population: number | null;
 }
@@ -31,6 +31,8 @@ export async function initCityCache() {
 
     cityCache = results.map((c) => ({
       ...c,
+      latitude: parseFloat(c.latitude.toString()),
+      longitude: parseFloat(c.longitude.toString()),
       population: c.population
         ? parseInt(c.population.toString())
         : null,
