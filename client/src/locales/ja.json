@@ -1,5 +1,114 @@
 {
-  "app": { "title": "Chronos", "tagline": "常に時間通り", "description": "接続された世界のための正確な時間同期" },
-  "nav": { "home": "ホーム", "worldClock": "世界時計", "converter": "コンバーター", "meetings": "会議招待", "countdown": "カウントダウン", "dst": "夏時間トラッカー", "team": "チームダッシュボード", "countries": "国と都市", "widget": "ウィジェット", "dashboard": "ダッシュボード" },
-  "common": { "language": "言語", "theme": "テーマ", "dark": "ダーク", "light": "ライト", "back": "戻る", "search": "検索", "loading": "読み込み中...", "error": "エラー", "success": "成功", "close": "閉じる", "save": "保存", "cancel": "キャンセル", "delete": "削除", "edit": "編集", "add": "追加", "remove": "削除" }
+  "app": {
+    "title": "Chronos",
+    "tagline": "常に時間通り",
+    "description": "接続された世界のための正確な時間同期"
+  },
+  "nav": {
+    "home": "ホーム",
+    "worldClock": "世界時計",
+    "converter": "コンバーター",
+    "meetings": "会議招待",
+    "countdown": "カウントダウン",
+    "dst": "夏時間トラッカー",
+    "team": "チームダッシュボード",
+    "countries": "国と都市",
+    "widget": "ウィジェット",
+    "dashboard": "ダッシュボード"
+  },
+  "common": {
+    "language": "言語",
+    "theme": "テーマ",
+    "dark": "ダーク",
+    "light": "ライト",
+    "back": "戻る",
+    "search": "検索",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "close": "閉じる",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "add": "追加",
+    "remove": "削除"
+  },
+  "home": {
+    "subtitle": "つながる世界のための精密な時間管理。リアルタイムの時計同期、タイムゾーン変換、チーム調整ツール。",
+    "badge": "精密な時間管理",
+    "cta": {
+      "getStarted": "今すぐ始める",
+      "learnMore": "詳細を見る"
+    },
+    "capabilitiesBadge": "機能",
+    "featuresTitleBold": "プレミアム機能",
+    "featuresTitleRest": "グローバルチームのために",
+    "features": [
+      {
+        "title": "グローバル対応",
+        "desc": "180以上のタイムゾーンをリアルタイムで同期"
+      },
+      {
+        "title": "瞬時変換",
+        "desc": "複数のタイムゾーン間で時間を瞬時に変換"
+      },
+      {
+        "title": "チーム調整",
+        "desc": "分散したチームの最適な会議時間を見つける"
+      },
+      {
+        "title": "高精度トラッキング",
+        "desc": "重要な業務のための原子時計レベルの精度"
+      },
+      {
+        "title": "分析",
+        "desc": "タイムゾーンのパターンとチームの稼働状況を追跡"
+      },
+      {
+        "title": "簡単な共有",
+        "desc": "自動ローカライズで会議時間を共有"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "グローバルな時間管理を",
+      "titleRest": "極める準備はできましたか?",
+      "subtitle": "大陸を越えて連携する数千人のプロフェッショナルに加わりましょう",
+      "button": "無料で始める"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "製品",
+          "links": [
+            "機能",
+            "料金",
+            "API"
+          ]
+        },
+        {
+          "title": "会社",
+          "links": [
+            "会社概要",
+            "ブログ",
+            "お問い合わせ"
+          ]
+        },
+        {
+          "title": "法的情報",
+          "links": [
+            "プライバシー",
+            "利用規約",
+            "セキュリティ"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. 無断複写・転載を禁じます。",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
+  }
 }

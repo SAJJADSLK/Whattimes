@@ -1,5 +1,114 @@
 {
-  "app": { "title": "Chronos", "tagline": "始终准时", "description": "为互联世界提供精确的时间同步" },
-  "nav": { "home": "首页", "worldClock": "世界时钟", "converter": "转换器", "meetings": "会议邀请", "countdown": "倒计时", "dst": "夏令时追踪", "team": "团队仪表板", "countries": "国家和城市", "widget": "小部件", "dashboard": "仪表板" },
-  "common": { "language": "语言", "theme": "主题", "dark": "深色", "light": "浅色", "back": "返回", "search": "搜索", "loading": "加载中...", "error": "错误", "success": "成功", "close": "关闭", "save": "保存", "cancel": "取消", "delete": "删除", "edit": "编辑", "add": "添加", "remove": "移除" }
+  "app": {
+    "title": "Chronos",
+    "tagline": "始终准时",
+    "description": "为互联世界提供精确的时间同步"
+  },
+  "nav": {
+    "home": "首页",
+    "worldClock": "世界时钟",
+    "converter": "转换器",
+    "meetings": "会议邀请",
+    "countdown": "倒计时",
+    "dst": "夏令时追踪",
+    "team": "团队仪表板",
+    "countries": "国家和城市",
+    "widget": "小部件",
+    "dashboard": "仪表板"
+  },
+  "common": {
+    "language": "语言",
+    "theme": "主题",
+    "dark": "深色",
+    "light": "浅色",
+    "back": "返回",
+    "search": "搜索",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "close": "关闭",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "remove": "移除"
+  },
+  "home": {
+    "subtitle": "为互联世界提供精确的时间同步。实时时钟同步、时区转换和团队协作工具。",
+    "badge": "精准计时",
+    "cta": {
+      "getStarted": "立即开始",
+      "learnMore": "了解更多"
+    },
+    "capabilitiesBadge": "核心功能",
+    "featuresTitleBold": "高级功能",
+    "featuresTitleRest": "助力全球团队",
+    "features": [
+      {
+        "title": "全球覆盖",
+        "desc": "180多个时区实时同步"
+      },
+      {
+        "title": "即时转换",
+        "desc": "在多个时区之间即时转换时间"
+      },
+      {
+        "title": "团队协调",
+        "desc": "为分布式团队找到完美的会议时间"
+      },
+      {
+        "title": "精准追踪",
+        "desc": "原子钟级精度,适用于关键业务"
+      },
+      {
+        "title": "数据分析",
+        "desc": "追踪时区模式和团队可用性"
+      },
+      {
+        "title": "轻松分享",
+        "desc": "自动本地化分享会议时间"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "准备好",
+      "titleRest": "掌控全球时间管理了吗?",
+      "subtitle": "加入数千名跨大陆协作的专业人士",
+      "button": "免费开始"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "产品",
+          "links": [
+            "功能",
+            "价格",
+            "API"
+          ]
+        },
+        {
+          "title": "公司",
+          "links": [
+            "关于我们",
+            "博客",
+            "联系我们"
+          ]
+        },
+        {
+          "title": "法律",
+          "links": [
+            "隐私政策",
+            "服务条款",
+            "安全"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. 保留所有权利。",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
+  }
 }

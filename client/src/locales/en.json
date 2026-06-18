@@ -29,7 +29,81 @@
     "sunrise": "Sunrise",
     "sunset": "Sunset",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "badge": "Precision Timekeeping",
+    "cta": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    },
+    "capabilitiesBadge": "Capabilities",
+    "featuresTitleBold": "Premium Features",
+    "featuresTitleRest": "for Global Teams",
+    "features": [
+      {
+        "title": "Global Coverage",
+        "desc": "180+ timezones with real-time synchronization"
+      },
+      {
+        "title": "Instant Conversion",
+        "desc": "Convert times across multiple zones instantly"
+      },
+      {
+        "title": "Team Coordination",
+        "desc": "Find perfect meeting times for distributed teams"
+      },
+      {
+        "title": "Precision Tracking",
+        "desc": "Atomic clock accuracy for critical operations"
+      },
+      {
+        "title": "Analytics",
+        "desc": "Track timezone patterns and team availability"
+      },
+      {
+        "title": "Easy Sharing",
+        "desc": "Share meeting times with automatic localization"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "Ready to master",
+      "titleRest": "global timekeeping?",
+      "subtitle": "Join thousands of professionals coordinating across continents",
+      "button": "Get Started Free"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Product",
+          "links": [
+            "Features",
+            "Pricing",
+            "API"
+          ]
+        },
+        {
+          "title": "Company",
+          "links": [
+            "About",
+            "Blog",
+            "Contact"
+          ]
+        },
+        {
+          "title": "Legal",
+          "links": [
+            "Privacy",
+            "Terms",
+            "Security"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. All rights reserved.",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
   },
   "worldClock": {
     "title": "World Clock",

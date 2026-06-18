@@ -1,5 +1,114 @@
 {
-  "app": { "title": "Chronos", "tagline": "Sempre no Horário", "description": "Sincronização de tempo precisa para um mundo conectado" },
-  "nav": { "home": "Início", "worldClock": "Relógio Mundial", "converter": "Conversor", "meetings": "Convites de Reunião", "countdown": "Contagem Regressiva", "dst": "Rastreador de Horário de Verão", "team": "Painel de Equipe", "countries": "Países e Cidades", "widget": "Widget", "dashboard": "Painel" },
-  "common": { "language": "Idioma", "theme": "Tema", "dark": "Escuro", "light": "Claro", "back": "Voltar", "search": "Pesquisar", "loading": "Carregando...", "error": "Erro", "success": "Sucesso", "close": "Fechar", "save": "Salvar", "cancel": "Cancelar", "delete": "Excluir", "edit": "Editar", "add": "Adicionar", "remove": "Remover" }
+  "app": {
+    "title": "Chronos",
+    "tagline": "Sempre no Horário",
+    "description": "Sincronização de tempo precisa para um mundo conectado"
+  },
+  "nav": {
+    "home": "Início",
+    "worldClock": "Relógio Mundial",
+    "converter": "Conversor",
+    "meetings": "Convites de Reunião",
+    "countdown": "Contagem Regressiva",
+    "dst": "Rastreador de Horário de Verão",
+    "team": "Painel de Equipe",
+    "countries": "Países e Cidades",
+    "widget": "Widget",
+    "dashboard": "Painel"
+  },
+  "common": {
+    "language": "Idioma",
+    "theme": "Tema",
+    "dark": "Escuro",
+    "light": "Claro",
+    "back": "Voltar",
+    "search": "Pesquisar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "close": "Fechar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "remove": "Remover"
+  },
+  "home": {
+    "subtitle": "Sincronização de tempo precisa para um mundo conectado. Sincronização de relógio em tempo real, conversão de fusos horários e ferramentas de coordenação de equipe.",
+    "badge": "Precisão no Tempo",
+    "cta": {
+      "getStarted": "Comece Agora",
+      "learnMore": "Saiba Mais"
+    },
+    "capabilitiesBadge": "Recursos",
+    "featuresTitleBold": "Recursos Premium",
+    "featuresTitleRest": "para Equipes Globais",
+    "features": [
+      {
+        "title": "Cobertura Global",
+        "desc": "Mais de 180 fusos horários com sincronização em tempo real"
+      },
+      {
+        "title": "Conversão Instantânea",
+        "desc": "Converta horários entre vários fusos instantaneamente"
+      },
+      {
+        "title": "Coordenação de Equipe",
+        "desc": "Encontre o horário perfeito para reuniões com equipes distribuídas"
+      },
+      {
+        "title": "Rastreamento de Precisão",
+        "desc": "Precisão de relógio atômico para operações críticas"
+      },
+      {
+        "title": "Análises",
+        "desc": "Acompanhe padrões de fusos horários e disponibilidade da equipe"
+      },
+      {
+        "title": "Compartilhamento Fácil",
+        "desc": "Compartilhe horários de reuniões com localização automática"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "Pronto para dominar",
+      "titleRest": "a gestão de tempo global?",
+      "subtitle": "Junte-se a milhares de profissionais que coordenam atividades entre continentes",
+      "button": "Comece Gratuitamente"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Produto",
+          "links": [
+            "Recursos",
+            "Preços",
+            "API"
+          ]
+        },
+        {
+          "title": "Empresa",
+          "links": [
+            "Sobre",
+            "Blog",
+            "Contato"
+          ]
+        },
+        {
+          "title": "Legal",
+          "links": [
+            "Privacidade",
+            "Termos",
+            "Segurança"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. Todos os direitos reservados.",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
+  }
 }

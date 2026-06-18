@@ -1,5 +1,114 @@
 {
-  "app": { "title": "Chronos", "tagline": "Immer Pünktlich", "description": "Präzise Zeitsynchronisation für eine vernetzte Welt" },
-  "nav": { "home": "Startseite", "worldClock": "Weltuhr", "converter": "Konverter", "meetings": "Besprechungseinladungen", "countdown": "Countdown", "dst": "DST-Tracker", "team": "Team-Dashboard", "countries": "Länder und Städte", "widget": "Widget", "dashboard": "Dashboard" },
-  "common": { "language": "Sprache", "theme": "Design", "dark": "Dunkel", "light": "Hell", "back": "Zurück", "search": "Suchen", "loading": "Wird geladen...", "error": "Fehler", "success": "Erfolg", "close": "Schließen", "save": "Speichern", "cancel": "Abbrechen", "delete": "Löschen", "edit": "Bearbeiten", "add": "Hinzufügen", "remove": "Entfernen" }
+  "app": {
+    "title": "Chronos",
+    "tagline": "Immer Pünktlich",
+    "description": "Präzise Zeitsynchronisation für eine vernetzte Welt"
+  },
+  "nav": {
+    "home": "Startseite",
+    "worldClock": "Weltuhr",
+    "converter": "Konverter",
+    "meetings": "Besprechungseinladungen",
+    "countdown": "Countdown",
+    "dst": "DST-Tracker",
+    "team": "Team-Dashboard",
+    "countries": "Länder und Städte",
+    "widget": "Widget",
+    "dashboard": "Dashboard"
+  },
+  "common": {
+    "language": "Sprache",
+    "theme": "Design",
+    "dark": "Dunkel",
+    "light": "Hell",
+    "back": "Zurück",
+    "search": "Suchen",
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "remove": "Entfernen"
+  },
+  "home": {
+    "subtitle": "Präzise Zeitsynchronisation für eine vernetzte Welt. Echtzeit-Uhrsynchronisation, Zeitzonenumrechnung und Tools zur Teamkoordination.",
+    "badge": "Präzises Timing",
+    "cta": {
+      "getStarted": "Jetzt Starten",
+      "learnMore": "Mehr Erfahren"
+    },
+    "capabilitiesBadge": "Funktionen",
+    "featuresTitleBold": "Premium-Funktionen",
+    "featuresTitleRest": "für globale Teams",
+    "features": [
+      {
+        "title": "Globale Abdeckung",
+        "desc": "Über 180 Zeitzonen mit Echtzeit-Synchronisation"
+      },
+      {
+        "title": "Sofortige Umrechnung",
+        "desc": "Zeiten zwischen mehreren Zeitzonen sofort umrechnen"
+      },
+      {
+        "title": "Teamkoordination",
+        "desc": "Finden Sie die perfekte Besprechungszeit für verteilte Teams"
+      },
+      {
+        "title": "Präzisionsverfolgung",
+        "desc": "Atomuhr-Genauigkeit für kritische Vorgänge"
+      },
+      {
+        "title": "Analysen",
+        "desc": "Zeitzonenmuster und Teamverfügbarkeit verfolgen"
+      },
+      {
+        "title": "Einfaches Teilen",
+        "desc": "Besprechungszeiten mit automatischer Lokalisierung teilen"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "Bereit, die globale",
+      "titleRest": "Zeitplanung zu meistern?",
+      "subtitle": "Schließen Sie sich Tausenden von Fachleuten an, die sich über Kontinente hinweg koordinieren",
+      "button": "Kostenlos Starten"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Produkt",
+          "links": [
+            "Funktionen",
+            "Preise",
+            "API"
+          ]
+        },
+        {
+          "title": "Unternehmen",
+          "links": [
+            "Über Uns",
+            "Blog",
+            "Kontakt"
+          ]
+        },
+        {
+          "title": "Rechtliches",
+          "links": [
+            "Datenschutz",
+            "Bedingungen",
+            "Sicherheit"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. Alle Rechte vorbehalten.",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
+  }
 }

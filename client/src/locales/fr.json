@@ -1,5 +1,114 @@
 {
-  "app": { "title": "Chronos", "tagline": "Toujours à l'Heure", "description": "Synchronisation de temps précise pour un monde connecté" },
-  "nav": { "home": "Accueil", "worldClock": "Horloge Mondiale", "converter": "Convertisseur", "meetings": "Invitations de Réunion", "countdown": "Compte à Rebours", "dst": "Suivi DST", "team": "Tableau de Bord Équipe", "countries": "Pays et Villes", "widget": "Widget", "dashboard": "Tableau de Bord" },
-  "common": { "language": "Langue", "theme": "Thème", "dark": "Sombre", "light": "Clair", "back": "Retour", "search": "Rechercher", "loading": "Chargement...", "error": "Erreur", "success": "Succès", "close": "Fermer", "save": "Enregistrer", "cancel": "Annuler", "delete": "Supprimer", "edit": "Modifier", "add": "Ajouter", "remove": "Supprimer" }
+  "app": {
+    "title": "Chronos",
+    "tagline": "Toujours à l'Heure",
+    "description": "Synchronisation de temps précise pour un monde connecté"
+  },
+  "nav": {
+    "home": "Accueil",
+    "worldClock": "Horloge Mondiale",
+    "converter": "Convertisseur",
+    "meetings": "Invitations de Réunion",
+    "countdown": "Compte à Rebours",
+    "dst": "Suivi DST",
+    "team": "Tableau de Bord Équipe",
+    "countries": "Pays et Villes",
+    "widget": "Widget",
+    "dashboard": "Tableau de Bord"
+  },
+  "common": {
+    "language": "Langue",
+    "theme": "Thème",
+    "dark": "Sombre",
+    "light": "Clair",
+    "back": "Retour",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "remove": "Supprimer"
+  },
+  "home": {
+    "subtitle": "Synchronisation horaire précise pour un monde connecté. Synchronisation d'horloge en temps réel, conversion de fuseaux horaires et outils de coordination d'équipe.",
+    "badge": "Précision Horaire",
+    "cta": {
+      "getStarted": "Commencer",
+      "learnMore": "En Savoir Plus"
+    },
+    "capabilitiesBadge": "Fonctionnalités",
+    "featuresTitleBold": "Fonctionnalités Premium",
+    "featuresTitleRest": "pour les Équipes Mondiales",
+    "features": [
+      {
+        "title": "Couverture Mondiale",
+        "desc": "Plus de 180 fuseaux horaires synchronisés en temps réel"
+      },
+      {
+        "title": "Conversion Instantanée",
+        "desc": "Convertissez les horaires entre plusieurs fuseaux instantanément"
+      },
+      {
+        "title": "Coordination d'Équipe",
+        "desc": "Trouvez l'horaire parfait pour les réunions d'équipes distribuées"
+      },
+      {
+        "title": "Suivi de Précision",
+        "desc": "Précision d'horloge atomique pour les opérations critiques"
+      },
+      {
+        "title": "Analytique",
+        "desc": "Suivez les habitudes horaires et la disponibilité des équipes"
+      },
+      {
+        "title": "Partage Facile",
+        "desc": "Partagez les horaires de réunion avec localisation automatique"
+      }
+    ],
+    "ctaSection": {
+      "titleBold": "Prêt à maîtriser",
+      "titleRest": "la gestion horaire mondiale ?",
+      "subtitle": "Rejoignez des milliers de professionnels coordonnant leurs activités à travers les continents",
+      "button": "Commencer Gratuitement"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Produit",
+          "links": [
+            "Fonctionnalités",
+            "Tarifs",
+            "API"
+          ]
+        },
+        {
+          "title": "Entreprise",
+          "links": [
+            "À Propos",
+            "Blog",
+            "Contact"
+          ]
+        },
+        {
+          "title": "Légal",
+          "links": [
+            "Confidentialité",
+            "Conditions",
+            "Sécurité"
+          ]
+        }
+      ],
+      "copyright": "© {{year}} WhatTime. Tous droits réservés.",
+      "social": [
+        "Twitter",
+        "GitHub",
+        "LinkedIn"
+      ]
+    }
+  }
 }
