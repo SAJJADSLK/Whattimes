@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Clock, Sunrise, Sunset, Compass } from 'lucide-react';
 import { DateTime } from 'luxon';
+import { setSEOMeta } from '@/lib/seo';
+
+const SITE_URL = 'https://www.whattime.info';
 
 export default function CityDetailPage() {
   const params = useParams();
@@ -75,18 +78,15 @@ export default function CityDetailPage() {
   // Update page title and meta tags dynamically
   useEffect(() => {
     if (city) {
-      document.title = `Exact Time in ${city.name} Right Now - Live Clock`;
-      
-      // Update meta description
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute(
-          'content',
-          `What time is it in ${city.name}? Check the official current local time, timezone data (${city.timezone}), and daylight saving time changes for ${city.name}, ${city.country}.`
-        );
-      }
+      const canonical = `${SITE_URL}/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
+      setSEOMeta({
+        title: `Exact Time in ${city.name} Right Now - Live Clock`,
+        description: `What time is it in ${city.name}? Check the official current local time, timezone data (${city.timezone}), and daylight saving time changes for ${city.name}, ${city.country}.`,
+        url: canonical,
+        type: 'website',
+      });
     }
-  }, [city]);
+  }, [city, countryParam, cityParam]);
 
   if (!city) {
     return (
@@ -99,7 +99,7 @@ export default function CityDetailPage() {
     );
   }
 
-  const canonicalUrl = `https://www.whattime.info/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
+  const canonicalUrl = `${SITE_URL}/${countryParam}/${cityParam.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
     <>

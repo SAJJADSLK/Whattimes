@@ -4,6 +4,14 @@ import { trpc } from '@/lib/trpc';
 import { useEffect, useState } from 'react';
 import { Clock, MapPin, Globe, Zap, Share2, Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import {
+  setSEOMeta,
+  setStructuredData,
+  generateCitySchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo';
+
+const SITE_URL = 'https://www.whattime.info';
 
 export default function CityPage() {
   const { t } = useTranslation();
@@ -28,6 +36,46 @@ export default function CityPage() {
     },
     { enabled: !!cityData }
   );
+
+  // Unique per-page SEO: title, meta description, canonical, and JSON-LD.
+  // Without this, every city page shows Google the same generic homepage
+  // title/description instead of a unique one per city.
+  useEffect(() => {
+    if (!cityData || !country || !city) return;
+
+    const pageUrl = `${SITE_URL}/${country}/${city}`;
+
+    setSEOMeta({
+      title: `Current Time in ${cityData.name}, ${country} - Live Clock & Timezone`,
+      description: `What time is it in ${cityData.name} right now? Live local time, ${cityData.timezone} timezone details, UTC offset, and sunrise/sunset for ${cityData.name}, ${country}.`,
+      url: pageUrl,
+      type: 'website',
+    });
+
+    setStructuredData({
+      '@context': 'https://schema.org',
+      '@graph': [
+        (() => {
+          const { '@context': _omit, ...schema } = generateCitySchema({
+            name: cityData.name,
+            country,
+            timezone: cityData.timezone,
+            latitude: Number(cityData.latitude),
+            longitude: Number(cityData.longitude),
+          });
+          return schema;
+        })(),
+        (() => {
+          const { '@context': _omit, ...schema } = generateBreadcrumbSchema([
+            { name: 'Home', url: SITE_URL },
+            { name: country, url: `${SITE_URL}/${country}` },
+            { name: cityData.name, url: pageUrl },
+          ]);
+          return schema;
+        })(),
+      ],
+    });
+  }, [cityData, country, city]);
 
   const handleCopyTime = () => {
     const timeStr = formatClockTime(time);

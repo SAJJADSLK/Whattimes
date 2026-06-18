@@ -1,10 +1,13 @@
-import { useParams } from 'wouter';
-import { useMemo } from 'react';
+import { useParams, Link } from 'wouter';
+import { useEffect, useMemo } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Clock } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { setSEOMeta, setStructuredData } from '@/lib/seo';
+
+const SITE_URL = 'https://www.whattime.info';
 
 export default function CountryPage() {
   const params = useParams();
@@ -29,10 +32,32 @@ export default function CountryPage() {
     );
   }, [allCities, formattedCountry]);
 
-  const handleCityClick = (cityName: string) => {
-    const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
-    navigate(`/${countryParam}/${citySlug}`);
-  };
+  const citySlug = (cityName: string) => cityName.toLowerCase().replace(/\s+/g, '-');
+
+  // Unique per-page SEO: title, meta description, canonical, and JSON-LD
+  // with the correct production domain.
+  useEffect(() => {
+    if (!countryParam) return;
+
+    const pageUrl = `${SITE_URL}/${countryParam}`;
+
+    setSEOMeta({
+      title: `Current Time in ${formattedCountry} - All Cities & Timezones`,
+      description: `Check the current time in every major city in ${formattedCountry}. Live clocks, timezones, and UTC offsets for ${citiesInCountry.length || 'all'} cities.`,
+      url: pageUrl,
+      type: 'website',
+    });
+
+    setStructuredData({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: `Time in ${formattedCountry} - All Cities`,
+      description: `Check current time in all cities of ${formattedCountry}. Real-time clock, timezone converter, and DST information.`,
+      url: pageUrl,
+      areaServed: formattedCountry,
+      numberOfItems: citiesInCountry.length,
+    });
+  }, [countryParam, formattedCountry, citiesInCountry.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -67,45 +92,44 @@ export default function CountryPage() {
         {citiesInCountry.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {citiesInCountry.map((city) => (
-              <Card
+              <Link
                 key={city.id}
-                className="p-6 hover:shadow-lg transition-shadow cursor-pointer group"
-                onClick={() => handleCityClick(city.name)}
+                href={`/${countryParam}/${citySlug(city.name)}`}
+                className="block"
               >
-                <div className="space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-accent transition-colors">
-                        {city.name}
-                      </h3>
-                      <p className="text-sm text-slate-600 mt-1">{city.country}</p>
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-900 group-hover:text-accent transition-colors">
+                          {city.name}
+                        </h3>
+                        <p className="text-sm text-slate-600 mt-1">{city.country}</p>
+                      </div>
+                      <Clock className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <Clock className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
 
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-600">Timezone:</span>
-                      <span className="font-mono text-sm font-semibold text-slate-900">
-                        {city.timezone}
-                      </span>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-slate-600">Timezone:</span>
+                        <span className="font-mono text-sm font-semibold text-slate-900">
+                          {city.timezone}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-slate-600">UTC Offset:</span>
+                        <span className="font-mono text-sm font-semibold text-slate-900">
+                          {city.utcOffset || 'N/A'}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-600">UTC Offset:</span>
-                      <span className="font-mono text-sm font-semibold text-slate-900">
-                        {city.utcOffset || 'N/A'}
-                      </span>
-                    </div>
-                  </div>
 
-                  <Button
-                    className="w-full mt-4 bg-foreground hover:bg-blue-700"
-                    onClick={() => handleCityClick(city.name)}
-                  >
-                    View Time
-                  </Button>
-                </div>
-              </Card>
+                    <Button className="w-full mt-4 bg-foreground hover:bg-blue-700">
+                      View Time
+                    </Button>
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
         ) : (
@@ -122,19 +146,6 @@ export default function CountryPage() {
           </div>
         )}
       </div>
-
-      {/* SEO Meta Tags */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
-          name: `Time in ${formattedCountry} - All Cities`,
-          description: `Check current time in all cities of ${formattedCountry}. Real-time clock, timezone converter, and DST information.`,
-          url: `https://www.whattime.info/${countryParam}`,
-          areaServed: formattedCountry,
-          numberOfItems: citiesInCountry.length,
-        })}
-      </script>
     </div>
   );
 }
