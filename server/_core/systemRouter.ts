@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { notifyOwner } from "./notification.js";
 import { adminProcedure, publicProcedure, router } from "./trpc.js";
-
 export const systemRouter = router({
   health: publicProcedure
     .input(
@@ -12,7 +11,6 @@ export const systemRouter = router({
     .query(() => ({
       ok: true,
     })),
-
   notifyOwner: adminProcedure
     .input(
       z.object({
@@ -21,7 +19,10 @@ export const systemRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const delivered = await notifyOwner(input);
+      const delivered = await notifyOwner({
+        title: input.title ?? "",
+        content: input.content ?? "",
+      });
       return {
         success: delivered,
       } as const;
