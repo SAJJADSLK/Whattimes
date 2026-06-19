@@ -1,5 +1,5 @@
 import { useParams, Link } from 'wouter';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
