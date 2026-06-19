@@ -1,5 +1,5 @@
 import { useParams, Link } from 'wouter';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -21,15 +21,14 @@ export default function CountryPage() {
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }, [countryParam]);
 
-  // Fetch all cities
-  const { data: citiesInCountry = [] } = trpc.cities.getByCountry.useQuery({
-  country: formattedCountry,
-});
+  // Fetch cities for this country directly (no limit issues)
+  const { data: citiesInCountry = [] } = trpc.cities.getByCountry.useQuery(
+    { country: formattedCountry },
+    { enabled: !!formattedCountry }
+  );
 
   const citySlug = (cityName: string) => cityName.toLowerCase().replace(/\s+/g, '-');
 
-  // Unique per-page SEO: title, meta description, canonical, and JSON-LD
-  // with the correct production domain.
   useEffect(() => {
     if (!countryParam) return;
 
