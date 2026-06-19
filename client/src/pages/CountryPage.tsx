@@ -22,15 +22,9 @@ export default function CountryPage() {
   }, [countryParam]);
 
   // Fetch all cities
-  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
-
-  // Filter cities by country
-  const citiesInCountry = useMemo(() => {
-    if (!allCities) return [];
-    return allCities.filter((city) =>
-      city.country.toLowerCase() === formattedCountry.toLowerCase()
-    );
-  }, [allCities, formattedCountry]);
+  const { data: citiesInCountry = [] } = trpc.cities.getByCountry.useQuery({
+  country: formattedCountry,
+});
 
   const citySlug = (cityName: string) => cityName.toLowerCase().replace(/\s+/g, '-');
 
