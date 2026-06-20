@@ -70,9 +70,9 @@ export default function Timer() {
         {/* Header */}
         <div className="mb-12 space-y-4">
           <h1 className="text-5xl font-light">
-            <span className="font-semibold text-accent">Timer</span>
+            <span className="font-semibold text-accent">{t('timer.heading')}</span>
           </h1>
-          <p className="text-lg text-foreground/70">Set and track time with precision</p>
+          <p className="text-lg text-foreground/70">{t('timer.subtitle')}</p>
         </div>
 
         {/* Timer Display */}
@@ -99,7 +99,7 @@ export default function Timer() {
               {!isRunning && totalSeconds === 0 && (
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-foreground/60 uppercase">Hours</label>
+                    <label className="text-xs font-semibold text-foreground/60 uppercase">{t('timer.hours')}</label>
                     <input
                       type="number"
                       min="0"
@@ -110,7 +110,7 @@ export default function Timer() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-foreground/60 uppercase">Minutes</label>
+                    <label className="text-xs font-semibold text-foreground/60 uppercase">{t('timer.minutes')}</label>
                     <input
                       type="number"
                       min="0"
@@ -121,7 +121,7 @@ export default function Timer() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-foreground/60 uppercase">Seconds</label>
+                    <label className="text-xs font-semibold text-foreground/60 uppercase">{t('timer.seconds')}</label>
                     <input
                       type="number"
                       min="0"
@@ -141,7 +141,7 @@ export default function Timer() {
                     onClick={handleSetTime}
                     className="flex-1 px-4 py-3 bg-accent text-background rounded-lg hover:bg-accent/90 transition-luxury font-semibold"
                   >
-                    Set Timer
+                    {t('timer.setTimer')}
                   </button>
                 ) : (
                   <>
@@ -150,14 +150,14 @@ export default function Timer() {
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-background rounded-lg hover:bg-accent/90 transition-luxury"
                     >
                       {isRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                      {isRunning ? 'Pause' : 'Start'}
+                      {isRunning ? t('timer.pause') : t('timer.start')}
                     </button>
                     <button
                       onClick={handleReset}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-foreground/10 hover:bg-foreground/20 text-foreground rounded-lg transition-luxury"
                     >
                       <RotateCcw className="w-4 h-4" />
-                      Reset
+                      {t('timer.reset')}
                     </button>
                   </>
                 )}

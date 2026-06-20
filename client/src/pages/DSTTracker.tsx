@@ -2,8 +2,10 @@ import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 
 export default function DSTTracker() {
+  const { t } = useTranslation();
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   // Common timezones with DST
@@ -88,11 +90,11 @@ export default function DSTTracker() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <AlertCircle className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold text-slate-900">DST Tracker</span>
+              <span className="text-xl font-bold text-slate-900">{t('dstTracker.title')}</span>
             </div>
           </div>
         </div>
@@ -101,15 +103,15 @@ export default function DSTTracker() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Daylight Saving Time Tracker</h1>
+          <h1 className="text-4xl font-bold text-slate-900">{t('dstTracker.heading')}</h1>
           <p className="text-lg text-slate-600">
-            Never miss DST changes across the world
+            {t('dstTracker.subtitle')}
           </p>
         </div>
 
         {/* Year Selector */}
         <div className="mb-12 flex items-center gap-4">
-          <label className="text-sm font-semibold text-slate-700">Select Year:</label>
+          <label className="text-sm font-semibold text-slate-700">{t('dstTracker.selectYear')}</label>
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
@@ -149,15 +151,15 @@ export default function DSTTracker() {
                     />
                     <div>
                       <div className="font-semibold text-slate-900">
-                        {change.type === 'spring' ? 'Spring Forward' : 'Fall Back'}
+                        {change.type === 'spring' ? t('dstTracker.springForward') : t('dstTracker.fallBack')}
                       </div>
                       <div className="text-sm text-slate-600">
                         {change.date} at {change.time}
                       </div>
                       <div className="text-xs text-slate-500 mt-1">
                         {change.type === 'spring'
-                          ? 'Clocks move forward 1 hour'
-                          : 'Clocks move back 1 hour'}
+                          ? t('dstTracker.clocksForward')
+                          : t('dstTracker.clocksBack')}
                       </div>
                     </div>
                   </div>
@@ -169,29 +171,23 @@ export default function DSTTracker() {
 
         {/* Info Section */}
         <div className="mt-16 bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
-          <h3 className="text-lg font-semibold text-blue-900">About Daylight Saving Time</h3>
+          <h3 className="text-lg font-semibold text-blue-900">{t('dstTracker.about')}</h3>
           <ul className="space-y-3 text-blue-800">
             <li className="flex gap-3">
               <span className="font-bold">•</span>
-              <span>
-                DST is the practice of setting clocks forward by one hour during warmer months
-              </span>
+              <span>{t('dstTracker.fact1')}</span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold">•</span>
-              <span>Not all countries observe DST; some regions use it partially</span>
+              <span>{t('dstTracker.fact2')}</span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold">•</span>
-              <span>
-                DST typically begins in spring (March/April) and ends in fall (September/October)
-              </span>
+              <span>{t('dstTracker.fact3')}</span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold">•</span>
-              <span>
-                Always verify DST dates for your specific timezone, as they can vary by region
-              </span>
+              <span>{t('dstTracker.fact4')}</span>
             </li>
           </ul>
         </div>

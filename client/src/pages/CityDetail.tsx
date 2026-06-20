@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Clock, Sun, Moon } from 'lucide-react';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function CityDetail() {
+  const { t } = useTranslation();
   const [cityName] = useState('New York');
   const [timezone] = useState('America/New_York');
 
@@ -34,7 +36,7 @@ export default function CityDetail() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <MapPin className="w-6 h-6 text-accent" />
@@ -57,7 +59,7 @@ export default function CityDetail() {
             <div className="text-7xl font-mono font-bold">
               {time ? formatClockTime(time) : '00:00:00'}
             </div>
-            <div className="text-2xl font-semibold">{time?.date || 'Loading...'}</div>
+            <div className="text-2xl font-semibold">{time?.date || t('common.loading')}</div>
           </div>
         </div>
 
@@ -67,29 +69,29 @@ export default function CityDetail() {
           <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-4">
             <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
               <Clock className="w-5 h-5 text-accent" />
-              Timezone Information
+              {t('cityDetail.timezoneInfo')}
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-600">Timezone</span>
+                <span className="text-slate-600">{t('common.timezone')}</span>
                 <span className="font-semibold text-slate-900">{timezone}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-600">UTC Offset</span>
+                <span className="text-slate-600">{t('common.utcOffset')}</span>
                 <span className="font-semibold text-slate-900">
                   {time ? `UTC${time.offset >= 0 ? '+' : ''}${Math.floor(time.offset / 60)}` : 'N/A'}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-600">Daylight Saving</span>
+                <span className="text-slate-600">{t('cityDetail.daylightSaving')}</span>
                 <span className={`font-semibold ${time?.isDst ? 'text-orange-600' : 'text-slate-900'}`}>
-                  {time?.isDst ? 'Active' : 'Inactive'}
+                  {time?.isDst ? t('common.active') : t('common.inactive')}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-600">Week Number</span>
+                <span className="text-slate-600">{t('cityDetail.weekNumber')}</span>
                 <span className="font-semibold text-slate-900">
-                  {time?.weekNumber ? `Week ${time.weekNumber}` : 'N/A'}
+                  {time?.weekNumber ? t('cityDetail.weekUnit', { n: time.weekNumber }) : 'N/A'}
                 </span>
               </div>
             </div>
@@ -99,20 +101,20 @@ export default function CityDetail() {
           <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-4">
             <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
               <Sun className="w-5 h-5 text-orange-600" />
-              Sun Schedule
+              {t('cityDetail.sunSchedule')}
             </h3>
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <Sun className="w-8 h-8 text-orange-500" />
                 <div>
-                  <div className="text-sm text-slate-600">Sunrise</div>
+                  <div className="text-sm text-slate-600">{t('cityPage.sunrise')}</div>
                   <div className="text-2xl font-semibold text-slate-900">06:00 AM</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <Moon className="w-8 h-8 text-slate-400" />
                 <div>
-                  <div className="text-sm text-slate-600">Sunset</div>
+                  <div className="text-sm text-slate-600">{t('cityPage.sunset')}</div>
                   <div className="text-2xl font-semibold text-slate-900">08:30 PM</div>
                 </div>
               </div>
@@ -122,12 +124,9 @@ export default function CityDetail() {
 
         {/* About Section */}
         <div className="bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
-          <h3 className="text-lg font-semibold text-blue-900">About {cityName}</h3>
+          <h3 className="text-lg font-semibold text-blue-900">{t('cityDetail.about')} {cityName}</h3>
           <p className="text-blue-800">
-            {cityName} is located in the {timezone} timezone. This page displays real-time information
-            including the current time, timezone offset, daylight saving time status, and sunrise/sunset
-            times. Use this information for scheduling meetings, coordinating with teams, or planning events
-            across different timezones.
+            {t('cityDetail.description', { city: cityName, timezone })}
           </p>
         </div>
 
@@ -138,7 +137,7 @@ export default function CityDetail() {
             '@type': 'LocalBusiness',
             name: cityName,
             description: `Current time and timezone information for ${cityName}`,
-            url: `https://chronos.example.com/city/${timezone}`,
+            url: `https://www.whattime.info/city/${timezone}`,
           })}
         </script>
       </div>

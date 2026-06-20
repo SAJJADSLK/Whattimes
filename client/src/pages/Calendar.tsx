@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function Calendar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getDaysInMonth = (date: Date) => {
@@ -14,12 +14,20 @@ export default function Calendar() {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  // Derive month/day names from the active language via Intl rather than
+  // maintaining parallel translation arrays - more accurate per-locale.
+  const monthNames = useMemo(() => {
+    return Array.from({ length: 12 }, (_, i) =>
+      new Intl.DateTimeFormat(i18n.language, { month: 'long' }).format(new Date(2024, i, 1))
+    );
+  }, [i18n.language]);
 
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNames = useMemo(() => {
+    // Jan 7, 2024 is a Sunday - use it as the anchor for weekday order.
+    return Array.from({ length: 7 }, (_, i) =>
+      new Intl.DateTimeFormat(i18n.language, { weekday: 'short' }).format(new Date(2024, 0, 7 + i))
+    );
+  }, [i18n.language]);
 
   const daysInMonth = getDaysInMonth(currentDate);
   const firstDay = getFirstDayOfMonth(currentDate);
@@ -54,9 +62,9 @@ export default function Calendar() {
         {/* Header */}
         <div className="mb-12 space-y-4">
           <h1 className="text-5xl font-light">
-            <span className="font-semibold text-accent">Calendar</span>
+            <span className="font-semibold text-accent">{t('calendar.heading')}</span>
           </h1>
-          <p className="text-lg text-foreground/70">View dates and plan ahead</p>
+          <p className="text-lg text-foreground/70">{t('calendar.subtitle')}</p>
         </div>
 
         {/* Calendar */}
@@ -123,7 +131,7 @@ export default function Calendar() {
 
               {/* Today Info */}
               <div className="pt-6 border-t border-border space-y-2">
-                <p className="text-sm text-foreground/60">Today</p>
+                <p className="text-sm text-foreground/60">{t('calendar.today')}</p>
                 <p className="text-lg font-semibold">
                   {monthNames[today.getMonth()]} {today.getDate()}, {today.getFullYear()}
                 </p>

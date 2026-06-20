@@ -4,8 +4,10 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, Copy, Share2, Plus, X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function MeetingInvite() {
+  const { t } = useTranslation();
   const [selectedTimezones, setSelectedTimezones] = useState<string[]>(['UTC', 'America/New_York']);
   const [meetingTime, setMeetingTime] = useState('14:00');
   const [meetingTitle, setMeetingTitle] = useState('Team Standup');
@@ -78,11 +80,11 @@ export default function MeetingInvite() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <Share2 className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold text-slate-900">Meeting Invite</span>
+              <span className="text-xl font-bold text-slate-900">{t('meetingInvite.title')}</span>
             </div>
           </div>
         </div>
@@ -91,9 +93,9 @@ export default function MeetingInvite() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Create Meeting Invite</h1>
+          <h1 className="text-4xl font-bold text-slate-900">{t('meetingInvite.heading')}</h1>
           <p className="text-lg text-slate-600">
-            Generate shareable meeting invites with automatic timezone localization
+            {t('meetingInvite.subtitle')}
           </p>
         </div>
 
@@ -102,20 +104,20 @@ export default function MeetingInvite() {
           <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-6">
             <div>
               <label className="block text-sm font-semibold text-slate-900 mb-2">
-                Meeting Title
+                {t('meetingInvite.meetingTitleLabel')}
               </label>
               <Input
                 type="text"
                 value={meetingTitle}
                 onChange={(e) => setMeetingTitle(e.target.value)}
                 className="w-full border-2 border-slate-200 focus:border-blue-600 rounded-lg py-3"
-                placeholder="e.g., Team Standup"
+                placeholder={t('meetingInvite.meetingTitlePlaceholder')}
               />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-slate-900 mb-2">
-                Meeting Time (UTC)
+                {t('meetingInvite.meetingTimeLabel')}
               </label>
               <Input
                 type="time"
@@ -128,7 +130,7 @@ export default function MeetingInvite() {
             {/* Timezone Selection */}
             <div>
               <label className="block text-sm font-semibold text-slate-900 mb-4">
-                Participant Timezones
+                {t('meetingInvite.participantTimezones')}
               </label>
 
               <div className="relative mb-4">
@@ -137,14 +139,14 @@ export default function MeetingInvite() {
                   className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-3 justify-start"
                 >
                   <Plus className="w-5 h-5 mr-2" />
-                  Add Timezone
+                  {t('meetingInvite.addTimezone')}
                 </Button>
 
                 {showSearch && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-slate-200 rounded-lg shadow-lg p-4 z-10">
                     <Input
                       type="text"
-                      placeholder="Search cities or timezones..."
+                      placeholder={t('meetingInvite.searchPlaceholder')}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="mb-4 border-2 border-slate-200 focus:border-blue-600"
@@ -191,7 +193,7 @@ export default function MeetingInvite() {
 
           {/* Time Preview */}
           <div className="bg-gradient-to-r from-slate-50 to-cyan-50 border-2 border-border rounded-xl p-8">
-            <h3 className="text-lg font-semibold text-slate-900 mb-6">Meeting Times</h3>
+            <h3 className="text-lg font-semibold text-slate-900 mb-6">{t('meetingInvite.meetingTimes')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {selectedTimezones.map((timezone) => (
                 <MeetingTimeCard
@@ -209,13 +211,13 @@ export default function MeetingInvite() {
             className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-6 text-lg"
           >
             <Share2 className="w-5 h-5 mr-2" />
-            Generate Invite Link
+            {t('meetingInvite.generateInviteLink')}
           </Button>
 
           {/* Invite Link Display */}
           {inviteLink && (
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-green-900">Invite Link Generated!</h3>
+              <h3 className="text-lg font-semibold text-green-900">{t('meetingInvite.linkGenerated')}</h3>
               <div className="bg-white border-2 border-green-200 rounded-lg p-4 flex items-center justify-between">
                 <code className="text-sm text-slate-600 break-all">{inviteLink}</code>
                 <Button
@@ -223,11 +225,11 @@ export default function MeetingInvite() {
                   className="ml-4 bg-green-600 hover:bg-green-700 text-white"
                 >
                   <Copy className="w-4 h-4 mr-2" />
-                  {copied ? 'Copied!' : 'Copy'}
+                  {copied ? t('meetingInvite.copied') : t('meetingInvite.copy')}
                 </Button>
               </div>
               <p className="text-sm text-green-700">
-                Share this link with participants. Each person will see the meeting time in their local timezone.
+                {t('meetingInvite.shareDesc')}
               </p>
             </div>
           )}

@@ -4,8 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Clock, Search, Globe, ArrowLeft, Star } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function WorldClock() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
@@ -51,11 +53,11 @@ export default function WorldClock() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <Globe className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold text-slate-900">World Clock</span>
+              <span className="text-xl font-bold text-slate-900">{t('nav.worldClock')}</span>
             </div>
           </div>
         </div>
@@ -65,9 +67,9 @@ export default function WorldClock() {
         {/* Search and Filter Section */}
         <div className="mb-12 space-y-6">
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold text-slate-900">100+ Cities at a Glance</h1>
+            <h1 className="text-4xl font-bold text-slate-900">{t('worldClock.title')}</h1>
             <p className="text-lg text-slate-600">
-              View current time across major cities worldwide
+              {t('worldClock.subtitle')}
             </p>
           </div>
 
@@ -76,7 +78,7 @@ export default function WorldClock() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
               type="text"
-              placeholder="Search cities or countries..."
+              placeholder={t('worldClock.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 py-3 border-2 border-slate-200 focus:border-blue-600 rounded-lg"
@@ -86,14 +88,14 @@ export default function WorldClock() {
           {/* Region Filter */}
           {regions && regions.length > 0 && (
             <div className="space-y-3">
-              <p className="text-sm font-semibold text-slate-700">Filter by Region</p>
+              <p className="text-sm font-semibold text-slate-700">{t('worldClock.filterByRegion')}</p>
               <div className="flex flex-wrap gap-2">
                 <Button
                   onClick={() => setSelectedRegion(null)}
                   variant={selectedRegion === null ? 'default' : 'outline'}
                   className={selectedRegion === null ? 'bg-foreground hover:bg-blue-700' : ''}
                 >
-                  All Regions
+                  {t('worldClock.allRegions')}
                 </Button>
                 {regions.map((region) => (
                   <Button
@@ -113,11 +115,11 @@ export default function WorldClock() {
         {/* Cities Grid */}
         {citiesLoading ? (
           <div className="text-center py-12">
-            <p className="text-slate-600">Loading cities...</p>
+            <p className="text-slate-600">{t('worldClock.loadingCities')}</p>
           </div>
         ) : filteredCities.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate-600">No cities found matching your search.</p>
+            <p className="text-slate-600">{t('worldClock.noResults')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -132,6 +134,7 @@ export default function WorldClock() {
 }
 
 function CityCard({ city }: { city: any }) {
+  const { t } = useTranslation();
   const { time } = useRealTimeClock(city.timezone);
   const [isFavorite, setIsFavorite] = useState(false);
   const addFavoriteMutation = trpc.favorites.add.useMutation();
@@ -172,19 +175,19 @@ function CityCard({ city }: { city: any }) {
         {/* Details */}
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-slate-500">Timezone</span>
+            <span className="text-slate-500">{t('common.timezone')}</span>
             <span className="font-medium text-slate-900">{city.timezone}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-500">UTC Offset</span>
+            <span className="text-slate-500">{t('common.utcOffset')}</span>
             <span className="font-medium text-slate-900">
               {time ? `UTC${time.offset >= 0 ? '+' : ''}${Math.floor(time.offset / 60)}` : 'N/A'}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-500">DST</span>
+            <span className="text-slate-500">{t('common.dst')}</span>
             <span className={`font-medium ${time?.isDst ? 'text-orange-600' : 'text-slate-900'}`}>
-              {time?.isDst ? 'Active' : 'Inactive'}
+              {time?.isDst ? t('common.active') : t('common.inactive')}
             </span>
           </div>
         </div>

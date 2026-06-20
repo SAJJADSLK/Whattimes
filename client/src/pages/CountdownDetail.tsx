@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Copy, Check, Share2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CountdownData {
   id: string;
@@ -13,6 +14,7 @@ interface CountdownData {
 }
 
 export default function CountdownDetail() {
+  const { t } = useTranslation();
   const [route, params] = useRoute('/countdown/:countdownId');
   const [copied, setCopied] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState({
@@ -76,18 +78,18 @@ export default function CountdownDetail() {
         <Card className="mb-6 p-12 shadow-lg bg-gradient-to-br from-slate-50 to-slate-100">
           {isExpired ? (
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-accent mb-2">🎉 Time's Up!</h2>
-              <p className="text-gray-600">The countdown has finished!</p>
+              <h2 className="text-4xl font-bold text-accent mb-2">🎉 {t('countdownDetail.timesUp')}</h2>
+              <p className="text-gray-600">{t('countdownDetail.finished')}</p>
             </div>
           ) : (
             <div className="space-y-8">
               {/* Countdown Display */}
               <div className="grid grid-cols-4 gap-4">
                 {[
-                  { value: timeRemaining.days, label: 'Days' },
-                  { value: timeRemaining.hours, label: 'Hours' },
-                  { value: timeRemaining.minutes, label: 'Minutes' },
-                  { value: timeRemaining.seconds, label: 'Seconds' },
+                  { value: timeRemaining.days, label: t('countdown.days') },
+                  { value: timeRemaining.hours, label: t('timer.hours') },
+                  { value: timeRemaining.minutes, label: t('timer.minutes') },
+                  { value: timeRemaining.seconds, label: t('timer.seconds') },
                 ].map((item) => (
                   <div key={item.label} className="text-center">
                     <div className="bg-white rounded-lg p-4 mb-2 shadow">
@@ -117,7 +119,7 @@ export default function CountdownDetail() {
         <Card className="mb-6 p-6">
           <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
             <Share2 className="w-5 h-5" />
-            Share This Countdown
+            {t('countdownDetail.shareCountdown')}
           </h3>
           <div className="flex gap-2">
             <input
@@ -134,12 +136,12 @@ export default function CountdownDetail() {
               {copied ? (
                 <>
                   <Check className="w-4 h-4" />
-                  Copied!
+                  {t('meetingInvite.copied')}
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  Copy Link
+                  {t('inviteDetail.copyLink')}
                 </>
               )}
             </Button>
@@ -148,17 +150,17 @@ export default function CountdownDetail() {
 
         {/* Info Section */}
         <Card className="p-6">
-          <h3 className="font-semibold text-gray-900 mb-3">About This Countdown</h3>
+          <h3 className="font-semibold text-gray-900 mb-3">{t('countdownDetail.aboutCountdown')}</h3>
           <div className="space-y-2 text-sm text-gray-600">
             <p>
-              <span className="font-medium">Created by:</span> {countdown.createdBy}
+              <span className="font-medium">{t('countdownDetail.createdBy')}</span> {countdown.createdBy}
             </p>
             <p>
-              <span className="font-medium">Target Date:</span>{' '}
+              <span className="font-medium">{t('countdownDetail.targetDate')}</span>{' '}
               {new Date(countdown.targetTime).toLocaleString()}
             </p>
             <p>
-              <span className="font-medium">Countdown ID:</span> {countdown.id}
+              <span className="font-medium">{t('countdownDetail.countdownId')}</span> {countdown.id}
             </p>
           </div>
         </Card>

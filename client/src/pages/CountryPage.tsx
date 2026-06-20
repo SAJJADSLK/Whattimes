@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Clock } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import { setSEOMeta, setStructuredData } from '@/lib/seo';
 
 const SITE_URL = 'https://www.whattime.info';
 
 export default function CountryPage() {
+  const { t } = useTranslation();
   const params = useParams();
   const [, navigate] = useLocation();
   const countryParam = params.country || '';
@@ -21,14 +23,21 @@ export default function CountryPage() {
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }, [countryParam]);
 
-  // Fetch cities for this country directly (no limit issues)
-  const { data: citiesInCountry = [] } = trpc.cities.getByCountry.useQuery(
-    { country: formattedCountry },
-    { enabled: !!formattedCountry }
-  );
+  // Fetch all cities
+  const { data: allCities } = trpc.cities.getAll.useQuery({ limit: 500 });
+
+  // Filter cities by country
+  const citiesInCountry = useMemo(() => {
+    if (!allCities) return [];
+    return allCities.filter((city) =>
+      city.country.toLowerCase() === formattedCountry.toLowerCase()
+    );
+  }, [allCities, formattedCountry]);
 
   const citySlug = (cityName: string) => cityName.toLowerCase().replace(/\s+/g, '-');
 
+  // Unique per-page SEO: title, meta description, canonical, and JSON-LD
+  // with the correct production domain.
   useEffect(() => {
     if (!countryParam) return;
 
@@ -65,7 +74,7 @@ export default function CountryPage() {
               className="gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              {t('common.back')}
             </Button>
             <div>
               <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
@@ -73,7 +82,7 @@ export default function CountryPage() {
                 {formattedCountry}
               </h1>
               <p className="text-slate-600 mt-1">
-                {citiesInCountry.length} cities • Time zones and current time
+                {t('countryPage.citiesSubtitle', { count: citiesInCountry.length })}
               </p>
             </div>
           </div>
@@ -104,13 +113,13 @@ export default function CountryPage() {
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-600">Timezone:</span>
+                        <span className="text-sm text-slate-600">{t('common.timezone')}:</span>
                         <span className="font-mono text-sm font-semibold text-slate-900">
                           {city.timezone}
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-600">UTC Offset:</span>
+                        <span className="text-sm text-slate-600">{t('common.utcOffset')}:</span>
                         <span className="font-mono text-sm font-semibold text-slate-900">
                           {city.utcOffset || 'N/A'}
                         </span>
@@ -118,7 +127,7 @@ export default function CountryPage() {
                     </div>
 
                     <Button className="w-full mt-4 bg-foreground hover:bg-blue-700">
-                      View Time
+                      {t('countryPage.viewTime')}
                     </Button>
                   </div>
                 </Card>
@@ -128,13 +137,13 @@ export default function CountryPage() {
         ) : (
           <div className="text-center py-12">
             <p className="text-slate-600 text-lg">
-              No cities found for {formattedCountry}
+              {t('countryPage.noCitiesFound', { country: formattedCountry })}
             </p>
             <Button
               className="mt-6"
               onClick={() => navigate('/')}
             >
-              Go Back Home
+              {t('countryPage.goBackHome')}
             </Button>
           </div>
         )}

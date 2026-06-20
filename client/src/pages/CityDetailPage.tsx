@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Clock, Sunrise, Sunset, Compass } from 'lucide-react';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 import { setSEOMeta } from '@/lib/seo';
 
 const SITE_URL = 'https://www.whattime.info';
 
 export default function CityDetailPage() {
+  const { t } = useTranslation();
   const params = useParams();
   const [, navigate] = useLocation();
   
@@ -92,8 +94,8 @@ export default function CityDetailPage() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">City not found</p>
-          <Button onClick={() => navigate('/')}>Go Back</Button>
+          <p className="text-gray-600 mb-4">{t('cityDetailPage.notFound')}</p>
+          <Button onClick={() => navigate('/')}>{t('cityDetailPage.goBack')}</Button>
         </div>
       </div>
     );
@@ -131,7 +133,7 @@ export default function CityDetailPage() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <h1 className="text-2xl font-bold text-slate-900">
               {city.name}, {city.country}
@@ -144,10 +146,10 @@ export default function CityDetailPage() {
           <div className="mb-12 space-y-6">
             <div className="space-y-2">
               <h1 className="text-5xl font-bold text-slate-900">
-                Exact Time in {city.name}
+                {t('cityDetailPage.exactTimeIn')} {city.name}
               </h1>
               <p className="text-xl text-slate-600">{city.country}</p>
-              <p className="text-sm text-slate-500">Timezone: {city.timezone}</p>
+              <p className="text-sm text-slate-500">{t('common.timezone')}: {city.timezone}</p>
             </div>
 
             {/* Large Clock Display - NO ADS ABOVE FOLD */}
@@ -155,7 +157,7 @@ export default function CityDetailPage() {
               <div className="text-8xl font-mono font-bold tracking-wider">
                 {time ? formatClockTime(time) : '00:00:00'}
               </div>
-              <div className="text-2xl font-semibold">{time?.date || 'Loading...'}</div>
+              <div className="text-2xl font-semibold">{time?.date || t('common.loading')}</div>
               <div className="text-sm opacity-90">
                 {city.timezone} • {city.country}
               </div>
@@ -168,23 +170,23 @@ export default function CityDetailPage() {
             <Card className="p-6 space-y-4">
               <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-red-600" />
-                Location
+                {t('home.location')}
               </h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-slate-600">City</span>
+                  <span className="text-slate-600">{t('cityDetailPage.city')}</span>
                   <span className="font-semibold text-slate-900">{city.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">Country</span>
+                  <span className="text-slate-600">{t('cityDetailPage.country')}</span>
                   <span className="font-semibold text-slate-900">{city.country}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">Region</span>
+                  <span className="text-slate-600">{t('cityDetailPage.region')}</span>
                   <span className="font-semibold text-slate-900">{city.region || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">Population</span>
+                  <span className="text-slate-600">{t('cityDetailPage.population')}</span>
                   <span className="font-semibold text-slate-900">
                     {city.population ? parseInt(city.population).toLocaleString() : 'N/A'}
                   </span>
@@ -196,20 +198,20 @@ export default function CityDetailPage() {
             <Card className="p-6 space-y-4">
               <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                 <Clock className="w-5 h-5 text-red-600" />
-                Timezone
+                {t('common.timezone')}
               </h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-slate-600">Timezone</span>
+                  <span className="text-slate-600">{t('common.timezone')}</span>
                   <span className="font-mono font-semibold text-slate-900">{city.timezone}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">UTC Offset</span>
+                  <span className="text-slate-600">{t('common.utcOffset')}</span>
                   <span className="font-mono font-semibold text-slate-900">{city.utcOffset || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">DST</span>
-                  <span className="font-semibold text-slate-900">{city.dst ? 'Yes' : 'No'}</span>
+                  <span className="text-slate-600">{t('common.dst')}</span>
+                  <span className="font-semibold text-slate-900">{city.dst ? t('common.active') : t('common.inactive')}</span>
                 </div>
               </div>
             </Card>
@@ -219,20 +221,20 @@ export default function CityDetailPage() {
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                   <Sunrise className="w-5 h-5 text-red-600" />
-                  Sun Times
+                  {t('cityDetailPage.sunTimes')}
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600">Sunrise</span>
+                    <span className="text-slate-600">{t('cityPage.sunrise')}</span>
                     <span className="font-semibold text-slate-900">{sunData.sunrise}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600">Sunset</span>
+                    <span className="text-slate-600">{t('cityPage.sunset')}</span>
                     <span className="font-semibold text-slate-900">{sunData.sunset}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600">Day Length</span>
-                    <span className="font-semibold text-slate-900">{sunData.dayLength} hours</span>
+                    <span className="text-slate-600">{t('cityDetailPage.dayLength')}</span>
+                    <span className="font-semibold text-slate-900">{t('cityDetailPage.hoursUnit', { count: sunData.dayLength })}</span>
                   </div>
                 </div>
               </Card>
@@ -244,7 +246,7 @@ export default function CityDetailPage() {
             <Card className="p-6 mb-12">
               <h3 className="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
                 <Compass className="w-5 h-5 text-red-600" />
-                Time Differences from {city.name}
+                {t('cityDetailPage.timeDifferencesFrom')} {city.name}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {timeDifferences.map((diff) => (

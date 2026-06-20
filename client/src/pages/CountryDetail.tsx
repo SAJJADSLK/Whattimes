@@ -7,8 +7,10 @@ import { Card } from '@/components/ui/card';
 import { ArrowLeft, MapPin, Clock, Globe } from 'lucide-react';
 import { Link } from 'wouter';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 
 export default function CountryDetail() {
+  const { t } = useTranslation();
   const params = useParams();
   const countryName = params.country ? decodeURIComponent(params.country) : '';
 
@@ -29,7 +31,7 @@ export default function CountryDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="text-gray-600">Loading...</p>
+        <p className="text-gray-600">{t('common.loading')}</p>
       </div>
     );
   }
@@ -38,9 +40,9 @@ export default function CountryDetail() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">Country not found</p>
+          <p className="text-gray-600 mb-4">{t('countryDetail.notFound')}</p>
           <Link href="/countries">
-            <Button>Back to Countries</Button>
+            <Button>{t('countryDetail.backToCountries')}</Button>
           </Link>
         </div>
       </div>
@@ -59,7 +61,7 @@ export default function CountryDetail() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">
@@ -75,21 +77,21 @@ export default function CountryDetail() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <MapPin className="w-5 h-5 text-accent" />
-                <p className="text-sm text-slate-600">Cities</p>
+                <p className="text-sm text-slate-600">{t('countryDetail.cities')}</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{countryCities.length}</p>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-5 h-5 text-accent" />
-                <p className="text-sm text-slate-600">Timezones</p>
+                <p className="text-sm text-slate-600">{t('countryDetail.timezones')}</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{timezones.length}</p>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Globe className="w-5 h-5 text-accent" />
-                <p className="text-sm text-slate-600">Region</p>
+                <p className="text-sm text-slate-600">{t('countryDetail.region')}</p>
               </div>
               <p className="text-3xl font-bold text-slate-900">{countryCities[0]?.region || 'N/A'}</p>
             </div>
@@ -99,7 +101,7 @@ export default function CountryDetail() {
         {/* Timezones Section */}
         {timezones.length > 1 && (
           <Card className="p-6 mb-12">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">Timezones in {countryName}</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">{t('countryDetail.timezonesIn')} {countryName}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {timezones.map(tz => {
                 const tzCities = countryCities.filter(c => c.timezone === tz);
@@ -107,7 +109,7 @@ export default function CountryDetail() {
                   <div key={tz} className="p-4 bg-slate-50 rounded-lg">
                     <p className="font-mono text-sm font-semibold text-slate-900 mb-2">{tz}</p>
                     <p className="text-xs text-slate-600">
-                      {tzCities.length} {tzCities.length === 1 ? 'city' : 'cities'}
+                      {t('countryDetail.cityCount', { count: tzCities.length })}
                     </p>
                   </div>
                 );
@@ -118,24 +120,22 @@ export default function CountryDetail() {
 
         {/* Cities Grid */}
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Cities in {countryName}</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">{t('countryDetail.citiesIn')} {countryName}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {countryCities.map((city) => (
-              <CityCard key={city.id} city={city} />
+              <CityCard key={city.id} city={city} countrySlug={countryName.toLowerCase().replace(/\s+/g, '-')} />
             ))}
           </div>
         </div>
 
         {/* SEO Content */}
         <div className="mt-16 pt-12 border-t border-slate-200 prose prose-sm max-w-none">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">About {countryName}</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('countryDetail.about')} {countryName}</h2>
           <p className="text-slate-600 mb-4">
-            {countryName} has {countryCities.length} major cities across {timezones.length} timezone{timezones.length > 1 ? 's' : ''}. 
-            Use this page to find current times in cities across {countryName} and compare them with other timezones worldwide.
+            {t('countryDetail.aboutDescP1', { country: countryName, cityCount: countryCities.length, tzCount: timezones.length })}
           </p>
           <p className="text-slate-600">
-            Perfect for scheduling meetings, calls, or events with people in {countryName}. 
-            Each city page provides real-time accuracy, sunrise/sunset times, and timezone information.
+            {t('countryDetail.aboutDescP2', { country: countryName })}
           </p>
         </div>
       </div>
@@ -143,11 +143,12 @@ export default function CountryDetail() {
   );
 }
 
-function CityCard({ city }: { city: any }) {
+function CityCard({ city, countrySlug }: { city: any; countrySlug: string }) {
   const { time } = useRealTimeClock(city.timezone);
+  const citySlug = city.name.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <Link href={`/city-detail/${encodeURIComponent(city.name)}`}>
+    <Link href={`/${countrySlug}/${citySlug}`}>
       <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer h-full">
         <div className="flex items-start justify-between mb-3">
           <div>

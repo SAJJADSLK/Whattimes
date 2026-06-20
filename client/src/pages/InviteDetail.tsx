@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Clock, MapPin, Users, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import { useRealTimeClock } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function InviteDetail() {
+  const { t } = useTranslation();
   const [route, params] = useRoute('/invite/:inviteId');
   const [copied, setCopied] = useState(false);
   const { time } = useRealTimeClock();
@@ -14,8 +16,8 @@ export default function InviteDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Invite not found</h1>
-          <p className="text-gray-600 mt-2">This invite link may have expired or is invalid.</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('inviteDetail.notFound')}</h1>
+          <p className="text-gray-600 mt-2">{t('inviteDetail.notFoundDesc')}</p>
         </div>
       </div>
     );
@@ -52,7 +54,7 @@ export default function InviteDetail() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">{invite.title}</h1>
-          <p className="text-gray-600">Organized by {invite.organizer}</p>
+          <p className="text-gray-600">{t('inviteDetail.organizedBy')} {invite.organizer}</p>
         </div>
 
         {/* Main Card */}
@@ -63,25 +65,25 @@ export default function InviteDetail() {
               <div>
                 <div className="flex items-center text-gray-600 mb-2">
                   <Clock className="w-5 h-5 mr-2" />
-                  <span className="text-sm font-medium">Proposed Time</span>
+                  <span className="text-sm font-medium">{t('inviteDetail.proposedTime')}</span>
                 </div>
                 <p className="text-2xl font-bold text-accent">{invite.proposedTime}</p>
-                <p className="text-sm text-gray-500 mt-1">Duration: {invite.duration}</p>
+                <p className="text-sm text-gray-500 mt-1">{t('inviteDetail.duration')} {invite.duration}</p>
               </div>
 
               <div>
                 <div className="flex items-center text-gray-600 mb-2">
                   <Users className="w-5 h-5 mr-2" />
-                  <span className="text-sm font-medium">Attendees</span>
+                  <span className="text-sm font-medium">{t('inviteDetail.attendees')}</span>
                 </div>
                 <p className="text-2xl font-bold text-accent">{invite.cities.length}</p>
-                <p className="text-sm text-gray-500 mt-1">Timezones</p>
+                <p className="text-sm text-gray-500 mt-1">{t('inviteDetail.timezonesLabel')}</p>
               </div>
             </div>
 
             {/* Cities and Local Times */}
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Local Times for Each City</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('inviteDetail.localTimes')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {invite.cities.map((city) => (
                   <div key={city.name} className="bg-gradient-to-br from-slate-50 to-slate-100 p-4 rounded-lg">
@@ -100,7 +102,7 @@ export default function InviteDetail() {
 
             {/* Share Section */}
             <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-semibold text-gray-900 mb-3">Share This Invite</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">{t('inviteDetail.shareInvite')}</h3>
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -116,12 +118,12 @@ export default function InviteDetail() {
                   {copied ? (
                     <>
                       <Check className="w-4 h-4" />
-                      Copied!
+                      {t('inviteDetail.copied')}
                     </>
                   ) : (
                     <>
                       <Copy className="w-4 h-4" />
-                      Copy Link
+                      {t('inviteDetail.copyLink')}
                     </>
                   )}
                 </Button>
@@ -130,8 +132,8 @@ export default function InviteDetail() {
 
             {/* Meta Information */}
             <div className="text-xs text-gray-500 space-y-1">
-              <p>Created: {invite.createdAt}</p>
-              <p>Expires: {invite.expiresAt}</p>
+              <p>{t('inviteDetail.created')} {invite.createdAt}</p>
+              <p>{t('inviteDetail.expires')} {invite.expiresAt}</p>
             </div>
           </div>
         </Card>
@@ -139,10 +141,10 @@ export default function InviteDetail() {
         {/* Action Buttons */}
         <div className="flex gap-4">
           <Button variant="default" className="flex-1">
-            Accept Invite
+            {t('inviteDetail.acceptInvite')}
           </Button>
           <Button variant="outline" className="flex-1">
-            Suggest Alternative Time
+            {t('inviteDetail.suggestAlternative')}
           </Button>
         </div>
       </div>

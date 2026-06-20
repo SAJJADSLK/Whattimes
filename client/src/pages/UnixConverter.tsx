@@ -42,9 +42,9 @@ export default function UnixConverter() {
         {/* Header */}
         <div className="mb-12 space-y-4">
           <h1 className="text-5xl font-light">
-            <span className="font-semibold text-accent">Unix Converter</span>
+            <span className="font-semibold text-accent">{t('unixConverter.heading')}</span>
           </h1>
-          <p className="text-lg text-foreground/70">Convert between Unix timestamps and human-readable dates</p>
+          <p className="text-lg text-foreground/70">{t('unixConverter.subtitle')}</p>
         </div>
 
         {/* Converter */}
@@ -60,7 +60,7 @@ export default function UnixConverter() {
 
             {/* Unix Timestamp Input */}
             <div className="space-y-3">
-              <label className="block text-sm font-semibold text-foreground/60 uppercase">Unix Timestamp</label>
+              <label className="block text-sm font-semibold text-foreground/60 uppercase">{t('unixConverter.unixTimestamp')}</label>
               <div className="flex gap-2">
                 <input
                   type="number"
@@ -81,7 +81,7 @@ export default function UnixConverter() {
 
             {/* Human Date Input */}
             <div className="space-y-3">
-              <label className="block text-sm font-semibold text-foreground/60 uppercase">ISO Date</label>
+              <label className="block text-sm font-semibold text-foreground/60 uppercase">{t('unixConverter.isoDate')}</label>
               <input
                 type="datetime-local"
                 value={humanDate.slice(0, 16)}
@@ -96,17 +96,17 @@ export default function UnixConverter() {
             <div className="space-y-4 pt-2">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-foreground/60 uppercase">Date</p>
+                  <p className="text-xs font-semibold text-foreground/60 uppercase">{t('unixConverter.date')}</p>
                   <p className="font-mono text-sm">{date.toLocaleDateString()}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-foreground/60 uppercase">Time</p>
+                  <p className="text-xs font-semibold text-foreground/60 uppercase">{t('unixConverter.time')}</p>
                   <p className="font-mono text-sm">{date.toLocaleTimeString()}</p>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <p className="text-xs font-semibold text-foreground/60 uppercase">Full ISO</p>
+                <p className="text-xs font-semibold text-foreground/60 uppercase">{t('unixConverter.fullIso')}</p>
                 <p className="font-mono text-xs break-all text-accent">{date.toISOString()}</p>
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function UnixConverter() {
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-accent text-background rounded-lg hover:bg-accent/90 transition-luxury font-semibold"
             >
               <RefreshCw className="w-4 h-4" />
-              Current Unix Time
+              {t('unixConverter.currentUnixTime')}
             </button>
           </div>
         </div>

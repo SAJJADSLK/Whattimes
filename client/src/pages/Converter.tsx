@@ -5,8 +5,10 @@ import { ArrowLeft, Plus, X, Clock } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { TimeScrubber } from '@/components/TimeScrubber';
+import { useTranslation } from 'react-i18next';
 
 export default function Converter() {
+  const { t, i18n } = useTranslation();
   const [selectedTimezones, setSelectedTimezones] = useState<string[]>(['UTC', 'America/New_York']);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -74,9 +76,9 @@ export default function Converter() {
               className="gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              {t('common.back')}
             </Button>
-            <h1 className="text-2xl font-bold text-gray-900">Timezone Converter</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('converter.title')}</h1>
           </div>
         </div>
       </nav>
@@ -84,13 +86,13 @@ export default function Converter() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Time Scrubber Section */}
         <div className="mb-12 bg-gradient-to-br from-slate-50 to-slate-100 p-8 rounded-lg">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Adjust Time</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">{t('converter.adjustTime')}</h2>
           <TimeScrubber value={scrubberTime} onChange={setScrubberTime} />
         </div>
 
         {/* Timezone Comparison Grid */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Compare Timezones</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('converter.compareTimezones')}</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {selectedTimezones.map((timezone) => (
@@ -101,7 +103,7 @@ export default function Converter() {
                 <button
                   onClick={() => removeTimezone(timezone)}
                   className="absolute top-2 right-2 p-1 hover:bg-blue-200 rounded"
-                  title="Remove timezone"
+                  title={t('converter.removeTimezone')}
                 >
                   <X className="w-4 h-4 text-gray-600" />
                 </button>
@@ -116,7 +118,7 @@ export default function Converter() {
                 </div>
 
                 <div className="text-sm text-gray-600">
-                  {new Date().toLocaleDateString('en-US', {
+                  {new Date().toLocaleDateString(i18n.language, {
                     timeZone: timezone,
                     weekday: 'short',
                     month: 'short',

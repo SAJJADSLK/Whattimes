@@ -1,7 +1,9 @@
 import { useParams } from 'wouter';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function CityStaticPage() {
+  const { t } = useTranslation();
   const params = useParams();
   const cityNumber = params.cityId;
   const [html, setHtml] = useState<string>('');
@@ -16,11 +18,11 @@ export default function CityStaticPage() {
           const content = await response.text();
           setHtml(content);
         } else {
-          setHtml('<div style="text-align: center; padding: 40px;"><h1>City page not found</h1></div>');
+          setHtml(`<div style="text-align: center; padding: 40px;"><h1>${t('cityStaticPage.notFound')}</h1></div>`);
         }
       } catch (error) {
         console.error('Error loading city page:', error);
-        setHtml('<div style="text-align: center; padding: 40px;"><h1>Error loading city page</h1></div>');
+        setHtml(`<div style="text-align: center; padding: 40px;"><h1>${t('cityStaticPage.errorLoading')}</h1></div>`);
       } finally {
         setLoading(false);
       }
@@ -30,7 +32,7 @@ export default function CityStaticPage() {
   }, [cityNumber]);
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: '40px' }}>Loading...</div>;
+    return <div style={{ textAlign: 'center', padding: '40px' }}>{t('common.loading')}</div>;
   }
 
   // Render the static HTML content

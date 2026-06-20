@@ -5,8 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Globe, Search, ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
+import { useTranslation } from 'react-i18next';
 
 export default function Countries() {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   
   // Fetch all cities to extract unique countries
@@ -39,7 +41,7 @@ export default function Countries() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="text-gray-600">Loading countries...</p>
+        <p className="text-gray-600">{t('countries.loadingCountries')}</p>
       </div>
     );
   }
@@ -51,10 +53,10 @@ export default function Countries() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-3 mb-6">
             <Globe className="w-8 h-8 text-accent" />
-            <h1 className="text-3xl font-bold text-slate-900">Countries & Timezones</h1>
+            <h1 className="text-3xl font-bold text-slate-900">{t('countries.heading')}</h1>
           </div>
           <p className="text-slate-600 mb-6">
-            Browse all countries and their timezones. Click on any country to see cities and current times.
+            {t('countries.subtitle')}
           </p>
           
           {/* Search */}
@@ -62,7 +64,7 @@ export default function Countries() {
             <Search className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
             <Input
               type="text"
-              placeholder="Search countries..."
+              placeholder={t('countries.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-2 text-base"
@@ -74,7 +76,7 @@ export default function Countries() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {filteredCountries.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">No countries found matching "{searchTerm}"</p>
+            <p className="text-gray-600 text-lg">{t('countries.noCountriesFound', { query: searchTerm })}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -89,7 +91,7 @@ export default function Countries() {
                       <div>
                         <h3 className="text-xl font-bold text-slate-900">{country}</h3>
                         <p className="text-sm text-slate-600 mt-1">
-                          {countryCities.length} {countryCities.length === 1 ? 'city' : 'cities'}
+                          {t('countries.cityCount', { count: countryCities.length })}
                         </p>
                       </div>
                       <ArrowRight className="w-5 h-5 text-accent flex-shrink-0" />
@@ -97,7 +99,7 @@ export default function Countries() {
                     
                     <div className="space-y-2">
                       <div>
-                        <p className="text-xs text-slate-600 font-semibold">TIMEZONES</p>
+                        <p className="text-xs text-slate-600 font-semibold">{t('countries.timezonesLabel')}</p>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {Array.from(timezones).slice(0, 3).map(tz => (
                             <span key={tz} className="inline-block bg-slate-100 text-blue-700 text-xs px-2 py-1 rounded">
@@ -106,7 +108,7 @@ export default function Countries() {
                           ))}
                           {timezones.size > 3 && (
                             <span className="inline-block bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded">
-                              +{timezones.size - 3} more
+                              {t('countries.moreCount', { count: timezones.size - 3 })}
                             </span>
                           )}
                         </div>
@@ -116,7 +118,7 @@ export default function Countries() {
                         <p className="text-xs text-slate-600">
                           {countryCities.length > 0 && (
                             <>
-                              <span className="font-semibold">Top cities:</span> {' '}
+                              <span className="font-semibold">{t('countries.topCities')}</span> {' '}
                               {countryCities.slice(0, 2).map(c => c.name).join(', ')}
                               {countryCities.length > 2 && '...'}
                             </>
@@ -136,17 +138,17 @@ export default function Countries() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <p className="text-4xl font-bold text-accent">{countries.length}</p>
-              <p className="text-slate-600 mt-2">Countries</p>
+              <p className="text-slate-600 mt-2">{t('countries.statsCountries')}</p>
             </div>
             <div className="text-center">
               <p className="text-4xl font-bold text-accent">{cities?.length || 0}</p>
-              <p className="text-slate-600 mt-2">Cities</p>
+              <p className="text-slate-600 mt-2">{t('countries.statsCities')}</p>
             </div>
             <div className="text-center">
               <p className="text-4xl font-bold text-accent">
                 {new Set(cities?.map(c => c.timezone)).size}
               </p>
-              <p className="text-slate-600 mt-2">Timezones</p>
+              <p className="text-slate-600 mt-2">{t('countries.statsTimezones')}</p>
             </div>
           </div>
         </div>

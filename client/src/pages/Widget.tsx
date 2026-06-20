@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Copy, Code } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Widget() {
+  const { t } = useTranslation();
   const [widgetStyle, setWidgetStyle] = useState<'digital' | 'analog'>('digital');
   const [widgetTheme, setWidgetTheme] = useState<'light' | 'dark'>('light');
   const [timezone, setTimezone] = useState('UTC');
   const [copied, setCopied] = useState(false);
 
-  const iframeCode = `<iframe src="https://chronos.example.com/embed?timezone=${timezone}&style=${widgetStyle}&theme=${widgetTheme}" width="300" height="150" frameborder="0" style="border: none; border-radius: 8px;"></iframe>`;
+  const iframeCode = `<iframe src="https://www.whattime.info/embed?timezone=${timezone}&style=${widgetStyle}&theme=${widgetTheme}" width="300" height="150" frameborder="0" style="border: none; border-radius: 8px;"></iframe>`;
 
-  const scriptCode = `<script src="https://chronos.example.com/widget.js"></script>
-<div class="chronos-clock" data-timezone="${timezone}" data-style="${widgetStyle}" data-theme="${widgetTheme}"></div>`;
+  const scriptCode = `<script src="https://www.whattime.info/widget.js"></script>
+<div class="whattime-clock" data-timezone="${timezone}" data-style="${widgetStyle}" data-theme="${widgetTheme}"></div>`;
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -32,11 +34,11 @@ export default function Widget() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <Code className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold text-slate-900">Embed Widget</span>
+              <span className="text-xl font-bold text-slate-900">{t('widget.title')}</span>
             </div>
           </div>
         </div>
@@ -45,9 +47,9 @@ export default function Widget() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Embeddable Clock Widget</h1>
+          <h1 className="text-4xl font-bold text-slate-900">{t('widget.heading')}</h1>
           <p className="text-lg text-slate-600">
-            Add a real-time clock to your website with just a few lines of code
+            {t('widget.subtitle')}
           </p>
         </div>
 
@@ -57,7 +59,7 @@ export default function Widget() {
             <div className="bg-white border-2 border-slate-200 rounded-xl p-6 space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-3">
-                  Timezone
+                  {t('common.timezone')}
                 </label>
                 <select
                   value={timezone}
@@ -74,7 +76,7 @@ export default function Widget() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-3">
-                  Style
+                  {t('widget.style')}
                 </label>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2">
@@ -85,7 +87,7 @@ export default function Widget() {
                       onChange={(e) => setWidgetStyle(e.target.value as 'digital' | 'analog')}
                       className="w-4 h-4"
                     />
-                    <span className="text-sm text-slate-700">Digital</span>
+                    <span className="text-sm text-slate-700">{t('widget.digital')}</span>
                   </label>
                   <label className="flex items-center gap-2">
                     <input
@@ -95,14 +97,14 @@ export default function Widget() {
                       onChange={(e) => setWidgetStyle(e.target.value as 'digital' | 'analog')}
                       className="w-4 h-4"
                     />
-                    <span className="text-sm text-slate-700">Analog</span>
+                    <span className="text-sm text-slate-700">{t('widget.analog')}</span>
                   </label>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-3">
-                  Theme
+                  {t('common.theme')}
                 </label>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2">
@@ -113,7 +115,7 @@ export default function Widget() {
                       onChange={(e) => setWidgetTheme(e.target.value as 'light' | 'dark')}
                       className="w-4 h-4"
                     />
-                    <span className="text-sm text-slate-700">Light</span>
+                    <span className="text-sm text-slate-700">{t('common.light')}</span>
                   </label>
                   <label className="flex items-center gap-2">
                     <input
@@ -123,7 +125,7 @@ export default function Widget() {
                       onChange={(e) => setWidgetTheme(e.target.value as 'light' | 'dark')}
                       className="w-4 h-4"
                     />
-                    <span className="text-sm text-slate-700">Dark</span>
+                    <span className="text-sm text-slate-700">{t('common.dark')}</span>
                   </label>
                 </div>
               </div>
@@ -134,7 +136,7 @@ export default function Widget() {
           <div className="lg:col-span-2 space-y-6">
             {/* Preview */}
             <div className="bg-white border-2 border-slate-200 rounded-xl p-8">
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">Preview</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-6">{t('widget.preview')}</h3>
               <div
                 className={`flex items-center justify-center p-8 rounded-lg ${
                   widgetTheme === 'dark' ? 'bg-slate-900' : 'bg-slate-50'
@@ -151,9 +153,9 @@ export default function Widget() {
 
             {/* Iframe Method */}
             <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-slate-900">Method 1: Iframe</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t('widget.method1')}</h3>
               <p className="text-sm text-slate-600">
-                Embed the widget using an iframe tag. Recommended for most websites.
+                {t('widget.method1Desc')}
               </p>
               <div className="bg-slate-900 text-slate-100 rounded-lg p-4 font-mono text-sm overflow-x-auto">
                 <code>{iframeCode}</code>
@@ -163,15 +165,15 @@ export default function Widget() {
                 className="w-full bg-foreground hover:bg-blue-700 text-white"
               >
                 <Copy className="w-4 h-4 mr-2" />
-                {copied ? 'Copied!' : 'Copy Code'}
+                {copied ? t('widget.copied') : t('widget.copyCode')}
               </Button>
             </div>
 
             {/* Script Method */}
             <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-slate-900">Method 2: Script Tag</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t('widget.method2')}</h3>
               <p className="text-sm text-slate-600">
-                Embed the widget using a script tag. Automatically initializes all widgets on the page.
+                {t('widget.method2Desc')}
               </p>
               <div className="bg-slate-900 text-slate-100 rounded-lg p-4 font-mono text-sm overflow-x-auto">
                 <code>{scriptCode}</code>
@@ -181,37 +183,37 @@ export default function Widget() {
                 className="w-full bg-foreground hover:bg-blue-700 text-white"
               >
                 <Copy className="w-4 h-4 mr-2" />
-                {copied ? 'Copied!' : 'Copy Code'}
+                {copied ? t('widget.copied') : t('widget.copyCode')}
               </Button>
             </div>
 
             {/* Features */}
             <div className="bg-slate-50 border-2 border-border rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-blue-900">Widget Features</h3>
+              <h3 className="text-lg font-semibold text-blue-900">{t('widget.features')}</h3>
               <ul className="space-y-2 text-blue-800">
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>Real-time clock synchronization with server</span>
+                  <span>{t('widget.feature1')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>Support for any timezone globally</span>
+                  <span>{t('widget.feature2')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>Digital and analog clock styles</span>
+                  <span>{t('widget.feature3')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>Light and dark theme options</span>
+                  <span>{t('widget.feature4')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>Fully responsive and mobile-friendly</span>
+                  <span>{t('widget.feature5')}</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold">•</span>
-                  <span>No dependencies required</span>
+                  <span>{t('widget.feature6')}</span>
                 </li>
               </ul>
             </div>

@@ -79,10 +79,10 @@ export default function Blog() {
         {/* Header */}
         <div className="mb-16 space-y-4">
           <h1 className="text-5xl lg:text-6xl font-light">
-            <span className="font-semibold text-accent">Blog & News</span>
+            <span className="font-semibold text-accent">{t('blog.heading')}</span>
           </h1>
           <p className="text-lg text-foreground/70 max-w-2xl">
-            Insights, tips, and stories about time, timezones, and global coordination
+            {t('blog.subtitle')}
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function Blog() {
               <div className="space-y-6">
                 <div className="inline-block">
                   <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-xs font-semibold uppercase">
-                    Featured
+                    {t('blog.featured')}
                   </span>
                 </div>
 
@@ -116,11 +116,11 @@ export default function Blog() {
                     <Calendar className="w-4 h-4" />
                     {blogPosts[0].date}
                   </div>
-                  <span>{blogPosts[0].readTime} min read</span>
+                  <span>{t('blog.minRead', { count: blogPosts[0].readTime })}</span>
                 </div>
 
                 <button className="flex items-center gap-2 text-accent hover:text-accent/80 transition-luxury font-semibold">
-                  Read More
+                  {t('blog.readMore')}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -128,7 +128,7 @@ export default function Blog() {
               <div className="bg-gradient-to-br from-accent/20 to-accent/5 rounded-lg flex items-center justify-center p-8">
                 <div className="text-center">
                   <div className="text-6xl font-light mb-2">📅</div>
-                  <p className="text-foreground/60">Featured Article</p>
+                  <p className="text-foreground/60">{t('blog.featuredArticle')}</p>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Blog() {
         {/* Category Filter */}
         <div className="mb-12 flex flex-wrap gap-3">
           <button className="px-4 py-2 bg-accent text-background rounded-full text-sm font-semibold hover:bg-accent/90 transition-luxury">
-            All
+            {t('blog.categoryAll')}
           </button>
           {categories.map(cat => (
             <button
@@ -179,7 +179,7 @@ export default function Blog() {
                     <User className="w-3 h-3" />
                     {post.author}
                   </div>
-                  <span>{post.readTime} min</span>
+                  <span>{t('blog.min', { count: post.readTime })}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -199,20 +199,20 @@ export default function Blog() {
           
           <div className="relative bg-foreground text-background rounded-lg p-12 text-center space-y-6">
             <h3 className="text-3xl font-light">
-              <span className="font-semibold">Subscribe to Our Newsletter</span>
+              <span className="font-semibold">{t('blog.newsletterTitle')}</span>
             </h3>
             <p className="text-background/70 max-w-md mx-auto">
-              Get the latest articles about time zones, scheduling, and global coordination delivered to your inbox
+              {t('blog.newsletterSubtitle')}
             </p>
 
             <div className="flex gap-3 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t('blog.emailPlaceholder')}
                 className="flex-1 bg-background text-foreground rounded px-4 py-3 text-sm"
               />
               <button className="px-6 py-3 bg-accent text-background rounded font-semibold hover:bg-accent/90 transition-luxury">
-                Subscribe
+                {t('blog.subscribe')}
               </button>
             </div>
           </div>

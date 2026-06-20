@@ -3,8 +3,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Plus, X, Users } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function TeamDashboard() {
+  const { t } = useTranslation();
   const [teamCities, setTeamCities] = useState<string[]>([
     'America/New_York',
     'Europe/London',
@@ -87,11 +89,11 @@ export default function TeamDashboard() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
             <div className="flex items-center gap-2">
               <Users className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold text-slate-900">Team Dashboard</span>
+              <span className="text-xl font-bold text-slate-900">{t('teamDashboard.title')}</span>
             </div>
           </div>
         </div>
@@ -100,9 +102,9 @@ export default function TeamDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Team Timezone Management</h1>
+          <h1 className="text-4xl font-bold text-slate-900">{t('teamDashboard.heading')}</h1>
           <p className="text-lg text-slate-600">
-            Manage your team's timezones and find the best meeting times
+            {t('teamDashboard.subtitle')}
           </p>
         </div>
 
@@ -110,7 +112,7 @@ export default function TeamDashboard() {
           {/* Left: City Management */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white border-2 border-slate-200 rounded-xl p-6 space-y-4">
-              <h3 className="text-lg font-semibold text-slate-900">Team Members</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t('teamDashboard.teamMembers')}</h3>
 
               <div className="relative">
                 <Button
@@ -118,14 +120,14 @@ export default function TeamDashboard() {
                   className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-3 justify-start"
                 >
                   <Plus className="w-5 h-5 mr-2" />
-                  Add Timezone
+                  {t('teamDashboard.addTimezone')}
                 </Button>
 
                 {showSearch && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-slate-200 rounded-lg shadow-lg p-4 z-10">
                     <input
                       type="text"
-                      placeholder="Search cities..."
+                      placeholder={t('teamDashboard.searchCities')}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full mb-4 border-2 border-slate-200 focus:border-blue-600 rounded-lg px-3 py-2 focus:outline-none"
@@ -173,7 +175,7 @@ export default function TeamDashboard() {
           <div className="lg:col-span-2 space-y-6">
             {/* Current Times */}
             <div className="bg-white border-2 border-slate-200 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">Current Times</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-6">{t('teamDashboard.currentTimes')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {teamCities.map((timezone) => (
                   <TeamMemberCard key={timezone} timezone={timezone} />
@@ -184,7 +186,7 @@ export default function TeamDashboard() {
             {/* Working Hours Overlap */}
             {calculateOverlap && (
               <div className="bg-white border-2 border-slate-200 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-slate-900 mb-6">Working Hours Overlap</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-6">{t('teamDashboard.workingHoursOverlap')}</h3>
                 <div className="space-y-2">
                   {Array.from({ length: 24 }).map((_, hour) => {
                     const overlap = calculateOverlap[hour];
@@ -216,15 +218,15 @@ export default function TeamDashboard() {
                 <div className="mt-6 flex gap-6 text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-green-500 rounded" />
-                    <span>Full overlap (75-100%)</span>
+                    <span>{t('teamDashboard.fullOverlap')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-500 rounded" />
-                    <span>Partial (50-75%)</span>
+                    <span>{t('teamDashboard.partialOverlap')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-red-500 rounded" />
-                    <span>Limited (&lt;50%)</span>
+                    <span>{t('teamDashboard.limitedOverlap')}</span>
                   </div>
                 </div>
               </div>
@@ -237,6 +239,7 @@ export default function TeamDashboard() {
 }
 
 function TeamMemberCard({ timezone }: { timezone: string }) {
+  const { t } = useTranslation();
   const { time } = useRealTimeClock(timezone);
 
   return (
@@ -246,7 +249,7 @@ function TeamMemberCard({ timezone }: { timezone: string }) {
         {time ? formatClockTime(time) : '00:00:00'}
       </div>
       <div className="text-xs text-slate-500 mt-2">
-        {time?.isDst ? 'DST Active' : 'Standard Time'}
+        {time?.isDst ? t('teamDashboard.dstActive') : t('teamDashboard.standardTime')}
       </div>
     </div>
   );

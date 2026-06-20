@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Copy, Share2, Play, Pause, RotateCcw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Countdown() {
+  const { t } = useTranslation();
   const [eventName, setEventName] = useState('New Year 2027');
   const [targetDate, setTargetDate] = useState('2027-01-01');
   const [targetTime, setTargetTime] = useState('00:00');
@@ -77,9 +79,9 @@ export default function Countdown() {
               className="text-slate-600 hover:text-slate-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('common.back')}
             </Button>
-            <span className="text-xl font-bold text-slate-900">Countdown Timer</span>
+            <span className="text-xl font-bold text-slate-900">{t('countdown.title')}</span>
           </div>
         </div>
       </nav>
@@ -87,8 +89,8 @@ export default function Countdown() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-12 space-y-4">
-          <h1 className="text-4xl font-bold text-slate-900">Countdown to Your Event</h1>
-          <p className="text-lg text-slate-600">Create shareable countdowns for events and launches</p>
+          <h1 className="text-4xl font-bold text-slate-900">{t('countdown.heading')}</h1>
+          <p className="text-lg text-slate-600">{t('countdown.subtitle')}</p>
         </div>
 
         <div className="space-y-8">
@@ -96,21 +98,21 @@ export default function Countdown() {
           <div className="bg-white border-2 border-slate-200 rounded-xl p-8 space-y-6">
             <div>
               <label className="block text-sm font-semibold text-slate-900 mb-2">
-                Event Name
+                {t('countdown.eventName')}
               </label>
               <Input
                 type="text"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
                 className="w-full border-2 border-slate-200 focus:border-blue-600 rounded-lg py-3"
-                placeholder="e.g., New Year 2027"
+                placeholder={t('countdown.eventNamePlaceholder')}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  Target Date
+                  {t('countdown.targetDate')}
                 </label>
                 <Input
                   type="date"
@@ -122,7 +124,7 @@ export default function Countdown() {
 
               <div>
                 <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  Target Time
+                  {t('countdown.targetTime')}
                 </label>
                 <Input
                   type="time"
@@ -140,10 +142,10 @@ export default function Countdown() {
               <h2 className="text-3xl font-bold">{eventName}</h2>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <CountdownUnit label="Days" value={timeRemaining.days} />
-                <CountdownUnit label="Hours" value={timeRemaining.hours} />
-                <CountdownUnit label="Minutes" value={timeRemaining.minutes} />
-                <CountdownUnit label="Seconds" value={timeRemaining.seconds} />
+                <CountdownUnit label={t('countdown.days')} value={timeRemaining.days} />
+                <CountdownUnit label={t('timer.hours')} value={timeRemaining.hours} />
+                <CountdownUnit label={t('timer.minutes')} value={timeRemaining.minutes} />
+                <CountdownUnit label={t('timer.seconds')} value={timeRemaining.seconds} />
               </div>
 
               {/* Controls */}
@@ -155,12 +157,12 @@ export default function Countdown() {
                   {isRunning ? (
                     <>
                       <Pause className="w-4 h-4 mr-2" />
-                      Pause
+                      {t('timer.pause')}
                     </>
                   ) : (
                     <>
                       <Play className="w-4 h-4 mr-2" />
-                      Start
+                      {t('timer.start')}
                     </>
                   )}
                 </Button>
@@ -169,7 +171,7 @@ export default function Countdown() {
                   className="bg-white text-accent hover:bg-slate-50 font-semibold px-6 py-3"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
-                  Reset
+                  {t('timer.reset')}
                 </Button>
               </div>
             </div>
@@ -181,13 +183,13 @@ export default function Countdown() {
             className="w-full bg-foreground hover:bg-blue-700 text-white font-semibold py-6 text-lg"
           >
             <Share2 className="w-5 h-5 mr-2" />
-            Generate Shareable Link
+            {t('countdown.generateLink')}
           </Button>
 
           {/* Share Link Display */}
           {shareLink && (
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 space-y-4">
-              <h3 className="text-lg font-semibold text-green-900">Countdown Link Generated!</h3>
+              <h3 className="text-lg font-semibold text-green-900">{t('countdown.linkGenerated')}</h3>
               <div className="bg-white border-2 border-green-200 rounded-lg p-4 flex items-center justify-between">
                 <code className="text-sm text-slate-600 break-all">{shareLink}</code>
                 <Button
@@ -195,11 +197,11 @@ export default function Countdown() {
                   className="ml-4 bg-green-600 hover:bg-green-700 text-white"
                 >
                   <Copy className="w-4 h-4 mr-2" />
-                  {copied ? 'Copied!' : 'Copy'}
+                  {copied ? t('meetingInvite.copied') : t('meetingInvite.copy')}
                 </Button>
               </div>
               <p className="text-sm text-green-700">
-                Share this link with anyone to let them watch the countdown in real-time.
+                {t('countdown.shareDesc')}
               </p>
             </div>
           )}

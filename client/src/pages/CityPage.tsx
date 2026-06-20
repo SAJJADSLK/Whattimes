@@ -89,7 +89,7 @@ export default function CityPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Clock className="w-12 h-12 text-accent mx-auto mb-4 animate-spin" />
-          <p className="text-foreground/60">Loading city data...</p>
+          <p className="text-foreground/60">{t('cityPage.loadingCity')}</p>
         </div>
       </div>
     );
@@ -100,8 +100,8 @@ export default function CityPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <MapPin className="w-12 h-12 text-accent mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-2">City Not Found</h1>
-          <p className="text-foreground/60">We couldn't find {city}, {country}</p>
+          <h1 className="text-2xl font-bold mb-2">{t('cityPage.notFoundTitle')}</h1>
+          <p className="text-foreground/60">{t('cityPage.notFoundDesc', { city, country })}</p>
         </div>
       </div>
     );
@@ -118,7 +118,7 @@ export default function CityPage() {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-8 text-sm text-foreground/60">
-            <a href="/" className="hover:text-accent transition-luxury">Home</a>
+            <a href="/" className="hover:text-accent transition-luxury">{t('nav.home')}</a>
             <span>/</span>
             <a href={`/${country}`} className="hover:text-accent transition-luxury">{country}</a>
             <span>/</span>
@@ -128,10 +128,10 @@ export default function CityPage() {
           {/* Title */}
           <div className="space-y-4 mb-12">
             <h1 className="text-5xl lg:text-6xl font-light">
-              Current Time in <span className="font-semibold text-accent">{cityData.name}</span>
+              {t('cityPage.currentTimeIn')} <span className="font-semibold text-accent">{cityData.name}</span>
             </h1>
             <p className="text-lg text-foreground/70">
-              Real-time clock for {cityData.name}, {country}
+              {t('cityPage.realTimeClockFor', { city: cityData.name, country })}
             </p>
           </div>
 
@@ -154,26 +154,26 @@ export default function CityPage() {
                   </div>
                   <div className="art-deco-divider" />
                   <div className="text-sm font-semibold tracking-widest text-foreground/60 uppercase">
-                    {time?.timezone || 'Loading...'}
+                    {time?.timezone || t('common.loading')}
                   </div>
                 </div>
 
                 {/* Info Grid */}
                 <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border">
                   <div className="space-y-2">
-                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Location</span>
+                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('home.location')}</span>
                     <p className="text-lg font-semibold">{cityData.name}, {country}</p>
                   </div>
                   <div className="space-y-2">
-                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Timezone</span>
+                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('cityPage.timezone')}</span>
                     <p className="text-lg font-mono font-semibold text-accent">{cityData.timezone}</p>
                   </div>
                   <div className="space-y-2">
-                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">UTC Offset</span>
+                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('cityPage.utcOffset')}</span>
                     <p className="text-lg font-mono font-semibold">{time?.utcOffset || 'N/A'}</p>
                   </div>
                   <div className="space-y-2">
-                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Coordinates</span>
+                    <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('cityPage.coordinates')}</span>
                     <p className="text-sm font-mono">{Number(cityData.latitude).toFixed(2)}°, {Number(cityData.longitude).toFixed(2)}°</p>
                   </div>
                 </div>
@@ -182,11 +182,11 @@ export default function CityPage() {
                 {sunTimes && (
                   <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border">
                     <div className="space-y-2">
-                      <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Sunrise</span>
+                      <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('cityPage.sunrise')}</span>
                       <p className="text-lg font-mono font-semibold">{sunTimes.sunrise}</p>
                     </div>
                     <div className="space-y-2">
-                      <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">Sunset</span>
+                      <span className="text-xs font-semibold tracking-widest text-foreground/60 uppercase">{t('cityPage.sunset')}</span>
                       <p className="text-lg font-mono font-semibold">{sunTimes.sunset}</p>
                     </div>
                   </div>
@@ -199,11 +199,11 @@ export default function CityPage() {
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent/10 hover:bg-accent/20 text-accent rounded-lg transition-luxury"
                   >
                     <Copy className="w-4 h-4" />
-                    {copied ? 'Copied!' : 'Copy Time'}
+                    {copied ? t('cityPage.copied') : t('cityPage.copyTime')}
                   </button>
                   <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent/10 hover:bg-accent/20 text-accent rounded-lg transition-luxury">
                     <Share2 className="w-4 h-4" />
-                    Share
+                    {t('cityPage.share')}
                   </button>
                 </div>
               </div>
@@ -216,13 +216,13 @@ export default function CityPage() {
       <section className="py-20 border-t border-border">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-light mb-12">
-            Other Cities in <span className="font-semibold text-accent">{country}</span>
+            {t('cityPage.otherCitiesIn')} <span className="font-semibold text-accent">{country}</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Would load related cities here */}
             <div className="minimalist-card">
-              <p className="text-foreground/60">Loading related cities...</p>
+              <p className="text-foreground/60">{t('cityPage.loadingRelatedCities')}</p>
             </div>
           </div>
         </div>
@@ -233,17 +233,13 @@ export default function CityPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-invert max-w-none">
             <h2 className="text-3xl font-light mb-6">
-              About <span className="font-semibold text-accent">{cityData.name}</span>
+              {t('cityPage.aboutCity')} <span className="font-semibold text-accent">{cityData.name}</span>
             </h2>
             <p className="text-foreground/70 leading-relaxed mb-6">
-              {cityData.name} is located in {country} and operates on the {cityData.timezone} timezone. 
-              This page provides real-time, accurate time information for {cityData.name}, including current time, 
-              timezone details, sunrise and sunset times, and geographic coordinates.
+              {t('cityPage.descriptionP1', { city: cityData.name, country, timezone: cityData.timezone })}
             </p>
             <p className="text-foreground/70 leading-relaxed">
-              Use this page to check the current time in {cityData.name} for scheduling meetings, 
-              coordinating with teams, or planning international activities. The time is automatically 
-              synchronized and updates every second.
+              {t('cityPage.descriptionP2', { city: cityData.name })}
             </p>
           </div>
         </div>

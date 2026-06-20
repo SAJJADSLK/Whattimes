@@ -6,8 +6,10 @@ import { ArrowLeft, Star, Clock, Settings, Trash2 } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
+import { useTranslation } from 'react-i18next';
 
 export default function UserDashboard() {
+  const { t } = useTranslation();
   const { user, loading } = useAuth();
   const { time } = useRealTimeClock();
   const [activeTab, setActiveTab] = useState('favorites');
@@ -38,7 +40,7 @@ export default function UserDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-gray-600">Loading...</div>
+        <div className="text-gray-600">{t('common.loading')}</div>
       </div>
     );
   }
@@ -47,8 +49,8 @@ export default function UserDashboard() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">Please log in to access your dashboard</p>
-          <Button onClick={() => window.location.href = '/'}>Go Home</Button>
+          <p className="text-gray-600 mb-4">{t('userDashboard.pleaseLogin')}</p>
+          <Button onClick={() => window.location.href = '/'}>{t('userDashboard.goHome')}</Button>
         </div>
       </div>
     );
@@ -67,9 +69,9 @@ export default function UserDashboard() {
               className="gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              {t('common.back')}
             </Button>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('userDashboard.title')}</h1>
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-600">{user.name}</p>
@@ -83,11 +85,11 @@ export default function UserDashboard() {
         <Card className="mb-8 p-6 bg-gradient-to-br from-slate-50 to-slate-100 border-border">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user.name}!</h2>
-              <p className="text-gray-700">Manage your timezones, meetings, and preferences</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('userDashboard.welcomeBack', { name: user.name })}</h2>
+              <p className="text-gray-700">{t('userDashboard.manageDesc')}</p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-600">Current Time</p>
+              <p className="text-sm text-gray-600">{t('userDashboard.currentTime')}</p>
               <p className="text-3xl font-bold text-accent font-mono">
                 {formatClockTime(time)}
               </p>
@@ -100,26 +102,26 @@ export default function UserDashboard() {
           <TabsList className="grid w-full grid-cols-4 mb-8">
             <TabsTrigger value="favorites">
               <Star className="w-4 h-4 mr-2" />
-              Favorites
+              {t('userDashboard.favorites')}
             </TabsTrigger>
             <TabsTrigger value="meetings">
               <Clock className="w-4 h-4 mr-2" />
-              Meetings
+              {t('userDashboard.meetings')}
             </TabsTrigger>
             <TabsTrigger value="countdowns">
               <Clock className="w-4 h-4 mr-2" />
-              Countdowns
+              {t('userDashboard.countdowns')}
             </TabsTrigger>
             <TabsTrigger value="settings">
               <Settings className="w-4 h-4 mr-2" />
-              Settings
+              {t('userDashboard.settings')}
             </TabsTrigger>
           </TabsList>
 
           {/* Favorites Tab */}
           <TabsContent value="favorites">
             <Card className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Favorite Cities</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('userDashboard.favoriteCities')}</h3>
               {favorites && favorites.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {favorites.map((fav) => (
@@ -142,7 +144,7 @@ export default function UserDashboard() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-600">No favorite cities yet. Add some from the World Clock!</p>
+                <p className="text-gray-600">{t('userDashboard.noFavorites')}</p>
               )}
             </Card>
           </TabsContent>
@@ -150,7 +152,7 @@ export default function UserDashboard() {
           {/* Meetings Tab */}
           <TabsContent value="meetings">
             <Card className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Meeting Invites</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('userDashboard.recentMeetings')}</h3>
               {meetings && meetings.length > 0 ? (
                 <div className="space-y-4">
                   {meetings.map((meeting) => (
@@ -169,17 +171,17 @@ export default function UserDashboard() {
                           onClick={() => {
                             const url = `${window.location.origin}/invite/${meeting.inviteCode}`;
                             navigator.clipboard.writeText(url);
-                            alert('Invite link copied!');
+                            alert(t('userDashboard.linkCopiedAlert'));
                           }}
                         >
-                          Copy Link
+                          {t('userDashboard.copyLink')}
                         </Button>
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-600">No meeting invites yet. Create one to get started!</p>
+                <p className="text-gray-600">{t('userDashboard.noMeetings')}</p>
               )}
             </Card>
           </TabsContent>
@@ -187,7 +189,7 @@ export default function UserDashboard() {
           {/* Countdowns Tab */}
           <TabsContent value="countdowns">
             <Card className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Countdowns</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('userDashboard.yourCountdowns')}</h3>
               {countdowns && countdowns.length > 0 ? (
                 <div className="space-y-4">
                   {countdowns.map((countdown) => (
@@ -197,7 +199,7 @@ export default function UserDashboard() {
                           <h4 className="font-semibold text-gray-900">{countdown.title}</h4>
                           <p className="text-sm text-gray-600 mt-1">{countdown.timezone}</p>
                           <p className="text-xs text-gray-500 mt-2">
-                            Target: {new Date(countdown.targetTimeUtc).toLocaleString()}
+                            {t('countdownDetail.targetDate')} {new Date(countdown.targetTimeUtc).toLocaleString()}
                           </p>
                         </div>
                         <button
@@ -211,7 +213,7 @@ export default function UserDashboard() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-600">No countdowns yet. Create one to get started!</p>
+                <p className="text-gray-600">{t('userDashboard.noCountdowns')}</p>
               )}
             </Card>
           </TabsContent>
@@ -219,22 +221,22 @@ export default function UserDashboard() {
           {/* Settings Tab */}
           <TabsContent value="settings">
             <Card className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">Preferences</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">{t('userDashboard.preferences')}</h3>
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-900 mb-2">
-                    Theme
+                    {t('common.theme')}
                   </label>
                   <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="auto">Auto (System)</option>
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
+                    <option value="auto">{t('userDashboard.autoSystem')}</option>
+                    <option value="light">{t('common.light')}</option>
+                    <option value="dark">{t('common.dark')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-900 mb-2">
-                    Default Timezone
+                    {t('userDashboard.defaultTimezone')}
                   </label>
                   <input
                     type="text"
@@ -245,7 +247,7 @@ export default function UserDashboard() {
                 </div>
 
                 <div className="pt-4">
-                  <Button variant="default">Save Preferences</Button>
+                  <Button variant="default">{t('userDashboard.savePreferences')}</Button>
                 </div>
               </div>
             </Card>

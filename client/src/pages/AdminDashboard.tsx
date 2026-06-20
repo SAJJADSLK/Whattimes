@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Download, RefreshCw, Trash2 } from 'lucide-react';
 import { tracker } from '@/hooks/useAnalytics';
+import { useTranslation } from 'react-i18next';
 
 interface AnalyticsData {
   totalEvents: number;
@@ -16,6 +17,7 @@ interface AnalyticsData {
 }
 
 export default function AdminDashboard() {
+  const { t } = useTranslation();
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -80,12 +82,12 @@ export default function AdminDashboard() {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `chronos-analytics-${Date.now()}.json`;
+    link.download = `whattime-analytics-${Date.now()}.json`;
     link.click();
   };
 
   const handleClearAnalytics = () => {
-    if (confirm('Are you sure you want to clear all analytics data?')) {
+    if (confirm(t('adminDashboard.clearConfirm'))) {
       tracker.clearEvents();
       setAnalyticsData(null);
       loadAnalytics();
@@ -99,7 +101,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading analytics...</p>
+          <p className="text-gray-600">{t('adminDashboard.loadingAnalytics')}</p>
         </div>
       </div>
     );
@@ -111,8 +113,8 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">Analytics Dashboard</h1>
-            <p className="text-gray-600 mt-2">Real-time user behavior and feature usage tracking</p>
+            <h1 className="text-4xl font-bold text-gray-900">{t('adminDashboard.heading')}</h1>
+            <p className="text-gray-600 mt-2">{t('adminDashboard.subtitle')}</p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -122,11 +124,11 @@ export default function AdminDashboard() {
               className="gap-2"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-              Refresh
+              {t('adminDashboard.refresh')}
             </Button>
             <Button onClick={handleExport} variant="outline" className="gap-2">
               <Download className="w-4 h-4" />
-              Export
+              {t('adminDashboard.export')}
             </Button>
             <Button
               onClick={handleClearAnalytics}
@@ -134,7 +136,7 @@ export default function AdminDashboard() {
               className="gap-2 text-red-600 hover:text-red-700"
             >
               <Trash2 className="w-4 h-4" />
-              Clear
+              {t('adminDashboard.clear')}
             </Button>
           </div>
         </div>
@@ -142,10 +144,10 @@ export default function AdminDashboard() {
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {[
-            { label: 'Total Events', value: analyticsData.totalEvents },
-            { label: 'Page Views', value: analyticsData.pageViews },
-            { label: 'Feature Usage', value: analyticsData.featureUsage },
-            { label: 'Errors', value: analyticsData.errors },
+            { label: t('adminDashboard.totalEvents'), value: analyticsData.totalEvents },
+            { label: t('adminDashboard.pageViews'), value: analyticsData.pageViews },
+            { label: t('adminDashboard.featureUsage'), value: analyticsData.featureUsage },
+            { label: t('adminDashboard.errors'), value: analyticsData.errors },
           ].map((metric) => (
             <Card key={metric.label} className="p-6">
               <div className="text-gray-600 text-sm font-medium mb-2">{metric.label}</div>
@@ -158,7 +160,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Event Types Pie Chart */}
           <Card className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Events by Type</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminDashboard.eventsByType')}</h2>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -182,7 +184,7 @@ export default function AdminDashboard() {
 
           {/* Top Features Bar Chart */}
           <Card className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Top Features</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminDashboard.topFeatures')}</h2>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={analyticsData.topFeatures}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -197,7 +199,7 @@ export default function AdminDashboard() {
 
         {/* Top Pages */}
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Top Pages</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminDashboard.topPages')}</h2>
           <div className="space-y-3">
             {analyticsData.topPages.map((page) => (
               <div key={page.page} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
