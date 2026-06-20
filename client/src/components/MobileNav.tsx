@@ -3,6 +3,7 @@ import { Menu, X, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Link } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663685753987/jbVr5R7iZyNr82uvFXU7st/whattime-icon-gd9dA8fSGqFXBABhPzefAD.webp';
@@ -10,15 +11,16 @@ const LOGO_URL = 'https://d2xsxph8kpxj0f.cloudfront.net/310519663685753987/jbVr5
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   const navItems = [
-    { label: 'World Clock', href: '/world-clock' },
-    { label: 'Converter', href: '/converter' },
-    { label: 'Meeting Invites', href: '/meeting-invite' },
-    { label: 'Countdown', href: '/countdown' },
-    { label: 'DST Tracker', href: '/dst-tracker' },
-    { label: 'Team Dashboard', href: '/team-dashboard' },
-    { label: 'Dashboard', href: '/dashboard' },
+    { label: t('nav.worldClock'), href: '/world-clock' },
+    { label: t('nav.converter'), href: '/converter' },
+    { label: t('nav.meetings'), href: '/meeting-invite' },
+    { label: t('nav.countdown'), href: '/countdown' },
+    { label: t('nav.dst'), href: '/dst-tracker' },
+    { label: t('nav.team'), href: '/team-dashboard' },
+    { label: t('nav.dashboard'), href: '/dashboard' },
   ];
 
   return (
