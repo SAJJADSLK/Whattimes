@@ -290,6 +290,19 @@
   }
 </style>
 
+
+<style>
+  .content-section { max-width: 900px; margin: 0 0 40px 0; }
+  .content-section h2 { font-size: 22px; margin-bottom: 12px; color: #1e293b; }
+  .content-section p { margin-bottom: 12px; color: #334155; }
+  .overlap-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+  .overlap-table th, .overlap-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e2e8f0; }
+  .overlap-table th { background: #f1f5f9; font-weight: 600; color: #334155; }
+  .overlap-tag { background: #dbeafe; color: #1e40af; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  details { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+  details summary { font-weight: 600; cursor: pointer; color: #1e293b; }
+  details p { margin-top: 10px; margin-bottom: 0; }
+</style>
 </head>
 <body>
   <nav>
@@ -355,6 +368,71 @@
     </div>
 
     
+    
+    <section class="content-section">
+      <h2>About Time in Sydney</h2>
+      <p>With a population of roughly 5,312,163, Sydney is one of the larger population centers in Australia, and its local time (Australia/Sydney) is a common reference point for scheduling calls, flights, and deliveries in and out of the Oceania region.</p>
+      <p>Right now, Sydney is on <strong>GMT+10</strong> (UTC+10). Sydney observes Daylight Saving Time, so its UTC offset shifts by an hour for part of the year. The offset shown above (UTC+10) reflects the current date; double-check the season when planning calls months in advance.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>Meeting Time Overlap: Sydney with Major Hubs</h2>
+      <p>If you keep a typical 9:00 AM–5:00 PM workday in Sydney, here is how that window lines up with other major business hubs right now:</p>
+      <table class="overlap-table">
+        <thead>
+          <tr><th>Hub</th><th>Time Difference</th><th>Sydney's 9–5 workday, in their local time</th><th>Overlap</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>New York (ET)</td>
+          <td>14 hours ahead of</td>
+          <td>7:00 PM – 3:00 AM</td>
+          <td><span class="overlap-tag">Limited overlap</span></td>
+        </tr>
+        <tr>
+          <td>London (GMT/BST)</td>
+          <td>9 hours ahead of</td>
+          <td>12:00 AM – 8:00 AM</td>
+          <td><span class="overlap-tag">Little to no overlap</span></td>
+        </tr>
+        <tr>
+          <td>Dubai (GST)</td>
+          <td>6 hours ahead of</td>
+          <td>3:00 AM – 11:00 AM</td>
+          <td><span class="overlap-tag">Limited overlap</span></td>
+        </tr>
+        <tr>
+          <td>Singapore (SGT)</td>
+          <td>2 hours ahead of</td>
+          <td>7:00 AM – 3:00 PM</td>
+          <td><span class="overlap-tag">Good overlap</span></td>
+        </tr>
+        <tr>
+          <td>Tokyo (JST)</td>
+          <td>1 hour ahead of</td>
+          <td>8:00 AM – 4:00 PM</td>
+          <td><span class="overlap-tag">Good overlap</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-section">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What time zone is Sydney in?</summary>
+        <p>Sydney, Australia uses the Australia/Sydney time zone, currently UTC+10 (GMT+10).</p>
+      </details>
+      <details>
+        <summary>Does Sydney observe Daylight Saving Time?</summary>
+        <p>Yes. Sydney shifts its clocks for Daylight Saving Time, so its UTC offset changes across the year.</p>
+      </details>
+      <details>
+        <summary>What is the current UTC offset for Sydney?</summary>
+        <p>Sydney is currently at UTC+10. Use the live clock above for the exact current time.</p>
+      </details>
+    </section>
+
     <div>
       <h2 style="margin-bottom: 24px; color: #1e293b;">Other Cities in Australia</h2>
       <div class="cities-grid">
@@ -389,7 +467,7 @@
   </main>
 
   <footer>
-    <p>&copy; 2024 Chronos World Clock. All rights reserved.</p>
+    <p>&copy; 2026 Chronos World Clock. All rights reserved.</p>
     <p><a href="/">Home</a> | <a href="/?page=world-clock">World Clock</a> | <a href="/?page=countries">Countries</a></p>
   </footer>
 
