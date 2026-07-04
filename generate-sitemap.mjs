@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const BASE_URL = 'https://chronosclock-jbvr5r7i.manus.space';
+const BASE_URL = 'https://www.whattime.info';
 const PUBLIC_DIR = './client/public';
 
 // Main pages

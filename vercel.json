@@ -20,6 +20,6 @@
   ],
   "rewrites": [
     { "source": "/api/trpc/(.*)", "destination": "/api/trpc/[trpc]" },
-    { "source": "/((?!api|sitemap.xml).*)", "destination": "/index.html" }
+    { "source": "/((?!api|.*\\..*).*)", "destination": "/index.html" }
   ]
 }
