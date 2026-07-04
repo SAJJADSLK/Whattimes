@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Copy, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function UnixConverter() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Unix Timestamp Converter - Epoch to Date & Time',
+      description:
+        'Convert Unix timestamps to human-readable dates and back, instantly and for free.',
+      url: 'https://www.whattime.info/unix-converter',
+      type: 'website',
+    });
+  }, []);
   const [unixTimestamp, setUnixTimestamp] = useState(Math.floor(Date.now() / 1000));
   const [humanDate, setHumanDate] = useState(new Date().toISOString());
   const [copied, setCopied] = useState(false);

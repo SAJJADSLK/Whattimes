@@ -1,11 +1,22 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function DSTTracker() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'DST Tracker - Daylight Saving Time Changes by Timezone',
+      description:
+        'Track upcoming daylight saving time changes for timezones around the world. Never miss a clock change again.',
+      url: 'https://www.whattime.info/dst-tracker',
+      type: 'website',
+    });
+  }, []);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   // Common timezones with DST

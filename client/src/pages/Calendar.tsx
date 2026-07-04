@@ -1,9 +1,20 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function Calendar() {
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Online Calendar - Simple Free Monthly Calendar',
+      description:
+        'A clean, free online calendar for viewing any month at a glance.',
+      url: 'https://www.whattime.info/calendar',
+      type: 'website',
+    });
+  }, []);
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getDaysInMonth = (date: Date) => {

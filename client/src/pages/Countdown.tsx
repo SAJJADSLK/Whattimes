@@ -3,9 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Copy, Share2, Play, Pause, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function Countdown() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Countdown Timer - Create & Share a Countdown to Any Date',
+      description:
+        'Create a free countdown timer to any date and time, and share it with a link. Perfect for launches, events, deadlines, and celebrations.',
+      url: 'https://www.whattime.info/countdown',
+      type: 'website',
+    });
+  }, []);
   const [eventName, setEventName] = useState('New Year 2027');
   const [targetDate, setTargetDate] = useState('2027-01-01');
   const [targetTime, setTargetTime] = useState('00:00');

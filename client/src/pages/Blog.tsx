@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, User, ArrowRight, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 interface BlogPost {
   id: string;
@@ -116,6 +117,16 @@ const blogPosts: BlogPost[] = [
 export default function Blog() {
   const { t } = useTranslation();
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Blog - Timezones, DST & Global Scheduling Tips | WhatTime',
+      description:
+        'Articles on daylight saving time, timezone conventions, and tips for scheduling across a global team.',
+      url: 'https://www.whattime.info/blog',
+      type: 'website',
+    });
+  }, []);
 
   const categories = Array.from(new Set(blogPosts.map(p => p.category)));
 

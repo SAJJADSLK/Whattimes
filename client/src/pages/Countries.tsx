@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,9 +6,20 @@ import { Button } from '@/components/ui/button';
 import { Globe, Search, ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function Countries() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Current Time by Country - Browse All Countries',
+      description:
+        'Browse every country to find the current local time in its major cities, with timezone and UTC offset details.',
+      url: 'https://www.whattime.info/countries',
+      type: 'website',
+    });
+  }, []);
   const [searchTerm, setSearchTerm] = useState('');
   
   // Fetch all cities to extract unique countries

@@ -5,9 +5,20 @@ import { Clock, Search, Globe, ArrowLeft, Star } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function WorldClock() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'World Clock - Current Local Time in Every Major City',
+      description:
+        'See the current local time in hundreds of cities worldwide. A free, real-time world clock covering every timezone and continent.',
+      url: 'https://www.whattime.info/world-clock',
+      type: 'website',
+    });
+  }, []);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 

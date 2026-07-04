@@ -1,12 +1,23 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Plus, X, Users } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function TeamDashboard() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Team Time Dashboard - See Your Whole Team\u2019s Local Time',
+      description:
+        'A shared dashboard showing the current local time for every city on your distributed team, at a glance.',
+      url: 'https://www.whattime.info/team-dashboard',
+      type: 'website',
+    });
+  }, []);
   const [teamCities, setTeamCities] = useState<string[]>([
     'America/New_York',
     'Europe/London',

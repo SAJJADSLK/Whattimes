@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Globe, Zap, Users, Share2, BarChart3, Clock, Code, ArrowRight, MapPin, Edit2, Check, X } from 'lucide-react';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
@@ -6,9 +7,37 @@ import { useTimezoneDetection } from '@/hooks/useTimezoneDetection';
 import { Input } from '@/components/ui/input';
 import { trpc } from '@/lib/trpc';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
+
+const SITE_URL = 'https://www.whattime.info';
+
+// Maps the footer link labels (from locale files) to their real routes.
+// Falling back to "/" for anything unrecognized keeps old/renamed labels
+// from ever pointing at a dead "#" link again.
+const FOOTER_LINK_PATHS: Record<string, string> = {
+  Features: '/features',
+  Pricing: '/pricing',
+  API: '/api-docs',
+  About: '/about',
+  Blog: '/blog',
+  Contact: '/contact',
+  Privacy: '/privacy',
+  Terms: '/terms',
+  Security: '/security',
+};
 
 export default function Home() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'WhatTime - World Clock, Timezone Converter & Meeting Scheduler',
+      description:
+        'Check the current time anywhere in the world, convert between timezones, schedule meetings across time zones, and track daylight saving changes - free, no sign-up required.',
+      url: SITE_URL,
+      type: 'website',
+    });
+  }, []);
   const { timezone: detectedTimezone, isLoading: tzLoading } = useTimezoneDetection();
   const userTz = detectedTimezone?.name || Intl.DateTimeFormat().resolvedOptions().timeZone;
   const { time, isLoading } = useRealTimeClock(userTz);
@@ -248,9 +277,12 @@ export default function Home() {
                 <ul className="space-y-2">
                   {col.links.map((link) => (
                     <li key={link}>
-                      <a href="#" className="text-sm text-foreground/60 hover:text-foreground transition-luxury">
+                      <Link
+                        href={FOOTER_LINK_PATHS[link] || '/'}
+                        className="text-sm text-foreground/60 hover:text-foreground transition-luxury"
+                      >
                         {link}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

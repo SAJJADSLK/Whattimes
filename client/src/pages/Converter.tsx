@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Plus, X, Clock } from 'lucide-react';
@@ -6,9 +6,20 @@ import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { TimeScrubber } from '@/components/TimeScrubber';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function Converter() {
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Timezone Converter - Compare Time Across Cities',
+      description:
+        'Convert time between multiple cities and timezones instantly. Drag the timeline to see the time difference across your team, anywhere in the world.',
+      url: 'https://www.whattime.info/converter',
+      type: 'website',
+    });
+  }, []);
   const [selectedTimezones, setSelectedTimezones] = useState<string[]>(['UTC', 'America/New_York']);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);

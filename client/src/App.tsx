@@ -29,9 +29,23 @@ import Calendar from "./pages/Calendar";
 import UnixConverter from "./pages/UnixConverter";
 
 import Blog from "./pages/Blog";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Pricing from "./pages/Pricing";
+import Features from "./pages/Features";
+import ApiDocs from "./pages/ApiDocs";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Security from "./pages/Security";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
+  //
+  // IMPORTANT: every fixed-path route (e.g. /blog, /timer, /dashboard) MUST be
+  // declared ABOVE the dynamic "/:country/:city" and "/:country" routes below.
+  // wouter's <Switch> renders the FIRST matching route, and "/:country" matches
+  // ANY single-segment path - so if it were declared first it would swallow
+  // routes like /blog or /timer before they ever got a chance to render.
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -46,9 +60,6 @@ function Router() {
       <Route path="/pages/city-:cityId" component={CityStaticPage} />
       <Route path="/countries" component={Countries} />
       <Route path="/country/:country" component={CountryDetail} />
-      {/* Dynamic routing for Time.is SEO strategy */}
-      <Route path="/:country/:city" component={CityPage} />
-      <Route path="/:country" component={CountryPage} />
       <Route path="/widget" component={Widget} />
       <Route path="/invite/:inviteId" component={InviteDetail} />
       <Route path="/countdown/:countdownId" component={CountdownDetail} />
@@ -58,7 +69,22 @@ function Router() {
       <Route path="/calendar" component={Calendar} />
       <Route path="/unix-converter" component={UnixConverter} />
       <Route path="/blog" component={Blog} />
+      <Route path="/about" component={About} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/pricing" component={Pricing} />
+      <Route path="/features" component={Features} />
+      <Route path="/api-docs" component={ApiDocs} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/security" component={Security} />
       <Route path="/404" component={NotFound} />
+
+      {/* Dynamic routing for Time.is-style SEO strategy - MUST stay last,
+          right before the final NotFound fallback, since these wildcards
+          match almost any path. */}
+      <Route path="/:country/:city" component={CityPage} />
+      <Route path="/:country" component={CountryPage} />
+
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

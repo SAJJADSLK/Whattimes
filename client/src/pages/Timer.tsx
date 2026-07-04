@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function Timer() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Online Timer - Free Countdown Timer with Alert Sound',
+      description:
+        'A simple, free online timer with an alert sound. Set hours, minutes, and seconds and start counting down instantly.',
+      url: 'https://www.whattime.info/timer',
+      type: 'website',
+    });
+  }, []);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);

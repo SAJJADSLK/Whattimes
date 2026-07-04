@@ -1,13 +1,24 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Copy, Share2, Plus, X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useRealTimeClock, formatClockTime } from '@/hooks/useRealTimeClock';
 import { useTranslation } from 'react-i18next';
+import { setSEOMeta } from '@/lib/seo';
 
 export default function MeetingInvite() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setSEOMeta({
+      title: 'Meeting Time Scheduler - Find the Best Time Across Timezones',
+      description:
+        'Schedule meetings across multiple timezones and share a clear invite link showing local times for every attendee.',
+      url: 'https://www.whattime.info/meeting-invite',
+      type: 'website',
+    });
+  }, []);
   const [selectedTimezones, setSelectedTimezones] = useState<string[]>(['UTC', 'America/New_York']);
   const [meetingTime, setMeetingTime] = useState('14:00');
   const [meetingTitle, setMeetingTitle] = useState('Team Standup');
