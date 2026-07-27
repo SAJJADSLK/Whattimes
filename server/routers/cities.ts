@@ -214,16 +214,29 @@ getAll: publicProcedure
    * Get city by name (for city detail pages)
    */
   getByName: publicProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), country: z.string().optional() }))
     .query(async ({ input }) => {
       try {
         const allCities = getAllCitiesFromCache();
-        
+
         // 💡 FIX: Force array safety check before executing .find()
         if (!allCities || !Array.isArray(allCities)) return null;
 
-        const normalizedName = input.name.toLowerCase();
-        return allCities.find(c => c.name.toLowerCase() === normalizedName) || null;
+        const normalizedName = input.name.toLowerCase().replace(/-/g, ' ');
+        const normalizedCountry = input.country?.toLowerCase().replace(/-/g, ' ');
+
+        // FIX: previously this matched by city name ALONE, so two countries
+        // sharing a city name (e.g. multiple "Springfield"/"London"/"Paris"
+        // entries) could silently return the wrong city's data. Filter by
+        // country when provided.
+        const matches = allCities.filter(c => c.name.toLowerCase() === normalizedName);
+        if (matches.length === 0) return null;
+        if (!normalizedCountry) return matches[0];
+
+        return (
+          matches.find(c => c.country.toLowerCase() === normalizedCountry) ||
+          matches[0]
+        );
       } catch (e) {
         console.error("Cache error in getByName:", e);
         return null;
