@@ -96,7 +96,7 @@ export default function Countries() {
               const timezones = new Set(countryCities.map(c => c.timezone));
               
               return (
-                <Link key={country} href={`/country/${encodeURIComponent(country)}`}>
+                <Link key={country} href={`/${country.toLowerCase().replace(/\s+/g, '-')}`}>
                   <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer h-full">
                     <div className="flex items-start justify-between mb-4">
                       <div>
