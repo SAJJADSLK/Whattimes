@@ -113,7 +113,7 @@ async function generateAllSitemaps() {
     // Cities sitemaps (split into chunks if needed)
     console.log('📝 Generating city sitemaps...');
     const citiesUrls = allCities.map((city) => ({
-      loc: `${BASE_URL}/city-detail/${encodeURIComponent(city.name.replace(/\s+/g, '_'))}`,
+      loc: `${BASE_URL}/${encodeURIComponent(city.country.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(city.name.toLowerCase().replace(/\s+/g, '-'))}`,
       lastmod: today,
       changefreq: 'weekly',
       priority: '0.7',
@@ -134,7 +134,7 @@ async function generateAllSitemaps() {
     // Countries sitemaps
     console.log('📝 Generating country sitemaps...');
     const countriesUrls = allCountries.map((country) => ({
-      loc: `${BASE_URL}/country/${encodeURIComponent(country)}`,
+      loc: `${BASE_URL}/${encodeURIComponent(country.toLowerCase().replace(/\s+/g, '-'))}`,
       lastmod: today,
       changefreq: 'weekly',
       priority: '0.8',

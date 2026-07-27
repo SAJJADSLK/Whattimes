@@ -18,6 +18,12 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/pages/(.*)", "destination": "/countries", "permanent": true },
+    { "source": "/city/(.*)", "destination": "/countries", "permanent": true },
+    { "source": "/city-detail/(.*)", "destination": "/countries", "permanent": true },
+    { "source": "/country/(.*)", "destination": "/countries", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/trpc/(.*)", "destination": "/api/trpc/[trpc]" },
     { "source": "/((?!api|.*\\..*).*)", "destination": "/index.html" }
