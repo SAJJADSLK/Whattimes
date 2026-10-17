@@ -62,21 +62,29 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* FOOTER */}
-      <footer className="max-w-[980px] mx-auto px-7 flex items-center justify-between py-5 pb-7 flex-wrap gap-3 border-t border-[var(--border)] mt-10">
-        <div className="flex gap-5 flex-wrap">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-[11.5px] text-[var(--t3)] hover:text-[var(--t2)] transition-colors no-underline"
-            >
-              {item.name}
-            </Link>
-          ))}
+      <footer className="max-w-[980px] mx-auto px-7 py-6 border-t border-[var(--border)] mt-12 space-y-4">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex gap-4 flex-wrap">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-[12px] text-[var(--t3)] hover:text-[var(--t1)] transition-colors no-underline"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          <span className="font-[var(--mono)] text-[11px] text-[var(--t3)] tracking-[0.04em]">
+            &copy; {new Date().getFullYear()} WhatTime (whattime.info)
+          </span>
         </div>
-        <span className="font-[var(--mono)] text-[10.5px] text-[var(--t3)] tracking-[0.04em]">
-          © {new Date().getFullYear()} WhatTime
-        </span>
+        <div className="flex gap-4 text-[11px] text-[var(--t3)] border-t border-[var(--border)] pt-3 flex-wrap">
+          <Link href="/about" className="hover:text-[var(--t1)] underline">About Us</Link>
+          <Link href="/contact" className="hover:text-[var(--t1)] underline">Contact Support</Link>
+          <Link href="/privacy" className="hover:text-[var(--t1)] underline">Privacy Policy &amp; Cookies</Link>
+          <Link href="/terms" className="hover:text-[var(--t1)] underline">Terms of Service</Link>
+        </div>
       </footer>
     </div>
   );

@@ -1,41 +1,41 @@
 import { useEffect } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Clock } from 'lucide-react';
+import { ArrowLeft, Clock, ShieldCheck } from 'lucide-react';
 import { setSEOMeta } from '@/lib/seo';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 const SITE_URL = 'https://www.whattime.info';
-const LAST_UPDATED = 'July 4, 2026';
+const LAST_UPDATED = 'October 17, 2026';
 
 export default function Terms() {
   useEffect(() => {
     setSEOMeta({
-      title: 'Terms of Service - WhatTime',
-      description: 'Read the terms and conditions for using WhatTime\u2019s world clock, timezone converter, and scheduling tools.',
+      title: 'Terms of Service — WhatTime',
+      description: 'Read the terms and conditions for using WhatTime’s world clock, timezone converter, and scheduling tools.',
       url: `${SITE_URL}/terms`,
       type: 'website',
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground mb-10">
-          <ArrowLeft className="w-4 h-4" /> Back to WhatTime
-        </Link>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <SiteHeader />
 
-        <div className="flex items-center gap-2 mb-4">
-          <Clock className="w-7 h-7 text-accent" />
-          <span className="font-semibold text-lg">WhatTime</span>
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="space-y-4 mb-10 pb-8 border-b border-border">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 text-accent text-xs font-semibold uppercase tracking-wider">
+            <ShieldCheck className="w-3.5 h-3.5" /> User Agreement
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Terms of Service</h1>
+          <p className="text-sm text-foreground/60">Last updated: {LAST_UPDATED}</p>
         </div>
 
-        <h1 className="text-4xl font-semibold mb-2">Terms of Service</h1>
-        <p className="text-sm text-foreground/60 mb-10">Last updated: {LAST_UPDATED}</p>
-
-        <div className="space-y-8 text-foreground/80 leading-relaxed">
+        <div className="space-y-8 text-foreground/85 leading-relaxed text-sm sm:text-base">
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-2">1. Acceptance of terms</h2>
             <p>
-              By accessing or using WhatTime ("the Service"), you agree to be bound by these
+              By accessing or using WhatTime (&ldquo;the Service&rdquo;), you agree to be bound by these
               Terms of Service. If you do not agree, please do not use the Service.
             </p>
           </section>
@@ -62,18 +62,18 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-foreground mb-2">4. Advertising</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-2">4. Advertising &amp; Google AdSense</h2>
             <p>
               WhatTime is supported by advertising, including through Google AdSense. Ads are
               provided by third parties and we are not responsible for the content of
-              third-party advertisements.
+              third-party advertisements. Please consult our <Link href="/privacy" className="text-accent underline">Privacy Policy</Link> for details on how cookies are used.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-2">5. No warranty</h2>
             <p>
-              The Service is provided "as is" without warranties of any kind, express or
+              The Service is provided &ldquo;as is&rdquo; without warranties of any kind, express or
               implied. We do not warrant that the Service will be uninterrupted, error-free, or
               secure.
             </p>
@@ -92,18 +92,20 @@ export default function Terms() {
             <h2 className="text-xl font-semibold text-foreground mb-2">7. Changes to the service or terms</h2>
             <p>
               We may modify or discontinue the Service, or update these Terms, at any time. We
-              will update the "last updated" date above when the Terms change.
+              will update the &ldquo;last updated&rdquo; date above when the Terms change.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-foreground mb-2">8. Contact</h2>
             <p>
-              Questions about these Terms? <Link href="/contact" className="text-accent hover:underline">Contact us</Link>.
+              Questions about these Terms? <Link href="/contact" className="text-accent hover:underline">Contact us</Link> or email <span className="font-mono text-accent">support@whattime.info</span>.
             </p>
           </section>
         </div>
-      </div>
+      </main>
+
+      <SiteFooter />
     </div>
   );
 }

@@ -1,77 +1,132 @@
 import { useEffect } from 'react';
 import { Link } from 'wouter';
-import { ArrowLeft, Clock, Globe, Users, Zap } from 'lucide-react';
+import { Clock, Globe, Users, Zap, Shield, Award, CheckCircle, ArrowRight } from 'lucide-react';
 import { setSEOMeta } from '@/lib/seo';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 const SITE_URL = 'https://www.whattime.info';
 
 export default function About() {
   useEffect(() => {
     setSEOMeta({
-      title: 'About WhatTime - Precision Timekeeping for a Connected World',
+      title: 'About WhatTime — Global Precision Timekeeping & Scheduling',
       description:
-        'Learn about WhatTime, a free world clock, timezone converter, and meeting scheduler built to help distributed teams and travelers coordinate across time zones.',
+        'Learn about WhatTime, our mission, atomic time synchronization standards, IANA database integration, and our team dedicated to making international scheduling effortless.',
       url: `${SITE_URL}/about`,
       type: 'website',
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground mb-10">
-          <ArrowLeft className="w-4 h-4" /> Back to WhatTime
-        </Link>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <SiteHeader />
 
-        <div className="flex items-center gap-2 mb-4">
-          <Clock className="w-7 h-7 text-accent" />
-          <span className="font-semibold text-lg">WhatTime</span>
-        </div>
-
-        <h1 className="text-4xl font-semibold mb-6">About WhatTime</h1>
-
-        <div className="space-y-6 text-foreground/80 leading-relaxed">
-          <p>
-            WhatTime is a free set of timekeeping tools built for anyone who works, travels,
-            or keeps in touch across time zones. Our world clock, timezone converter, meeting
-            scheduler, and DST tracker are designed to answer one simple question as quickly
-            as possible: what time is it, there, right now?
-          </p>
-          <p>
-            The project grew out of a common frustration: existing timezone tools were either
-            cluttered with ads, slow to load, or simply out of date on daylight saving rules.
-            We set out to build something fast, accurate, and genuinely useful for remote
-            teams, international families, and anyone scheduling across borders.
-          </p>
-          <p>
-            WhatTime is free to use, with no account required for the core tools. We keep the
-            lights on through minimal, clearly labeled advertising rather than subscriptions
-            or paywalls.
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        {/* Header */}
+        <div className="space-y-4 mb-12 pb-8 border-b border-border">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 text-accent text-xs font-semibold uppercase tracking-wider">
+            <Clock className="w-3.5 h-3.5" /> Our Mission &amp; Standards
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
+            About WhatTime
+          </h1>
+          <p className="text-lg text-foreground/75 leading-relaxed max-w-2xl">
+            Precision timekeeping, live timezone conversion, and frictionless meeting scheduling
+            built for distributed teams, international travelers, and global citizens.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
-          <div className="minimalist-card p-6 rounded-lg border border-border">
-            <Globe className="w-6 h-6 text-accent mb-3" />
-            <h3 className="font-semibold mb-1">Global coverage</h3>
-            <p className="text-sm text-foreground/60">Hundreds of cities and every IANA timezone, kept current with DST changes.</p>
+        {/* Story */}
+        <div className="space-y-8 text-foreground/85 leading-relaxed text-sm sm:text-base">
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold text-foreground">Why We Built WhatTime</h2>
+            <p>
+              In an increasingly interconnected global economy, millions of professionals collaborate
+              across five, eight, or twelve time zones every single day. Yet, checking local time and
+              calculating cross-border call windows has remained surprisingly frustrating: legacy time
+              websites are frequently bogged down by invasive popups, slow loading times, outdated
+              daylight saving transition databases, or paywalls.
+            </p>
+            <p>
+              <strong>WhatTime</strong> was created to solve this problem permanently: a lightning-fast,
+              clean, beautifully designed platform that answers the fundamental question:{' '}
+              <em>&ldquo;What exact time is it over there, right now?&rdquo;</em> with zero friction, zero
+              mandatory sign-ups, and sub-second accuracy.
+            </p>
+          </section>
+
+          {/* Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-4">
+            <div className="p-6 rounded-xl border border-border bg-card space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center">
+                <Globe className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground">Authoritative Data</h3>
+              <p className="text-xs text-foreground/70 leading-relaxed">
+                Powered by the standard IANA Time Zone Database (tzdb) updated in real time to capture
+                international daylight saving shifts and government boundary changes.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-border bg-card space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center">
+                <Zap className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground">Speed &amp; Simplicity</h3>
+              <p className="text-xs text-foreground/70 leading-relaxed">
+                Designed to load in under a second worldwide. Instant city search, live seconds counter,
+                and one-click time difference calculations.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl border border-border bg-card space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-accent/15 text-accent flex items-center justify-center">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground">Team First</h3>
+              <p className="text-xs text-foreground/70 leading-relaxed">
+                Tools built specifically for remote organizations, such as our 9-to-5 mutual business
+                hours calculator and shareable meeting invites.
+              </p>
+            </div>
           </div>
-          <div className="minimalist-card p-6 rounded-lg border border-border">
-            <Zap className="w-6 h-6 text-accent mb-3" />
-            <h3 className="font-semibold mb-1">Fast by default</h3>
-            <p className="text-sm text-foreground/60">No sign-up required to check the time, convert zones, or schedule a meeting.</p>
-          </div>
-          <div className="minimalist-card p-6 rounded-lg border border-border">
-            <Users className="w-6 h-6 text-accent mb-3" />
-            <h3 className="font-semibold mb-1">Built for teams</h3>
-            <p className="text-sm text-foreground/60">Meeting invites and team dashboards designed for distributed work.</p>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold text-foreground">Our Editorial &amp; Quality Commitment</h2>
+            <p>
+              WhatTime is maintained by an independent engineering team passionate about digital
+              utilities and developer tools. We are committed to editorial transparency: all guides,
+              articles, and timezone explainers published on our blog are original, thoroughly
+              fact-checked, and regularly reviewed to ensure full compliance with global timekeeping
+              conventions.
+            </p>
+            <p>
+              To keep WhatTime completely free and open to everyone, we support our server infrastructure
+              via clearly labeled, non-intrusive advertisements served through Google AdSense. We do not
+              sell user data, engage in deceptive layouts, or lock core features behind subscriptions.
+            </p>
+          </section>
+
+          {/* Quick Links */}
+          <div className="p-6 rounded-xl border border-border bg-card/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="font-bold text-foreground">Have feedback or need to get in touch?</h3>
+              <p className="text-xs text-foreground/70 mt-1">
+                We love hearing from our users and continuously add new cities and features.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-accent-foreground font-semibold text-sm hover:bg-accent/90 transition-colors flex-shrink-0"
+            >
+              Contact Support <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
+      </main>
 
-        <p className="text-sm text-foreground/60 mt-12">
-          Questions or feedback? Visit our <Link href="/contact" className="text-accent hover:underline">contact page</Link>.
-        </p>
-      </div>
+      <SiteFooter />
     </div>
   );
 }

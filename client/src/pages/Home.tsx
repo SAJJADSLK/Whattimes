@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { trpc } from '@/lib/trpc';
 import { useTranslation } from 'react-i18next';
 import { setSEOMeta } from '@/lib/seo';
+import { AdBanner } from '@/components/AdBanner';
 
 const SITE_URL = 'https://www.whattime.info';
 
@@ -236,6 +237,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AdBanner className="my-10" />
+      </div>
 
       {/* CTA SECTION - Art Deco Inspired */}
       <section className="relative py-32 bg-foreground text-background overflow-hidden">

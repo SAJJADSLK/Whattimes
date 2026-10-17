@@ -9,20 +9,40 @@
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/xml; charset=utf-8"
+          "value": "application/xml; charset=utf-8"
         },
         {
-          "key": "Content-Encoding",
-          "value": "identity"
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=43200"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/ads.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
         }
       ]
     }
   ],
   "redirects": [
-    { "source": "/pages/(.*)", "destination": "/countries", "permanent": true },
-    { "source": "/city/(.*)", "destination": "/countries", "permanent": true },
-    { "source": "/city-detail/(.*)", "destination": "/countries", "permanent": true },
-    { "source": "/country/(.*)", "destination": "/countries", "permanent": true }
+    { "source": "/country/:country", "destination": "/:country", "permanent": true },
+    { "source": "/city/:country/:city", "destination": "/:country/:city", "permanent": true }
   ],
   "rewrites": [
     { "source": "/api/trpc/(.*)", "destination": "/api/trpc/[trpc]" },

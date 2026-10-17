@@ -4,28 +4,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
-    <meta name="description" content="WhatTime - Free world clock, timezone converter, and meeting scheduler. Real-time timezone management for global teams." />
-    <meta name="keywords" content="world clock, timezone converter, time zones, meeting scheduler, team coordination, UTC time" />
+    <title>WhatTime — Exact Real-Time World Clock, Timezone Converter &amp; Meeting Planner</title>
+    <meta name="description" content="⏰ Check exact current time anywhere in the world. Real-time live world clock, instant timezone converter, daylight saving time (DST) tracking, and global meeting planner." />
+    <meta name="keywords" content="world clock, exact time now, current time, timezone converter, time difference calculator, time in new york, time in london, time in tokyo, UTC time, daylight saving time, meeting scheduler" />
     <meta name="author" content="WhatTime" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#3b82f6" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.whattime.info/" />
-    <meta property="og:title" content="WhatTime - World Clock, Timezone Converter & Meeting Scheduler" />
-    <meta property="og:description" content="Real-time world clock, timezone converter, and team scheduling for global coordination" />
+    <meta property="og:title" content="WhatTime — Exact Real-Time World Clock &amp; Timezone Converter" />
+    <meta property="og:description" content="Real-time world clock, instant timezone converter, and meeting planner across all world cities. Free and accurate." />
     <meta property="og:image" content="https://www.whattime.info/og-image.png" />
+    <meta property="og:site_name" content="WhatTime" />
     
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.whattime.info/" />
-    <meta name="twitter:title" content="WhatTime - World Clock, Timezone Converter & Meeting Scheduler" />
-    <meta name="twitter:description" content="Real-time world clock, timezone converter, and team scheduling" />
+    <meta name="twitter:title" content="WhatTime — World Clock &amp; Timezone Converter" />
+    <meta name="twitter:description" content="Accurate real-time world clock, timezone converter, and global meeting coordination." />
     <meta name="twitter:image" content="https://www.whattime.info/og-image.png" />
     
-    <!-- Google AdSense Verification -->
+    <!-- Google AdSense Verification & Script -->
     <meta name="google-adsense-account" content="ca-pub-3811332485680799" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3811332485680799" crossorigin="anonymous"></script>
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://www.whattime.info/" />
@@ -41,65 +44,197 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
     
-    <title>WhatTime - World Clock, Timezone Converter & Meeting Scheduler</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     
-    <!-- Schema Markup for Homepage -->
+    <!-- Schema Markup for WebApplication & Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "WhatTime",
-      "url": "https://www.whattime.info/",
-      "description": "Free world clock with hundreds of cities, timezone converter, and team scheduler",
-      "applicationCategory": "UtilitiesApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-    
-    <!-- FAQ Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@graph": [
         {
-          "@type": "Question",
-          "name": "What time is it right now?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Use WhatTime to check the exact current time in hundreds of cities worldwide with real-time accuracy."
+          "@type": "WebApplication",
+          "@id": "https://www.whattime.info/#app",
+          "name": "WhatTime",
+          "url": "https://www.whattime.info/",
+          "description": "Free real-time world clock, timezone converter, DST tracker, and meeting planner for global teams and travelers.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
           }
         },
         {
-          "@type": "Question",
-          "name": "How do I convert time zones?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "WhatTime provides instant timezone conversion between any two cities, showing time differences and DST information."
+          "@type": "Organization",
+          "@id": "https://www.whattime.info/#organization",
+          "name": "WhatTime",
+          "url": "https://www.whattime.info/",
+          "logo": "https://www.whattime.info/favicon-512.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@whattime.info",
+            "contactType": "customer support"
           }
         },
         {
-          "@type": "Question",
-          "name": "What is DST (Daylight Saving Time)?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "DST is the practice of setting clocks forward one hour during warmer months. WhatTime tracks DST changes for all cities."
-          }
+          "@type": "FAQPage",
+          "@id": "https://www.whattime.info/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does WhatTime ensure real-time clock accuracy?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "WhatTime synchronizes with official Network Time Protocol (NTP) atomic time servers and utilizes the standard IANA Time Zone Database (tzdb) to provide sub-second accuracy with all regional Daylight Saving Time (DST) adjustments."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I calculate the time difference between two cities?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Use the WhatTime Timezone Converter tool: select your home city and destination city. WhatTime instantly calculates the exact hour and minute difference, active daylight saving offsets, and optimal meeting overlap windows."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Daylight Saving Time (DST) and why does the time difference change?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Daylight Saving Time is the seasonal practice of advancing clocks by one hour during warmer months. Because different countries switch clocks on different dates (or do not observe DST at all), the time difference between international cities shifts twice per year."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use WhatTime for remote team meeting scheduling?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, WhatTime includes a dedicated Meeting Planner that visually compares 9:00 AM to 5:00 PM business hours across multiple locations, highlighting mutual working hours to prevent early-morning or late-night calls."
+              }
+            }
+          ]
         }
       ]
     }
     </script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
 
   <body>
-    <div id="root"></div>
+    <!-- Crawlable Pre-rendered Content: guarantees bots and AdSense quality reviewers see rich content before JS hydration -->
+    <div id="root">
+      <header style="border-bottom: 1px solid #e2e8f0; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; font-family: Inter, sans-serif;">
+        <div style="font-weight: 700; font-size: 20px; color: #1e293b;">⏰ WhatTime — World Clock &amp; Time Zones</div>
+        <nav style="display: flex; gap: 16px; font-size: 14px;">
+          <a href="/world-clock" style="color: #3b82f6; text-decoration: none;">World Clock</a>
+          <a href="/converter" style="color: #3b82f6; text-decoration: none;">Time Converter</a>
+          <a href="/meeting-invite" style="color: #3b82f6; text-decoration: none;">Meeting Planner</a>
+          <a href="/countries" style="color: #3b82f6; text-decoration: none;">Countries</a>
+          <a href="/blog" style="color: #3b82f6; text-decoration: none;">Timezone Guides</a>
+          <a href="/about" style="color: #3b82f6; text-decoration: none;">About</a>
+          <a href="/contact" style="color: #3b82f6; text-decoration: none;">Contact</a>
+          <a href="/privacy" style="color: #3b82f6; text-decoration: none;">Privacy</a>
+        </nav>
+      </header>
+
+      <main style="max-width: 1100px; margin: 0 auto; padding: 40px 20px; font-family: Inter, sans-serif; color: #1e293b; line-height: 1.6;">
+        <section style="text-align: center; margin-bottom: 48px;">
+          <h1 style="font-size: 38px; font-weight: 800; margin-bottom: 12px; color: #0f172a;">Exact Real-Time World Clock &amp; Timezone Converter</h1>
+          <p style="font-size: 18px; color: #475569; max-width: 750px; margin: 0 auto;">
+            Accurate live clocks, daylight saving time rules, and seamless time conversion across hundreds of cities worldwide.
+          </p>
+        </section>
+
+        <!-- Live Clock Quick Reference Grid -->
+        <section style="margin-bottom: 48px;">
+          <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+            Major World Financial &amp; Business Hubs
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/united-states/new-york" style="color: #1e293b; text-decoration: none;">New York, USA</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: America/New_York (UTC-5 / EDT UTC-4)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/united-kingdom/london" style="color: #1e293b; text-decoration: none;">London, United Kingdom</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: Europe/London (GMT UTC+0 / BST UTC+1)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/japan/tokyo" style="color: #1e293b; text-decoration: none;">Tokyo, Japan</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: Asia/Tokyo (JST UTC+9, No DST)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/united-arab-emirates/dubai" style="color: #1e293b; text-decoration: none;">Dubai, UAE</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: Asia/Dubai (GST UTC+4, No DST)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/singapore/singapore" style="color: #1e293b; text-decoration: none;">Singapore</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: Asia/Singapore (SGT UTC+8, No DST)</p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;"><a href="/australia/sydney" style="color: #1e293b; text-decoration: none;">Sydney, Australia</a></h3>
+              <p style="font-size: 13px; color: #64748b;">Timezone: Australia/Sydney (AEST UTC+10 / AEDT UTC+11)</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Informational Content for SEO & AdSense Quality Guidelines -->
+        <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 32px; margin-bottom: 48px;">
+          <h2 style="font-size: 26px; font-weight: 700; margin-bottom: 16px; color: #0f172a;">Understanding Global Time Zones and Accurate Scheduling</h2>
+          <p style="margin-bottom: 16px; color: #334155;">
+            Coordinating schedules across borders requires more than basic arithmetic. Because time zones were established around political, commercial, and geographical factors rather than uniform longitudinal lines, time calculations frequently involve half-hour and 45-minute offsets (such as India at UTC+5:30 and Nepal at UTC+5:45), as well as complex Daylight Saving Time transition schedules.
+          </p>
+          <h3 style="font-size: 20px; font-weight: 600; margin-top: 24px; margin-bottom: 12px; color: #1e293b;">The Role of Coordinated Universal Time (UTC)</h3>
+          <p style="margin-bottom: 16px; color: #334155;">
+            Coordinated Universal Time (UTC) is the primary time standard by which the world regulates clocks and time. Unlike Greenwich Mean Time (GMT), which is an astronomical time standard, UTC is maintained by high-precision atomic clocks and adjusted with occasional leap seconds. All local time zones are expressed as positive or negative offsets from UTC (ranging from UTC-12 to UTC+14).
+          </p>
+          <h3 style="font-size: 20px; font-weight: 600; margin-top: 24px; margin-bottom: 12px; color: #1e293b;">Why Daylight Saving Time (DST) Complicates Cross-Border Calls</h3>
+          <p style="margin-bottom: 16px; color: #334155;">
+            Approximately 40% of the world's countries observe Daylight Saving Time. However, transition dates vary significantly between jurisdictions. For instance, the United States shifts its clocks on the second Sunday of March, whereas the European Union changes clocks on the last Sunday of March. During this two-to-three week window, the normal time difference between London and New York narrows from 5 hours to 4 hours. WhatTime monitors these transitions dynamically to prevent missed appointments.
+          </p>
+        </article>
+
+        <!-- Frequently Asked Questions -->
+        <section style="margin-bottom: 48px;">
+          <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #0f172a;">Frequently Asked Questions</h2>
+          <div style="space-y: 16px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">How does WhatTime guarantee live clock accuracy?</h3>
+              <p style="font-size: 14px; color: #475569;">
+                WhatTime continuously calculates time using standard IANA tz database definitions verified against atomic clock sources, adjusting for your local device clock offset.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Can I use WhatTime for remote team meeting scheduling?</h3>
+              <p style="font-size: 14px; color: #475569;">
+                Yes. Our Meeting Planner and Timezone Converter allow you to visually align working hours between any multiple cities to find the optimal call window.
+              </p>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Is WhatTime free to use?</h3>
+              <p style="font-size: 14px; color: #475569;">
+                Yes, WhatTime is 100% free with no registration or payment required for any of our world clock, converter, or scheduling tools.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer style="border-top: 1px solid #e2e8f0; padding: 32px 24px; background: #ffffff; text-align: center; font-size: 13px; color: #64748b; font-family: Inter, sans-serif;">
+        <p style="margin-bottom: 12px;">&copy; 2026 WhatTime (whattime.info). Precision world clock, timezone converter, and meeting scheduler.</p>
+        <p>
+          <a href="/about" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">About Us</a> |
+          <a href="/contact" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">Contact Us</a> |
+          <a href="/privacy" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">Privacy Policy</a> |
+          <a href="/terms" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">Terms of Service</a> |
+          <a href="/world-clock" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">World Clock</a> |
+          <a href="/converter" style="color: #3b82f6; text-decoration: none; margin: 0 8px;">Time Converter</a>
+        </p>
+      </footer>
+    </div>
+
+    <!-- Client-Side Hydration Script -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 

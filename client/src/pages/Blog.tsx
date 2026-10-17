@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { Calendar, User, ArrowRight, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { setSEOMeta } from '@/lib/seo';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
+import { AdBanner } from '@/components/AdBanner';
 
 interface BlogPost {
   id: string;
@@ -27,7 +30,7 @@ const blogPosts: BlogPost[] = [
       'Most of Asia, Africa, and a growing number of countries worldwide skip DST entirely. India, China, Japan, and most of the Middle East keep a single fixed offset year-round. That actually makes scheduling with those regions easier in one sense — no seasonal recalculation needed — but it means the time difference between, for example, Tokyo and New York changes twice a year purely because New York moves and Tokyo does not.',
       'The practical takeaway for anyone coordinating across time zones: never memorize a fixed time difference between two places if either one observes DST. A gap that is 8 hours in January can become 7 hours in July. The safest approach is to always calculate from UTC on the specific date you care about, or use a converter that accounts for the transition dates automatically, since they shift slightly from year to year in some countries.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'June 15, 2026',
     category: 'Time Zones',
     readTime: 5,
@@ -43,7 +46,7 @@ const blogPosts: BlogPost[] = [
       'Adoption was slow and uneven. The U.S. did not standardize time zones by federal law until the Standard Time Act of 1918. France, for political reasons, refused to officially reference "Greenwich" time until 1978, instead defining its time as "Paris Mean Time, retarded by 9 minutes 21 seconds" — which was numerically identical to GMT, just described without giving Britain credit.',
       'Even today, time zones remain more political than geographic. China, which spans a longitude wide enough to justify five time zones, uses a single time zone nationwide for administrative unity. Meanwhile, some countries offset by 30 or 45 minutes rather than a full hour — India (UTC+5:30) and Nepal (UTC+5:45) are the best-known examples — decisions made deliberately to distinguish their national identity from neighboring time zones rather than for any astronomical reason.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'June 10, 2026',
     category: 'History',
     readTime: 7,
@@ -59,7 +62,7 @@ const blogPosts: BlogPost[] = [
       'Always send calendar invites with an explicit time zone and, where possible, let the calendar software handle the local conversion automatically rather than writing "3pm EST" in the body of an email. A recipient in a timezone that observes DST on a different schedule than you can easily end up an hour off if the conversion is manual and the invite spans a DST transition date.',
       'Finally, be explicit about ambiguous abbreviations. "CST" alone is genuinely ambiguous — it could mean Central Standard Time (US), China Standard Time, or Cuba Standard Time, and all three are different. Spelling out the full time zone name or region avoids a surprisingly common source of missed meetings.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'June 5, 2026',
     category: 'Productivity',
     readTime: 4,
@@ -75,7 +78,7 @@ const blogPosts: BlogPost[] = [
       'The other well-known limitation is the "Year 2038 problem." Systems that store Unix time as a signed 32-bit integer will overflow on January 19, 2038, at 03:14:07 UTC, after which the counter wraps around to a negative number and the represented date jumps back to 1901. Most modern systems have already migrated to 64-bit timestamps, which pushes the same overflow problem roughly 292 billion years into the future, but older embedded systems and some legacy databases remain at risk.',
       'For developers, the practical rule of thumb is: store and transmit time as Unix timestamps (or another UTC-based, unambiguous format like ISO 8601 with an explicit UTC offset), and only convert to a local, human-readable time at the very last step, right before displaying it to a user.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'May 28, 2026',
     category: 'Technology',
     readTime: 6,
@@ -91,7 +94,7 @@ const blogPosts: BlogPost[] = [
       'Time zone handling adds a second layer of risk that is more about process than physics. A trading desk that mishandles a Daylight Saving Time transition — for example, misapplying an hour offset for a market that switches on a different date than the desk\'s home country — can end up reporting trades with an incorrect timestamp, which is a compliance problem even if the trade itself executed correctly. This is one of the reasons many financial systems standardize all internal logging to UTC and only convert to local exchange time for display purposes.',
       'The underlying lesson generalizes well beyond finance: any system where the order of events has legal or financial consequences benefits from treating "what time is it, exactly, and according to which clock" as a first-class engineering problem rather than an afterthought.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'May 20, 2026',
     category: 'Finance',
     readTime: 8,
@@ -107,7 +110,7 @@ const blogPosts: BlogPost[] = [
       'When live meetings are necessary, the fairness principle from meeting scheduling applies here too: track who has been asked to take early-morning or late-night calls over the past month, and actively rotate that burden. It is easy for the habit to silently settle on whichever team member is "used to it," which erodes morale over time even if no one says so directly.',
       'Finally, be deliberate about overlap hours versus focus hours. A team spread across three or more time zones often has only a two-to-three hour window where everyone is online simultaneously. Protecting that window for genuine collaboration — and explicitly discouraging routine status meetings from eating into it — tends to make distributed teams noticeably more effective than teams that treat every hour as interchangeable.',
     ],
-    author: 'Chronos Editorial Team',
+    author: 'WhatTime Editorial Team',
     date: 'May 15, 2026',
     category: 'Remote Work',
     readTime: 5,
@@ -131,8 +134,9 @@ export default function Blog() {
   const categories = Array.from(new Set(blogPosts.map(p => p.category)));
 
   return (
-    <div className="min-h-screen bg-background py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <SiteHeader />
+      <div className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {/* Header */}
         <div className="mb-16 space-y-4">
           <h1 className="text-5xl lg:text-6xl font-light">
@@ -281,6 +285,8 @@ export default function Blog() {
             </div>
           </div>
         </div>
+
+        <AdBanner className="mt-12" />
       </div>
 
       {/* Full article reader */}
@@ -331,6 +337,8 @@ export default function Blog() {
           </div>
         </div>
       )}
+
+      <SiteFooter />
     </div>
   );
 }
